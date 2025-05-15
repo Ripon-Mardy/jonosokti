@@ -1,0 +1,98 @@
+[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "email": "demo@gmail.com",
+        "address" : "Dinajpur",
+        "category" :[ "Computer Servicing",  "Electric Service", "Electronics Service", "Plumber Service", "Shifting Service", "Tailoring & Dress Making"],
+        "star" : "1"
+    },
+    {
+        "id": 2,
+        "name": "John Doe",
+        "email": "demo@gmail.com",
+        "address" : "Dinajpur",
+        "category" :[ "Computer Servicing",  "Electric Service", "Electronics Service", "Plumber Service"],
+         "star" : "2"
+    },
+    {
+        "id": 3,
+        "name": "John Doe",
+        "email": "demo@gmail.com",
+        "address" : "Dinajpur",
+       "category" :[ "Computer Servicing",  "Electric Service", "Electronics Service", "Plumber Service", "Shifting Service", "Tailoring & Dress Making"],
+         "star" : "3"
+    },
+    {
+        "id": 4,
+        "name": "John Doe",
+        "email": "demo@gmail.com",
+        "address" : "Dinajpur",
+        "category" :[ "Computer Servicing",  "Electric Service"],
+         "star" : "4"
+    },
+    {
+        "id": 5,
+        "name": "John Doe",
+        "email": "demo@gmail.com",
+        "address" : "Dinajpur",
+        "category" :[ "Computer Servicing",  "Electric Service", "Electronics Service", "Plumber Service", "Shifting Service", "Tailoring & Dress Making"],
+         "star" : "5"
+    },
+    {
+        "id": 6,
+        "name": "John Doe",
+        "email": "demo@gmail.com",
+        "address" : "Dinajpur",
+        "category" :[ "Cleaning Service"],
+         "star" : "1"
+    },
+    {
+        "id": 7,
+        "name": "John Doe",
+        "email": "demo@gmail.com",
+        "address" : "Dhaka",
+        "category" :[ "Computer Servicing"],
+         "star" : "1"
+    },
+    {
+        "id": 7,
+        "name": "John Doe",
+        "email": "demo@gmail.com",
+        "address" : "feni",
+        "category" :[ "Computer Servicing"],
+         "star" : "1"
+    },
+    {
+        "id": 8,
+        "name": "John Doe",
+        "email": "demo@gmail.com",
+        "address" : "feni",
+        "category" :[ "Computer Servicing"],
+         "star" : "1"
+    },
+    {
+        "id": 9,
+        "name": "John Doe",
+        "email": "demo@gmail.com",
+        "address" : "feni",
+        "category" :[ "Computer Servicing"],
+         "star" : "1"
+    },
+    {
+        "id": 10,
+        "name": "John Doe",
+        "email": "demo@gmail.com",
+        "address" : "feni",
+        "category" :[ "Computer Servicing"],
+         "star" : "1"
+    },
+    {
+        "id": 11,
+        "name": "John Doe",
+        "email": "demo@gmail.com",
+        "address" : "feni",
+        "category" :[ "Computer Servicing"],
+         "star" : "1"
+    }
+]

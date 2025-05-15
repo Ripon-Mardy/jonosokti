@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Dashboard",
+    "icon": "FaHome",
+    "component": "/dashboard"
+  },
+  {
+    "id": 2,
+    "name": "Category",
+    "icon": "BiSolidCategory",
+    "component" : "/dashboard/all-category"
+  },
+  {
+    "id" : 3,
+    "name" : "Banner",
+    "icon" : "FaImage",
+    "component" : "/dashboard/banner"
+  },
+  {
+    "id" : 4,
+    "name" : "Jobs",
+    "icon" : "BsFillHandbagFill",
+    "component" : "#",
+      "subMenu": [
+        { "id": 4.1, "name": "Job Type", "component": "/dashboard/jobs/job-types" },
+        { "id": 4.2, "name": "Workplace", "component": "/dashboard/jobs/workplace" },
+        { "id": 4.3, "name": "All Jobs", "component": "/dashboard/all-jobs" }
+      ]
+  },
+  {
+    "id": 5,
+    "name" : "Users",
+    "icon" : "FaUserFriends",
+    "component" : "/dashboard/users"
+  },
+  {
+    "id": 6,
+    "name" : "package",
+    "icon" : "FiPackage",
+    "component" : "/dashboard/packages"
+  },
+  {
+    "id" : 7,
+    "name" : "FAQ",
+    "component" : "/dashboard/faq",
+    "icon" : "FaQuestion"
+  },
+  {
+    "id": 8,
+    "name": "Settings",
+    "icon": "FaCog",
+    "component": "/dashboard/setting"
+  }
+ 
+]
