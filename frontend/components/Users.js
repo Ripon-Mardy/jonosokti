@@ -13,6 +13,9 @@ const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isFiltering, setIsFiltering] = useState(false);
 
+  // api key 
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+
   // Calculate pagination values
   const jobsPerPage = 18;
   
@@ -31,7 +34,7 @@ const Users = () => {
       try {
         setLoading(true);
         const res = await fetch(
-          "https://jono-db.onrender.com/v1/user/all-users"
+          `${apiKey}/user/all-users`
         );
         if (!res.ok) throw new Error("Failed to fetch users");
 

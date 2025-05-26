@@ -20,6 +20,9 @@ const Banner = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // api key 
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+
   // Refs for dropdown containers
   const categoryDropdownRef = useRef(null);
   const locationDropdownRef = useRef(null);
@@ -113,7 +116,7 @@ const Banner = () => {
 
       try {
         const [categoryRes, locationRes] = await Promise.all([
-          fetch("https://jono-db.onrender.com/v1/category/categories"),
+          fetch(`${apiKey}/category/categories`),
           fetch("https://bdapi.vercel.app/api/v.1/district"),
         ]);
 

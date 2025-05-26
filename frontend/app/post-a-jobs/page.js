@@ -14,6 +14,9 @@ export default function page() {
   const [success, setSuccess] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  // api key 
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -38,7 +41,7 @@ export default function page() {
         throw new Error("You must be logged in to post a job.");
       }
 
-      const res = await fetch("https://jono-db.onrender.com/v1/job/post-job", {
+      const res = await fetch(`${apiKey}/job/post-job`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

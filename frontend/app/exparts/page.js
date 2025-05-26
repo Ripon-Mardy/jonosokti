@@ -18,15 +18,16 @@ const page = () => {
     category: "",
     rating: "",
   });
-  console.log('filters', filters);
   const [filteredUsers, setFilteredUsers] = useState(jsonUsers);
-  console.log("filteredUsers", filteredUsers);
   const [category, setCategory] = useState([]);
   const [users, setUsers] = useState([]);
   const [location, setLocation] = useState([]);
   const [filterdLocation, setFilteredLocation] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // api key 
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   const ref = useRef(null);
   // handle outside click to close the suggestion
@@ -70,8 +71,8 @@ const page = () => {
       setError(null);
       try {
         const [categoryRes, userRes, locationRes] = await Promise.all([
-          fetch(`https://jono-db.onrender.com/v1/category/categories`),
-          fetch(`https://jono-db.onrender.com/v1/user/all-users`),
+          fetch(`${apiKey}/category/categories`),
+          fetch(`${apiKey}/user/all-users`),
           fetch(`https://bdapi.vercel.app/api/v.1/district`),
         ]);
 

@@ -11,10 +11,13 @@ const Page = () => {
   const [error, setError] = useState(null);
   const [selectedPackage, setSelectedPackage] = useState(null);
 
+  // api key 
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const res = await fetch(`https://jono-db.onrender.com/v1/package/packages`);
+        const res = await fetch(`${apiKey}/package/packages`);
         if (!res.ok) throw new Error("Failed to fetch packages");
         const data = await res.json();
         setPackages(data.data);

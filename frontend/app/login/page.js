@@ -11,9 +11,11 @@ export default function Page() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  // api key 
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+
   // router 
   const router = useRouter();
-  console.log('router', router)
 
   const handlePhoneChange = (e) => {
     const value = e.target.value.replace(/\D/g, ""); // Allow only digits
@@ -35,7 +37,7 @@ export default function Page() {
     }
 
     try {
-      const res = await fetch("https://jono-db.onrender.com/v1/user-auth/login", {
+      const res = await fetch(`${apiKey}/user-auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
