@@ -102,6 +102,7 @@ const Jobs = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
         >
           {loading ? (
             <JobLoader />
@@ -116,7 +117,7 @@ const Jobs = () => {
               >
                 <Link
                   href={`/alljobs/${job._id || ""}`}
-                  className="flex items-start gap-4 p-3 rounded-lg border border-borderInputColor hover:border-borderFocusColor hover:bg-blue-50/30 transition-all duration-200 group bg-white"
+                  className="flex gap-4 p-3 rounded-lg border border-borderInputColor hover:border-borderFocusColor hover:bg-blue-50/30 transition-all duration-200 group bg-white"
                 >
                   <div className="relative flex-shrink-0 w-14 h-14 rounded-md overflow-hidden bg-blue-50 border border-gray-100">
                     <Image
