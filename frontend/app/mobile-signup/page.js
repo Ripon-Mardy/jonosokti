@@ -4,12 +4,14 @@ import { Phone, ArrowRight, Clock, Shield } from 'lucide-react';
 
 export default function Page() {
   const [phone, setPhone] = useState("");
-  console.log('phone', phone)
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [timer, setTimer] = useState(120);
   const [isResendDisabled, setIsResendDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  // api key 
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   const handlePhoneChange = (e) => {
     const value = e.target.value.replace(/\D/g, '');
@@ -24,7 +26,7 @@ export default function Page() {
       try {
         // Simulate API call
 
-        const res = await fetch(`https://jono-db.onrender.com/v1/user-auth/send-otp`,{
+        const res = await fetch(`${apiKey}/user-auth/send-otp`,{
           method : 'POST',
           headers : {
             'content-type' : 'application/json',
@@ -79,7 +81,7 @@ export default function Page() {
       try {
         // Simulate API call
 
-        const res = await fetch(`https://jono-db.onrender.com/v1/user-auth/verify-otp`, {
+        const res = await fetch(`${apiKey}/user-auth/verify-otp`, {
           method : 'POST',
           headers : {
             'content-type' : 'application/json',

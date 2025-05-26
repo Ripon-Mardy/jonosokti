@@ -65,6 +65,9 @@ const Faq = () => {
   const [loading, setLoading] = useState(false); // Loading state for fetching data
   const [error, setError] = useState(null); // Error state for fetching data
 
+  // api key 
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+
 
   const handleToggle = (index) => {
     setOpenIndex(index === openIndex ? null : index);
@@ -75,7 +78,7 @@ const Faq = () => {
     const fetchFAQ = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`https://jono-db.onrender.com/v1/faq/get-faqs`);
+        const res = await fetch(`${apiKey}/faq/get-faqs`);
         if (!res.ok) {
           setError('Failed to fetch data');
           throw new Error('Failed to fetch data');

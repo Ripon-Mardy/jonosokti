@@ -17,6 +17,9 @@ const Jobs = () => {
   const [loading, setLoading] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
+  // api key 
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+
   const initialVisibleCount = 6;
   const displayedJobs = Array.isArray(jobs)
     ? showAll
@@ -63,7 +66,7 @@ const Jobs = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          "https://jono-db.onrender.com/v1/job/active-jobs"
+          `${apiKey}/job/active-jobs`
         );
         if (!res.ok) {
           throw new Error("response was not ok");

@@ -21,14 +21,17 @@ const page = () => {
   const [error, setError] = useState(null); // Error state for fetching data
   const dropdownRef = useRef(null)
 
+  //api key
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+
   // Fetch data from API 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true); // Start loading
       try {
         const [jobRes, categoryRes, locationRes] = await Promise.all([
-          fetch(`https://jono-db.onrender.com/v1/job/active-jobs`),
-          fetch(`https://jono-db.onrender.com/v1/category/categories`),
+          fetch(`${apiKey}/job/active-jobs`),
+          fetch(`${apiKey}/category/categories`),
           fetch('https://bdapi.vercel.app/api/v.1/district')
         ]);
 

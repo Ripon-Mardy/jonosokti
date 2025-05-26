@@ -25,14 +25,16 @@ const JobDetails = ({ params }) => {
   const jobId = params.job_details; // Get job id from params
   const [error, setError] = useState(null);
   const [singleJob, setSingleJob] = useState([]);
-  console.log('single job', singleJob)
   const [loading, setLoading] = useState(true);
+
+  // api key 
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   // get single job 
   useEffect(() => {
     const getSingleJob = async () => {
       try {
-        const res = await fetch(`https://jono-db.onrender.com/v1/job/single-job?job_id=${jobId}`)
+        const res = await fetch(`${apiKey}/job/single-job?job_id=${jobId}`)
         if(!res.ok) {
           setError('Job not found')
           setLoading(false)
