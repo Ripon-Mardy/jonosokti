@@ -11,9 +11,6 @@ import jobImage from "@/public/images/jobsimage.jpg";
 import JobLoader from "./Loader/JobLoader";
 import NoDataFound from "./NoDataFound/NoDataFound";
 
-
-// hello developrs
-
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState(null);
