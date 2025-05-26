@@ -11,9 +11,11 @@ import jobImage from "@/public/images/jobsimage.jpg";
 import JobLoader from "./Loader/JobLoader";
 import NoDataFound from "./NoDataFound/NoDataFound";
 
+
+// hello developrs
+
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
-  console.log("jobs", jobs);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showAll, setShowAll] = useState(false);
