@@ -23,7 +23,7 @@ import useOutsideClick from "@/hooks/useClickOutside";
 import jsonUsers from "@/lib/Users.json";
 import NoDataFound from "@/components/NoDataFound/NoDataFound";
 
-const ExpertHirePage = () => {
+const page = () => {
 
 
   // State management
@@ -694,4 +694,4 @@ const ExpertHirePage = () => {
   );
 };
 
-export default ExpertHirePage;
+export default page;
