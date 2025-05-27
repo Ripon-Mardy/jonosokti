@@ -51,7 +51,7 @@ module.exports = {
 
 
 
-        "paraColor": "#737373",
+        "paraColor": "#4B5563",
         "textSecondaryColor": "#e58e26",
         "textprimaryColor": "#767676",
         "bottom-textColor": "#022279",
