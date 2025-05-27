@@ -6,11 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiArrowRight, FiArrowUp } from "react-icons/fi";
 import CategoryLoader from "./Loader/CategoryLoader";
 
-import jobImages from "../public/images/Jobcategory/plumber.webp";
-
 const JobCategory = () => {
   const [jobCategories, setJobCategories] = useState([]);
-  console.log("Job Categories:", jobCategories);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showAll, setShowAll] = useState(false);
