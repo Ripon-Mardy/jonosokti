@@ -6,8 +6,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiArrowRight, FiArrowUp } from "react-icons/fi";
 import CategoryLoader from "./Loader/CategoryLoader";
 
+import jobImages from "../public/images/Jobcategory/plumber.webp";
+
 const JobCategory = () => {
   const [jobCategories, setJobCategories] = useState([]);
+  console.log("Job Categories:", jobCategories);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showAll, setShowAll] = useState(false);
@@ -137,7 +140,7 @@ const JobCategory = () => {
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           className="object-cover group-hover:scale-105 transition-transform duration-300 text-xs"
-                          src={jobItem.image || "/placeholder-image.png"}
+                          src={API_URL + jobItem.image}
                           alt={jobItem.name || "Category Image"}
                         />
                       </div>
