@@ -117,7 +117,7 @@ const JobCategory = () => {
           </div>
         ) : (
           <motion.div 
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6"
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 sm:gap-6"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -140,15 +140,15 @@ const JobCategory = () => {
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           className="object-cover group-hover:scale-105 transition-transform duration-300 text-xs"
-                          src={API_URL + jobItem.image}
+                          src={jobItem?.image}
                           alt={jobItem.name || "Category Image"}
                         />
                       </div>
                       <div className="mt-4 text-center w-full">
-                        <h3 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-200 text-sm">
+                        <h3 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-200 text-xs">
                           {jobItem.name || "Untitled"}
                         </h3>
-                        <p className="mt-1 text-xs text-textColor">
+                        <p className="mt-1 text-xs text-paraColor">
                           {providerCounts[jobItem._id] ?? 0} Provider{providerCounts[jobItem._id] === 1 ? "" : "s"} available
                         </p>
                       </div>
