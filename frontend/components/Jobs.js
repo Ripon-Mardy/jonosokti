@@ -17,7 +17,7 @@ const Jobs = () => {
   const [loading, setLoading] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
-  // api key 
+  // api key
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   const initialVisibleCount = 6;
@@ -65,9 +65,7 @@ const Jobs = () => {
     const fetchJobs = async () => {
       setLoading(true);
       try {
-        const res = await fetch(
-          `${apiKey}/job/active-jobs`
-        );
+        const res = await fetch(`${apiKey}/job/active-jobs`);
         if (!res.ok) {
           throw new Error("response was not ok");
         }
@@ -105,73 +103,75 @@ const Jobs = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+          
         >
           {loading ? (
             <JobLoader />
           ) : error ? (
             <div>error</div>
           ) : jobs.length > 0 ? (
-            displayedJobs.map((job, index) => (
-              <motion.div
-                key={job.id || index}
-                variants={itemVariants}
-                transition={{ duration: 0.2 }}
-              >
-                <Link
-                  href={`/alljobs/${job._id || ""}`}
-                  className="flex gap-4 p-3 rounded-lg border border-borderInputColor hover:border-borderFocusColor hover:bg-blue-50/30 transition-all duration-200 group bg-white"
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {displayedJobs.map((job, index) => (
+                <motion.div
+                  key={job.id || index}
+                  variants={itemVariants}
+                  transition={{ duration: 0.2 }}
                 >
-                  <div className="relative flex-shrink-0 w-14 h-14 rounded-md overflow-hidden bg-blue-50 border border-gray-100">
-                    <Image
-                      src={jobImage}
-                      alt={job.companyName || "Company logo"}
-                      fill
-                      sizes="56px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex justify-between items-start flex-wrap">
-                      <h3 className="text-gray-900 font-semibold text-base group-hover:text-blue-600 transition-colors">
-                        {shortenText(job.title, 6)}
-                      </h3>
+                  <Link
+                    href={`/alljobs/${job._id || ""}`}
+                    className="flex gap-4 p-3 rounded-lg border border-borderInputColor hover:border-borderFocusColor hover:bg-blue-50/30 transition-all duration-200 group bg-white"
+                  >
+                    <div className="relative flex-shrink-0 w-14 h-14 rounded-md overflow-hidden bg-blue-50 border border-gray-100">
+                      <Image
+                        src={jobImage}
+                        alt={job.companyName || "Company logo"}
+                        fill
+                        sizes="56px"
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
                     </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-start flex-wrap">
+                        <h3 className="text-gray-900 font-semibold text-base group-hover:text-blue-600 transition-colors">
+                          {shortenText(job.title, 6)}
+                        </h3>
+                      </div>
 
-                    <div className="mt-1 flex flex-wrap items-center text-sm text-gray-500 gap-x-3 w-full">
-                      <span className="inline-flex items-center text-xs">
-                        <BsBriefcase className="mr-1 text-textIconColor" />
-                        {job.company_name || "Wing Assistant"}
-                      </span>
-                      <span className="inline-flex items-center text-xs">
-                        <FaLocationDot className="mr-1 text-textIconColor" />
-                        {job.address || "Dhaka, Bangladesh"}
-                      </span>
-                    </div>
+                      <div className="mt-1 flex flex-wrap items-center text-sm text-gray-500 gap-x-3 w-full">
+                        <span className="inline-flex items-center text-xs">
+                          <BsBriefcase className="mr-1 text-textIconColor" />
+                          {job.company_name || "Wing Assistant"}
+                        </span>
+                        <span className="inline-flex items-center text-xs">
+                          <FaLocationDot className="mr-1 text-textIconColor" />
+                          {job.address || "Dhaka, Bangladesh"}
+                        </span>
+                      </div>
 
-                    <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
-                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium flex gap-1">
-                        {/* <FaMoneyBillWave className="mr-1 text-gray-500" /> */}
-                        ৳ {job.cost || "35000"}/month
-                      </span>
-                      <span className="inline-flex items-center text-xs text-gray-500">
-                        <FaRegClock className="mr-1 text-textIconColor" />
-                        {job.posted || "6 months ago"}
-                      </span>
+                      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
+                        <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium flex gap-1">
+                          {/* <FaMoneyBillWave className="mr-1 text-gray-500" /> */}
+                          ৳ {job.cost || "35000"}/month
+                        </span>
+                        <span className="inline-flex items-center text-xs text-gray-500">
+                          <FaRegClock className="mr-1 text-textIconColor" />
+                          {job.posted || "6 months ago"}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           ) : (
-            <div className="mt-5">
+            <div className="mt-5 ">
               <NoDataFound
-              icon={<BriefcaseBusiness />}
-              text={" No job post available"}
-              subText={
-                "Currently, there are no job listings. Please check back later."
-              }
-            />
+                icon={<BriefcaseBusiness />}
+                text={" No job post available"}
+                subText={
+                  "Currently, there are no job listings. Please check back later."
+                }
+              />
             </div>
           )}
         </motion.div>
