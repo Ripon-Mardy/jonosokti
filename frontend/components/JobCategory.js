@@ -4,7 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiArrowRight, FiArrowUp } from "react-icons/fi";
+import { Grip } from 'lucide-react';
 import CategoryLoader from "./Loader/CategoryLoader";
+import NotFound from "@/app/not-found";
+import NoDataFound from "./NoDataFound/NoDataFound";
 
 const JobCategory = () => {
   const [jobCategories, setJobCategories] = useState([]);
@@ -35,7 +38,10 @@ const JobCategory = () => {
               const data = await res.json();
               counts[category._id] = data.data?.users?.length || 0;
             } catch (err) {
-              console.error("Failed to fetch providers for category:", category._id);
+              console.error(
+                "Failed to fetch providers for category:",
+                category._id
+              );
               counts[category._id] = 0;
             }
           })
@@ -62,8 +68,8 @@ const JobCategory = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.05 }
-    }
+      transition: { staggerChildren: 0.05 },
+    },
   };
 
   const itemVariants = {
@@ -71,15 +77,15 @@ const JobCategory = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.4, ease: "easeOut" }
-    }
+      transition: { duration: 0.4, ease: "easeOut" },
+    },
   };
 
   return (
     <section className="py-3">
       <div className="max-w-7xl mx-auto px-2 sm:px-0">
         <div className="text-center mb-6">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -87,7 +93,7 @@ const JobCategory = () => {
           >
             Popular Categories
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -103,8 +109,16 @@ const JobCategory = () => {
           <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md max-w-2xl mx-auto">
             <div className="flex">
               <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                <svg
+                  className="h-5 w-5 text-red-500"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
               <div className="ml-3">
@@ -112,8 +126,8 @@ const JobCategory = () => {
               </div>
             </div>
           </div>
-        ) : (
-          <motion.div 
+        ) : displayedCategories.length > 0 ? (
+          <motion.div
             className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 sm:gap-6"
             variants={containerVariants}
             initial="hidden"
@@ -121,7 +135,7 @@ const JobCategory = () => {
           >
             <AnimatePresence>
               {displayedCategories.map((jobItem, index) => (
-                <motion.div 
+                <motion.div
                   key={jobItem._id || index}
                   variants={itemVariants}
                   layout
@@ -146,7 +160,9 @@ const JobCategory = () => {
                           {jobItem.name || "Untitled"}
                         </h3>
                         <p className="mt-1 text-xs text-paraColor">
-                          {providerCounts[jobItem._id] ?? 0} Provider{providerCounts[jobItem._id] === 1 ? "" : "s"} available
+                          {providerCounts[jobItem._id] ?? 0} Provider
+                          {providerCounts[jobItem._id] === 1 ? "" : "s"}{" "}
+                          available
                         </p>
                       </div>
                     </div>
@@ -155,19 +171,20 @@ const JobCategory = () => {
               ))}
             </AnimatePresence>
           </motion.div>
+        ) : (
+          <div>
+            <NoDataFound icon={<Grip/>} text={'No category available'} subText={'Currently, there are no job listings. Please check back later.'} />
+          </div>
         )}
 
         {jobCategories.length > initialVisibleCount && (
-          <motion.div 
+          <motion.div
             className="text-center mt-12"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className="btn"
-            >
+            <button onClick={() => setShowAll(!showAll)} className="btn">
               {showAll ? (
                 <>
                   See Less
