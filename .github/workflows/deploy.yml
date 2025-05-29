@@ -12,9 +12,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.SECRETS_VPS_IP }}
-          username: ${{ secrets.SECRETS_VPS_USERNAME }}
-          key: ${{ secrets.SECRETS_SSH_PRIVATE_KEY }}
+          host: ${{ secrets.VPS_IP }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/nextjs/Jonosokti/frontend
             git pull origin main
