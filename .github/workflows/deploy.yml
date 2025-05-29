@@ -1,11 +1,13 @@
-name: Deploy
-on: push
+name: Deploy Frontend
+on:
+  push:
+    paths:
+      - 'frontend/**'  # Only trigger when frontend/ files change
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm install && npm run build
       - uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VPS_IP }}
@@ -14,6 +16,6 @@ jobs:
           script: |
             cd /var/www/nextjs/Jonosokti/frontend
             git pull origin main
-            npm install --production
+            npm install
             npm run build
             pm2 restart "jonosokti-client"
