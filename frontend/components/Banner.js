@@ -81,6 +81,9 @@ const Banner = () => {
     setFilteredLocations([]);
   }, []);
 
+
+  // .. 
+
   // Handle click outside to close dropdowns
   useEffect(() => {
     const handleClickOutside = (event) => {
