@@ -15,4 +15,5 @@ jobs:
             cd /var/www/nextjs/Jonosokti/frontend
             git pull origin main
             npm install --production
+            npm run build
             pm2 restart "jonosokti-client"
