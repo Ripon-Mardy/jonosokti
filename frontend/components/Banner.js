@@ -82,7 +82,7 @@ const Banner = () => {
   }, []);
 
 
-  // .. 
+  // .. ...
 
   // Handle click outside to close dropdowns
   useEffect(() => {
