@@ -325,7 +325,7 @@ const page = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Desktop Filters Sidebar */}
-          <div className="hidden lg:block lg:col-span-3">
+          <div className="hidden md:block lg:col-span-3">
             <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-20 space-y-6" ref={locationRef}>
               <div className="flex items-center gap-2 pb-4 border-b border-gray-100">
                 <Filter className="text-blue-600" size={20} />
@@ -421,7 +421,7 @@ const page = () => {
 
           {/* Mobile Filters Modal */}
           {showMobileFilters && (
-            <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end">
+            <div className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end">
               <div className="bg-white w-full max-h-[80vh] overflow-y-auto rounded-t-2xl" ref={filterRef}>
                 <div className="p-6 space-y-6">
                   <div className="flex items-center justify-between">
@@ -541,12 +541,13 @@ const page = () => {
             ) : filteredUsers.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredUsers.map((user, index) => (
-                  <div
+                 <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
+                   <div
                     key={index}
-                    className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
+                    className=" flex md:block"
                   >
                     {/* Profile Image */}
-                    <div className="relative">
+                    <div className="relative w-full">
                       <div className="aspect-square relative bg-gradient-to-br from-gray-100 to-gray-200">
                         <Image
                           src={user?.profile_image || customProfile}
@@ -577,7 +578,7 @@ const page = () => {
                     </div>
 
                     {/* Content */}
-                    <div className="p-5 space-y-4">
+                    <div className="p-2 md:p-5 space-y-4 w-full">
                       {/* Name and Location */}
                       <div>
                         <h3 className="font-bold text-lg text-gray-800 mb-1 truncate">
@@ -644,7 +645,7 @@ const page = () => {
                       )}
 
                       {/* Action Buttons */}
-                      <div className="space-y-2 pt-2">
+                      <div className="space-y-2 pt-2 hidden md:block">
                         {user?.phone ? (
                           <a
                             href={`tel:${user.phone}`}
@@ -671,8 +672,40 @@ const page = () => {
                           <span className="text-sm">View Profile</span>
                         </Link>
                       </div>
+
                     </div>
+
+
                   </div>
+                  {/* mobile actions buttons  */}
+                   {/* Action Buttons */}
+                      <div className="space-y-2 pt-2 px-3 pb-2">
+                        {user?.phone ? (
+                          <a
+                            href={`tel:${user.phone}`}
+                            className="w-full bg-gray-100 text-gray-400 py-2 px-4 rounded-xl flex items-center justify-center gap-2 cursor-not-allowed text-xs font-medium"
+                          >
+                            <Phone size={18} />
+                            <span>Call Now</span>
+                          </a>
+                        ) : (
+                          <button
+                            disabled
+                            className="w-full bg-gray-100 text-gray-400 py-2 px-4 rounded-xl flex items-center justify-center gap-2 cursor-not-allowed text-xs font-medium"
+                          >
+                            <Phone size={18} />
+                            <span className="text-xs">No Phone</span>
+                          </button>
+                        )}
+                        <Link
+                          href={`/user-profile/${user?.id || ""}`}
+                          className="w-full text-white py-2 px-4 rounded-xl flex items-center justify-center gap-2 cursor-not-allowed text-xs bg-bgColor font-medium"
+                        >
+                          <User size={18} />
+                          <span className="text-xs text-white">View Profile</span>
+                        </Link>
+                      </div>
+                 </div>
                 ))}
               </div>
             ) : (
