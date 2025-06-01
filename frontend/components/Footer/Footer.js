@@ -146,39 +146,33 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div className="space-y-4 animate-fadeIn" style={{ animationDelay: "0.4s" }}>
-            <h3 className="text-gray-900 font-semibold text-lg mb-4">Contact Us</h3>
-            
-            <div className="space-y-3 text-sm md:text-base">
-              <div className="flex items-start">
-                <MdEmail className="w-5 h-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" />
-                <div>
-                  <p className="text-gray-800 font-medium">Email</p>
-                  <a href="mailto:info@jonosokti.com" className="text-textColor hover:text-blue-600 transition-colors duration-200">
-                    info@jonosokti.com
-                  </a>
-                </div>
-              </div>
-              
-              <div className="flex items-start">
-                <FaPhoneAlt className="w-4 h-4 text-blue-600 mt-0.5 mr-3 flex-shrink-0" />
-                <div>
-                  <p className="text-gray-800 font-medium">Phone</p>
-                  <a href="tel:+8801700000000" className="text-textColor hover:text-blue-600 transition-colors duration-200">
-                    +880 1700 000000
-                  </a>
-                </div>
-              </div>
-              
-              <div className="flex items-start">
-                <FaMapMarkerAlt className="w-5 h-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" />
-                <div>
-                  <p className="text-gray-800 font-medium">Address</p>
-                  <p className="text-textColor">
-                    Dhaka, Bangladesh
-                  </p>
-                </div>
-              </div>
-            </div>
+            <h3 className="text-gray-900 font-semibold text-lg mb-4">E-commerce services</h3>
+            <ul className="space-y-3 text-sm md:text-base">
+              <li>
+                <Link
+                  href="/terms-conditions"
+                  className="text-textColor hover:text-blue-600 transition-colors duration-200 flex items-center"
+                >
+                  <span className="border-b border-transparent hover:border-blue-600">E-commerce</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/privacy-policy"
+                  className="text-textColor hover:text-blue-600 transition-colors duration-200 flex items-center"
+                >
+                  <span className="border-b border-transparent hover:border-blue-600">Online Store</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/payment-policy"
+                  className="text-textColor hover:text-blue-600 transition-colors duration-200 flex items-center"
+                >
+                  <span className="border-b border-transparent hover:border-blue-600">Sell Online</span>
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
 
