@@ -208,6 +208,8 @@ const page = () => {
           </form>
           {/* end job search filter */}
 
+          {/* ..  */}
+
           {/* job list */}
           <div className='sm:col-span-8'>
             {loading ? (
