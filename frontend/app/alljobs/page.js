@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import Loading from '@/components/Loading';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Clock8, MapPin, Banknote, Bookmark } from 'lucide-react';
+import { Clock8, MapPin, Banknote, Bookmark, Award, BriefcaseBusiness   } from 'lucide-react';
 import jobsImage from '@/public/images/jobsimage.jpg';
 
 const page = () => {
@@ -122,9 +122,17 @@ const page = () => {
   return (
     <div className='xl:container xl:mx-auto px-2 sm:px-0 pt-20 pb-10'>
       <div>
-        {/* job title */}
-        <h2 className='text-textHeadingColor text-2xl sm:text-4xl font-bold text-center'>Find Your Dream Job</h2>
-        <p className='text-textColor text-sm sm:text-base text-center mt-2'>Browse through thousands of job opportunities and find the one that suits you best.</p>
+
+
+        <div className="text-center mb-8">
+                  <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-2 rounded-2xl shadow-lg mb-4">
+                    <BriefcaseBusiness  className="text-yellow-300" size={28} />
+                    <h1 className="text-base md:text-xl font-bold">Find Your Dream Job</h1>
+                  </div>
+                  <p className="text-paraColor text-sm max-w-2xl mx-auto">
+                    Browse through thousands of job opportunities and find the one that suits you best.
+                  </p>
+                </div>
 
         {/* job wrapper */}
         <div className='mt-8 grid grid-cols-1 sm:grid-cols-12 gap-6'>
