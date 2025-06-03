@@ -4,7 +4,7 @@ import { Phone, ArrowRight, Clock, Shield } from 'lucide-react';
 
 export default function Page() {
   const [phone, setPhone] = useState("");
-  const [otp, setOtp] = useState(["", "", "", ""]);
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [timer, setTimer] = useState(120);
   const [isResendDisabled, setIsResendDisabled] = useState(false);
@@ -76,7 +76,7 @@ export default function Page() {
 
   const verifyOtp = async () => {
     const fullOtp = otp.join("");
-    if (fullOtp.length === 4) {
+    if (fullOtp.length === 6) {
       setIsLoading(true);
       try {
         // Simulate API call

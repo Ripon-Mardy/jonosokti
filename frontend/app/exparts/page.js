@@ -679,7 +679,7 @@ const page = () => {
                   </div>
                   {/* mobile actions buttons  */}
                    {/* Action Buttons */}
-                      <div className="space-y-2 pt-2 px-3 pb-2">
+                      <div className="space-y-2 pt-2 px-3 pb-2 md:hidden">
                         {user?.phone ? (
                           <a
                             href={`tel:${user.phone}`}
