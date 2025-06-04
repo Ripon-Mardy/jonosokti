@@ -29,6 +29,7 @@ module.exports = {
 
         "buttonBgColor" : "#2563EB",
         "buttonHoverBgColor" : "#1D4ED8",
+        "headerBgColor" : "#1D4ED8",
 
 
 

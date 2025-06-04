@@ -9,14 +9,12 @@ import {
   Banknote,
   Bookmark,
   Award,
-  BriefcaseBusiness,
   Search,
   Filter,
   X,
   ChevronDown,
   Heart,
   Users,
-  TrendingUp,
   Star,
 } from "lucide-react";
 import jobsImage from "@/public/images/jobsimage.jpg";
@@ -191,17 +189,19 @@ const page = () => {
     <div>
       {/* Hero Section */}
       <div className="relative">
-        <div className="xl:container xl:mx-auto px-2 xl:px-0 relative z-10 pt-16 md:pt-20">
-          <div className="text-center max-w-4xl mx-auto">
+        <div className="xl:container xl:mx-auto px-2 xl:px-0 relative z-10 pt-16 md:pt-24">
+          <div className="text-center mx-auto">
+
+
             {/* Header */}
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-2 rounded-2xl shadow-lg mb-4">
+            <div className="text-center mb-8 bg-headerBgColor p-3 rounded-md space-y-2 py-5 max-w-4xl mx-auto">
+              <div className="flex items-center justify-center gap-2">
                 <Award className="text-yellow-300" size={28} />
-                <h1 className="text-base md:text-xl font-bold">
+                <h1 className="text-base md:text-xl font-bold text-white">
                   Find Your Dream Career
                 </h1>
               </div>
-              <p className="text-paraColor text-sm max-w-2xl mx-auto">
+              <p className="text-white text-sm max-w-2xl mx-auto">
                 Discover thousands of opportunities from top companies. Your
                 next career move starts here.
               </p>

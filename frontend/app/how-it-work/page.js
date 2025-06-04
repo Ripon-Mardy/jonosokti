@@ -73,12 +73,12 @@ const Page = () => {
 
 
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-2 rounded-2xl shadow-lg mb-4">
-            <Briefcase className="text-yellow-300" size={28} />
-            <h1 className="text-base md:text-xl font-bold">How It Works</h1>
+        <div className="text-center mb-8 bg-hoverBg p-3 rounded-md space-y-2 py-5">
+          <div className="flex items-center justify-center gap-2">
+            <Briefcase className="text-yellow-300" size={26} />
+            <h1 className="text-base md:text-xl font-bold text-white">How It Works</h1>
           </div>
-          <p className="text-paraColor text-sm max-w-2xl mx-auto">
+          <p className="text-white text-sm max-w-2xl mx-auto">
              Jonosokti is an online electronic platform that connects Clients and
             Workers to perform work or job assignments efficiently.
           </p>
