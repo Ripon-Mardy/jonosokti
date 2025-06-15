@@ -207,12 +207,12 @@ const page = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center items-center">
-        <div className="bg-white p-8 rounded-2xl shadow-xl flex flex-col items-center space-y-4">
+        <div className=" p-8 rounded-2xl shadow-xl flex flex-col items-center space-y-4">
           <Loader2 className="animate-spin text-blue-500" size={48} />
-          <div className="text-center">
+          {/* <div className="text-center">
             <h3 className="text-lg font-semibold text-gray-800">Loading Experts</h3>
             <p className="text-gray-600">Finding the best professionals for you...</p>
-          </div>
+          </div> */}
         </div>
       </div>
     );

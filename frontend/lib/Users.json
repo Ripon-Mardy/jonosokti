@@ -3,9 +3,10 @@
         "id": 1,
         "name": "John Doe",
         "email": "demo@gmail.com",
+        "phone" : "01700000000",
         "address" : "Dinajpur",
-        "category" :[ "Computer Servicing",  "Electric Service", "Electronics Service", "Plumber Service", "Shifting Service", "Tailoring & Dress Making"],
-        "star" : "1"
+        "category" :[ "Computer Servicing",  "Electric Service", "Electronics Service", "Plumber Service", "Shifting Service", "Tailoring & Dress Making", "Cleaning Service"],
+         "star" : "1"
     },
     {
         "id": 2,
