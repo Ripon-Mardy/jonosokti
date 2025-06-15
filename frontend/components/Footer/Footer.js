@@ -95,7 +95,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/blog"
+                  href="/privacy-policy"
                   className="text-textColor hover:text-blue-600 transition-colors duration-200 flex items-center"
                 >
                   <span className="border-b border-transparent hover:border-blue-600">Privacy Policy</span>

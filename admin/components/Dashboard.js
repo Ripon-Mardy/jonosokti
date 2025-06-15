@@ -182,18 +182,6 @@ const Dashboard = () => {
           />
         ))}
       </div>
-
-      {/* Charts Section */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-        <div className="xl:col-span-8 bg-white rounded-xl shadow-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Transaction History</h2>
-          <Transcation />
-        </div>
-        <div className="xl:col-span-4 bg-white rounded-xl shadow-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Quick Stats</h2>
-          {/* Add additional stats or charts here */}
-        </div>
-      </div>
     </div>
   );
 };

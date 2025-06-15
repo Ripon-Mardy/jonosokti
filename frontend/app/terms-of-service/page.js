@@ -4,31 +4,32 @@ import Link from "next/link";
 const page = () => {
     return (
         <>
-            <section className="pt-24 pb-10">
-                <div className="container mx-auto px-2 md:px-0">
-                    <h1 className="text-center my-5 capitalize">
+            <section className="pt-20 pb-10 animate-fadeIn">
+                <div className="container mx-auto max-w-6xl px-2 md:px-0">
+                    <h1 className="text-center my-5 capitalize text-xs md:text-sm
+                    ">
                         <Link href="/">home</Link> / terms Of Service
                     </h1>
                     <div className="p-5 bg-white rounded-md">
-                        <h1 className="text-3xl md:text-4xl mb-2 text-bottom-textColor font-bold md:font-semibold capitalize md:mb-5">
+                        <h1 className="text-base md:text-lg mb-2 text-textHeadingColor font-bold md:font-semibold capitalize md:mb-5">
                             Terms of service
                         </h1>
-                        <p className="text-textprimaryColor text-textmedium mb-5">
+                        <p className="text-textColor text-sm md:text-textmedium mb-5 leading-6">
                             Jonosokti Private Limited is a medium where the provider and the
                             service recipient will be coordinated. Terms of Service; this is
                             an abbreviated form of the company's policy "Terms and Conditions"
                             will be operated on the public website and app.
                         </p>
-                        <p className="text-textprimaryColor text-textmedium">
+                        <p className="text-textColor text-sm leading-6 md:text-textmedium">
                             Client - The person, organization or organization receiving the
                             service. Provider - A person, organization or organization
                             providing services.
                         </p>
 
                         <div>
-                            <h1 className="text-bottom-textColor font-bold text-2xl mt-4 mb-2 ">Terms:</h1>
+                            <h1 className="text-textHeadingColor text-base md:text-lg font-bold mt-4 mb-2 ">Terms:</h1>
                             <div>
-                                <ul className="list-disc flex flex-col gap-3 pl-4 text-textprimaryColor">
+                                <ul className="list-disc flex flex-col gap-3 text-sm md:text-base leading-6 pl-4 text-textColor ">
                                     <li>Jonosokti user or provider must be after 18 years;</li>
                                     <li>
                                         The service provider must have relevant service knowledge;
@@ -109,7 +110,7 @@ const page = () => {
                                     </li>
                                 </ul>
                             </div>
-                            <p className="my-5 md:my-7 font-semibold text-center text-textprimaryColor">The "Terms and Conditions" are understood and consciously committed to accept and follow.</p>
+                            <p className=" mt-5 my-5 md:my-7 text-sm leading-6 text-center text-textColor">The "Terms and Conditions" are understood and consciously committed to accept and follow.</p>
                         </div>
                     </div>
                 </div>
