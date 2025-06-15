@@ -24,7 +24,7 @@ const page = () => {
               (hereinafter referred to as “Service”).
             </p>
             <p className="leading-6 text-sm md:text-textmedium text-textColor">
-              Our Privacy Policy governs your visit to{" "}
+              Our Privacy Policy governs your visit to
               <Link className="underline" href={"https://jonosokti.com"} target="_blank">
                 jonosokti.com
               </Link>
