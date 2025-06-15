@@ -44,7 +44,7 @@ module.exports = {
         "applyButtonColor" : "#0a66c2",
       },
       textColor: {
-        "textColor": "#4B5563",
+        "textColor": "#111827",
         "textHeadingColor" : "#111827",
         "textIconColor" : "#9CA3AF",
         
