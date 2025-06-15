@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { ArrowRight, CheckCircle, HelpCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, HelpCircle, Award, Briefcase   } from "lucide-react";
 
 const Section = ({ title, content }) => (
   <div className="mb-8 p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all">
@@ -69,16 +69,25 @@ const Page = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
-        {/* Header Section */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 mb-12 text-center shadow-lg">
-          <h1 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            How It Works
-          </h1>
-          <p className="text-blue-100 text-lg max-w-2xl mx-auto">
-            Jonosokti is an online electronic platform that connects Clients and
+
+
+
+        {/* Header */}
+        <div className="text-center mb-8 bg-hoverBg p-3 rounded-md space-y-2 py-5">
+          <div className="flex items-center justify-center gap-2">
+            <Briefcase className="text-yellow-300" size={26} />
+            <h1 className="text-base md:text-xl font-bold text-white">How It Works</h1>
+          </div>
+          <p className="text-white text-sm max-w-2xl mx-auto">
+             Jonosokti is an online electronic platform that connects Clients and
             Workers to perform work or job assignments efficiently.
           </p>
         </div>
+
+
+
+
+
 
         {/* Introduction */}
         <div className="bg-white rounded-xl p-6 mb-8 shadow-sm">

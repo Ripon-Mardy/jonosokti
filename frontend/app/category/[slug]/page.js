@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Loading from "@/components/Loading";
 import Users from "@/components/Users";
 import jobCategory from "@/public/images/Jobcategory/computer.webp";
-import { ChevronRight, Search, MapPin, Filter } from "lucide-react";
+import { ChevronRight, Search, MapPin, Filter, ArrowLeft  } from "lucide-react";
 
 const CategoryPage = ({ params }) => {
   const [category, setCategory] = useState(null);
@@ -16,6 +17,8 @@ const CategoryPage = ({ params }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const categoryId = params.slug;
+
+  const router = useRouter();
 
   // api key
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
@@ -30,7 +33,7 @@ const CategoryPage = ({ params }) => {
         if (!res.ok) throw new Error("Failed to fetch category");
 
         const data = await res.json();
-        setCategory(data?.data);
+        setCategory(data?.data || []);
 
         // Fetch related categories (mock data for now)
         // In a real app, you would fetch related categories from your API
@@ -70,7 +73,7 @@ const CategoryPage = ({ params }) => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50">
       {/* Hero Section with Category Info */}
       <section className="bg-gradient-to-b from-blue-50 to-white pt-20 pb-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -130,49 +133,54 @@ const CategoryPage = ({ params }) => {
                 </span>
               </motion.div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+
+
+              {/* Category Details */}
+              <div className="">
                 {/* Category Image */}
-                <motion.div variants={fadeIn} className="order-2 lg:order-1">
-                  <div className="relative rounded-2xl overflow-hidden shadow-lg bg-white p-4">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/10 z-0"></div>
+                <motion.div variants={fadeIn}>
+                  <div className="flex items-center justify-start gap-4">
                     <Image
                       src={category?.image || jobCategory}
-                      width={600}
-                      height={400}
+                      width={100}
+                      height={100}
                       quality={90}
-                      className="rounded-xl object-cover w-full h-[300px] sm:h-[400px] relative z-10"
+                      className="rounded-xl object-cover relative w-24 md:w-32 z-10"
                       alt={category?.name || "Category Image"}
                       priority
                     />
+                    <h1 className="text-xl lg:text-3xl font-bold text-gray-900">
+                    {category?.name}
+                  </h1>
                   </div>
                 </motion.div>
 
-                {/* Category Info */}
-                <motion.div variants={fadeIn} className="order-1 lg:order-2">
-                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                    {category?.name}
-                  </h1>
 
-                  <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+
+                {/* Category Info */}
+                <motion.div variants={fadeIn} className="order-1 lg:order-2 mt-3 md:mt-5">
+                  
+
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed">
                     {category?.description ||
                       "Connect with skilled professionals who specialize in this category. Get your tasks done efficiently and effectively."}
                   </p>
 
-                  <div className="flex flex-wrap gap-3 mb-6">
-                    <span className="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
+                  <div className="flex flex-wrap gap-1">
+                    <span className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">
                       {category?.serviceCount || "100+"} Services
                     </span>
-                    <span className="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">
+                    <span className="bg-green-100 text-green-800 text-xs font-medium px-3 py-1 rounded-full">
                       {category?.expertCount || "50+"} Experts
                     </span>
-                    <span className="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">
+                    <span className="bg-purple-100 text-purple-800 text-xs font-medium px-3 py-1 rounded-full">
                       <MapPin size={14} className="inline mr-1" />
                       Available Nationwide
                     </span>
                   </div>
 
                   {/* Search Bar */}
-                  <div className="relative max-w-md">
+                  {/* <div className="relative max-w-md">
                     <input
                       type="text"
                       placeholder={`Search in ${category?.name}...`}
@@ -189,10 +197,18 @@ const CategoryPage = ({ params }) => {
                     >
                       <Filter size={18} />
                     </button>
-                  </div>
+                  </div> */}
+
+
+
                 </motion.div>
               </div>
+
+
             </motion.div>
+
+
+
           )}
         </div>
       </section>
@@ -262,7 +278,7 @@ const CategoryPage = ({ params }) => {
 
       {/* Related Categories Section */}
       {!loading && !error && relatedCategories.length > 0 && (
-        <section className="py-6 bg-white border-b border-gray-200">
+        <section className=" bg-white border-b border-gray-200">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-gray-900">
@@ -294,18 +310,21 @@ const CategoryPage = ({ params }) => {
       {/* Service Providers Section */}
       <section className="py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-900">
               Service Providers
             </h2>
-            <Link href="/categories" className="flex items-center text-blue-600 hover:text-blue-800 font-medium">
+            <div onClick={() => router.back()} className="flex items-center text-blue-600 hover:text-blue-800 font-medium cursor-pointer text-sm">
               <ArrowLeft size={16} className="mr-1" />
               Back to Categories
-            </Link>
-          </div> */}
+            </div>
+          </div>
+
 
           {/* Users Component */}
-          <Users categoryId={categoryId} searchQuery={searchQuery} />
+          <Users />
+
+
         </div>
       </section>
     </div>

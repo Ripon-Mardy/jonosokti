@@ -8,16 +8,15 @@ import android from "../../public/images/android.png";
 import appleStore from "../../public/images/appstore.webp";
 import footer_logo from "@/public/images/Footer-Logo.png";
 
-import { FaFacebook, FaLinkedin, FaInstagram, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
+import { FaFacebook, FaLinkedin, FaInstagram} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { MdEmail } from "react-icons/md";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-white pt-16 pb-6">
-      <div className="max-w-7xl mx-auto px-2 sm:px-0">
+      <div className="xl:container xl:mx-auto px-2 xl:px-0">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
           {/* Company Info */}

@@ -3,7 +3,8 @@ import Loading from "@/components/Loading";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { RxCheck } from "react-icons/rx";
-import { motion } from "framer-motion"; // Add framer-motion for animations
+import { motion } from "framer-motion";
+import { Award, CircleDollarSign  } from "lucide-react";
 
 const Page = () => {
   const [packages, setPackages] = useState([]);
@@ -20,7 +21,7 @@ const Page = () => {
         const res = await fetch(`${apiKey}/package/packages`);
         if (!res.ok) throw new Error("Failed to fetch packages");
         const data = await res.json();
-        setPackages(data.data);
+        setPackages(data.data || []);
       } catch (error) {
         setError("Failed to load packages. Please try again later.");
       } finally {
@@ -43,17 +44,24 @@ const Page = () => {
   ];
 
   return (
-    <section className="min-h-screen bg-gray-50 pt-24 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section */}
-        <div className="text-center space-y-4 mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-            Choose Your Perfect Plan
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+    <section className=" bg-gray-50 pt-24 pb-12">
+      <div className="xl:container xl:mx-auto px-2 sm:px-6 lg:px-8">
+
+
+        {/* Header */}
+        <div className="text-center mb-8 bg-headerBgColor rounded-md p-3 space-y-2 py-5 max-w-4xl mx-auto">
+          <div className="flex items-center justify-center gap-2">
+            <CircleDollarSign  className="text-yellow-300" size={28} />
+            <h1 className="text-base md:text-xl font-bold text-white">Choose Your Perfect Plan</h1>
+          </div>
+          <p className="text-white text-sm max-w-2xl mx-auto">
             Select the package that best suits your needs. All plans include our core features.
           </p>
         </div>
+
+
+
+
 
         {/* Packages Grid */}
         {loading ? (

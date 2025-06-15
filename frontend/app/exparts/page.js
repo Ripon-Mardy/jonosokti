@@ -222,16 +222,16 @@ const page = () => {
 
   return (
     <div>
-      <div className="xl:container xl:mx-auto px-4 pt-20 pb-20">
+      <div className="xl:container xl:mx-auto px-4 pt-24 pb-20">
 
 
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-2 rounded-2xl shadow-lg mb-4">
+        <div className="text-center mb-8 bg-headerBgColor rounded-md p-3 space-y-2 py-5 max-w-4xl mx-auto">
+          <div className="flex items-center justify-center gap-2">
             <Award className="text-yellow-300" size={28} />
-            <h1 className="text-base md:text-xl font-bold">Hire Expert Professionals</h1>
+            <h1 className="text-base md:text-xl font-bold text-white">Hire Expert Professionals</h1>
           </div>
-          <p className="text-paraColor text-sm max-w-2xl mx-auto">
+          <p className="text-white text-sm max-w-2xl mx-auto">
             Connect with verified professionals in your area. Quality service guaranteed.
           </p>
         </div>
@@ -679,7 +679,7 @@ const page = () => {
                   </div>
                   {/* mobile actions buttons  */}
                    {/* Action Buttons */}
-                      <div className="space-y-2 pt-2 px-3 pb-2">
+                      <div className="space-y-2 pt-2 px-3 pb-2 md:hidden">
                         {user?.phone ? (
                           <a
                             href={`tel:${user.phone}`}
