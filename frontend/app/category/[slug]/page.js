@@ -1,22 +1,24 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Loading from "@/components/Loading";
 import Users from "@/components/Users";
 import jobCategory from "@/public/images/Jobcategory/computer.webp";
-import { ChevronRight, Search, MapPin, Filter } from "lucide-react";
+import { ChevronRight, Search, MapPin, Filter, ArrowLeft  } from "lucide-react";
 
 const CategoryPage = ({ params }) => {
   const [category, setCategory] = useState(null);
-  console.log(' category', category);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [relatedCategories, setRelatedCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const categoryId = params.slug;
+
+  const router = useRouter();
 
   // api key
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
@@ -308,18 +310,21 @@ const CategoryPage = ({ params }) => {
       {/* Service Providers Section */}
       <section className="py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-900">
               Service Providers
             </h2>
-            <Link href="/categories" className="flex items-center text-blue-600 hover:text-blue-800 font-medium">
+            <div onClick={() => router.back()} className="flex items-center text-blue-600 hover:text-blue-800 font-medium cursor-pointer text-sm">
               <ArrowLeft size={16} className="mr-1" />
               Back to Categories
-            </Link>
-          </div> */}
+            </div>
+          </div>
+
 
           {/* Users Component */}
-          <Users categoryId={categoryId} searchQuery={searchQuery} />
+          <Users />
+
+
         </div>
       </section>
     </div>
