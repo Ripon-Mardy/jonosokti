@@ -8,8 +8,7 @@ import users from "@/lib/Users.json";
 
 const Users = () => {
   return (
-    <section>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <>
         {users.map((user, index) => (
           <div
             key={index}
@@ -22,8 +21,8 @@ const Users = () => {
             />
             {/* content  */}
             <div className="p-2 space-y-3 mb-1">
-              <h2 className="text-base font-semibold text-textHeadingColor ">
-                {user?.name || "Jhone Doe"}{" "}
+              <h2 className="text-base font-semibold text-textHeadingColor">
+                {user?.name || "Jhone Doe"}
               </h2>
               <h2 className="text-xs flex items-center justify-start text-textColor gap-1">
                 <MapPin size={15} /> {user?.address || "location"}
@@ -46,11 +45,11 @@ const Users = () => {
               </div>
               {/* star rating  */}
               <div className="flex items-center justify-start gap-2 text-textColor">
-                <span className="text-xs flex items-center justify-center gap-1 font-medium">
+                <span className="text-xs flex items-center justify-center gap-1">
                   <FaStar className="text-yellow-500" size={14} />
                   {user?.rating || 4}
                 </span>
-                <span className="text-xs text-textColor md:font-medium">
+                <span className="text-xs text-textColor">
                   ({user?.reviews || 100} reviews)
                 </span>
               </div>
@@ -76,7 +75,7 @@ const Users = () => {
 
                 <Link
                   href={`/user-profile/${user?.id || ""}`}
-                  className="flex items-center justify-center p-2 border border-gray-200 rounded-md shadow gap-1 md:font-medium text-textColor text-xs md:text-sm hover:border-blue-700 transition duration-200 hover:text-blue-700"
+                  className="flex items-center justify-center p-2 border border-gray-50 rounded-md shadow gap-1 text-textColor text-xs md:text-sm hover:border-blue-700 transition duration-200 hover:text-blue-700"
                 >
                   <User size={18} />
                   <span className="text-sm">View Profile</span>
@@ -85,8 +84,7 @@ const Users = () => {
             </div>
           </div>
         ))}
-      </div>
-    </section>
+        </>
   );
 };
 
