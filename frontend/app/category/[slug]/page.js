@@ -7,15 +7,19 @@ import { motion } from "framer-motion";
 import Loading from "@/components/Loading";
 import Users from "@/components/Users";
 import jobCategory from "@/public/images/Jobcategory/computer.webp";
-import { ChevronRight, Search, MapPin, Filter, ArrowLeft  } from "lucide-react";
+import { ChevronRight, Search, MapPin, Filter, ArrowLeft ,   } from "lucide-react";
+import NoDataFound from "@/components/NoDataFound/NoDataFound";
 
 const CategoryPage = ({ params }) => {
-  const [category, setCategory] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [relatedCategories, setRelatedCategories] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [showFilters, setShowFilters] = useState(false);
+  const [category, setCategory] = useState(null); // get single category object
+  const [userByCateogory, setUserByCategory] = useState([]); // users by category
+  const [error, setError] = useState(null); // error state
+  const [loading, setLoading] = useState(true); // loading state
+  const [relatedCategories, setRelatedCategories] = useState([]); // related categories
+  const [searchQuery, setSearchQuery] = useState(""); // search query state
+  const [showFilters, setShowFilters] = useState(false); // show/hide filters state
+
+  // get single category from params 
   const categoryId = params.slug;
 
   const router = useRouter();
@@ -23,20 +27,24 @@ const CategoryPage = ({ params }) => {
   // api key
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
+// fetching api keys 
   useEffect(() => {
     const fetchCategory = async () => {
       try {
         setLoading(true);
-        const res = await fetch(
-          `${apiKey}/category/single-category?id=${categoryId}`
-        );
-        if (!res.ok) throw new Error("Failed to fetch category");
+        const [categoryRes, userByCategory] = await Promise.all([
+          fetch(`${apiKey}/category/single-category?id=${categoryId}`),
+          fetch(`${apiKey}/category/get-users?id=${categoryId}`)
+        ])
+        if (!categoryRes.ok) throw new Error("Failed to fetch category");
+        if (!userByCategory.ok) throw new Error("Failed to fetch users by category");
 
-        const data = await res.json();
-        setCategory(data?.data || []);
+        const singleCategoryData = await categoryRes.json();
+        const usersByCategoryData = await userByCategory.json();
+        setCategory(singleCategoryData?.data || []);
+        setUserByCategory(usersByCategoryData?.data || []);
 
         // Fetch related categories (mock data for now)
-        // In a real app, you would fetch related categories from your API
         setRelatedCategories([
           { id: "1", name: "Web Development" },
           { id: "2", name: "Mobile App Development" },
@@ -323,7 +331,28 @@ const CategoryPage = ({ params }) => {
 
           {/* Users Component */}
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4" >
-            <Users />
+            {/* {  userByCateogory?.data?.map((cateUser, cateIndex) => ((
+              <div key={cateIndex}>
+                <Users image={cateUser?.image} first_name={cateUser?.first_name} address={cateUser?.address} />
+              </div>
+            )))
+            } */}
+            {userByCateogory?.data?.length > 0 ?(
+              userByCateogory?.data?.map((user, index) => (
+                <Users
+                  key={index}
+                  image={user?.image}
+                  first_name={user?.first_name}
+                  last_name={user?.last_name}
+                  address={user?.address}
+                  userId={user?._id}
+                />
+              ))
+            ) : (
+              <div className="flex items-center justify-center col-span-6">
+                <NoDataFound icon={<Filter/>} text={'No users found for selected category.'} subText={'try again later'} />
+              </div>
+            )}
           </div>
 
 

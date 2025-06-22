@@ -11,19 +11,21 @@ import {
   X,
   Camera,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 import coverImage from "@/public/images/jonosokti_cover.jpeg";
 import userImage from "@/public/images/user.png";
-import ProfileBanner from '@/public/images/profile-banner.jpg';
+import ProfileBanner from "@/public/images/profile-banner.jpg";
 import { FaStar } from "react-icons/fa6";
-import facebook from '@/public/images/social/facebook.png';
-import x from '@/public/images/social/x.png';
-import linkedin from '@/public/images/social/linkedin.png';
-import telegram from '@/public/images/social/telegram.png';
+import facebook from "@/public/images/social/facebook.png";
+import x from "@/public/images/social/x.png";
+import linkedin from "@/public/images/social/linkedin.png";
+import telegram from "@/public/images/social/telegram.png";
 
-const Page = () => {
+const Page = ({ params }) => {
+  const [singleUser, setSingleUser] = useState({});
+  console.log("single user", singleUser);
   const [bannerImage, setBannerImage] = useState(coverImage);
   const [profileImage, setProfileImage] = useState(userImage);
   const [activeTab, setActiveTab] = useState("overview");
@@ -31,6 +33,18 @@ const Page = () => {
   const [showSharePopup, setShowSharePopup] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // get user params id
+  const userId = params?.id || ""; // default id for testing
+
+  // api key
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  if (!apiKey) {
+    console.error(
+      "API key is not defined. Please set NEXT_PUBLIC_API_KEY in your environment variables."
+    );
+  }
 
   // Sample photos data
   const photos = [
@@ -46,10 +60,10 @@ const Page = () => {
 
   // Sample tabs data
   const tabs = [
-    { id: "overview", label: "Overview"},
-    { id: "contact", label: "Contact"},
-    { id: "reviews", label: "Reviews"},
-    { id: "services", label: "Services"},
+    { id: "overview", label: "Overview" },
+    { id: "contact", label: "Contact" },
+    { id: "reviews", label: "Reviews" },
+    { id: "services", label: "Services" },
   ];
 
   // Sample reviews data
@@ -59,18 +73,38 @@ const Page = () => {
       name: "John Doe",
       rating: 5,
       comment: "Excellent service! Very professional and timely.",
-      date: "2024-01-15"
+      date: "2024-01-15",
     },
     {
       id: 2,
       name: "Jane Smith",
       rating: 4,
       comment: "Great work, would recommend.",
-      date: "2024-01-10"
-    }
+      date: "2024-01-10",
+    },
   ]);
 
-  const linkUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const linkUrl = typeof window !== "undefined" ? window.location.href : "";
+
+  // get single user
+  useEffect(() => {
+    const fetchSingleUser = async () => {
+      try {
+        // setLoading(true);
+        const res = await fetch(
+          `${apiKey}/user/get-user?id=6835582d32384de6c21ec471}`
+        );
+        if (!res.ok) throw new Error("Failed to fetch user data");
+        const userData = await res.json();
+        setSingleUser(userData || {});
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        // setLoading(false);
+      }
+    };
+    fetchSingleUser();
+  }, []);
 
   const handleCopy = async () => {
     try {
@@ -86,7 +120,7 @@ const Page = () => {
     const newReview = {
       id: reviews.length + 1,
       ...reviewData,
-      date: new Date().toISOString().split('T')[0]
+      date: new Date().toISOString().split("T")[0],
     };
     setReviews([...reviews, newReview]);
     setShowReviewModal(false);
@@ -100,7 +134,8 @@ const Page = () => {
   // Function to check scroll position and update button states
   const checkScrollPosition = () => {
     if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      const { scrollLeft, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
     }
@@ -143,11 +178,11 @@ const Page = () => {
   return (
     <section className="pt-20 pb-20">
       <div className="xl:container xl:mx-auto px-2 xl:px-0">
-        <div className='flex gap-6'>
+        <div className="flex gap-6">
           {/* Left Section */}
-          <div className=' w-full sm:w-[70%]'>
+          <div className=" w-full sm:w-[70%]">
             {/* Profile Card */}
-            <div className='bg-white rounded border border-gray-200 pb-5'>
+            <div className="bg-white rounded border border-gray-200 pb-5">
               {/* Cover Image */}
               <div className="relative">
                 <div className="relative w-full h-40 md:h-64 lg:h-72">
@@ -177,24 +212,50 @@ const Page = () => {
                     <h2 className="text-xl md:text-3xl font-semibold text-[#000000] flex items-center">
                       Ripon Mardy Axel
                     </h2>
-                    <span onClick={() => setShowSharePopup(true)} className='cursor-pointer text-paraColor pr-5 hover:text-gray-900 transition ' title="Share"><Share2 className='md:scale-110' /></span>
+                    <span
+                      onClick={() => setShowSharePopup(true)}
+                      className="cursor-pointer text-paraColor pr-5 hover:text-gray-900 transition "
+                      title="Share"
+                    >
+                      <Share2 className="md:scale-110" />
+                    </span>
                   </div>
                   <div className="space-y-2 mt-4">
                     <div className="flex items-center justify-start flex-wrap text-sm md:text-base gap-2 text-black90 font-normal mt-1 leading-4 mb-2">
-                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">Cleaning Service</span>
-                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">Electric Service</span>
-                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">Electronics Service</span>
-                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">Electronics Service</span>
+                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">
+                        Cleaning Service
+                      </span>
+                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">
+                        Electric Service
+                      </span>
+                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">
+                        Electronics Service
+                      </span>
+                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">
+                        Electronics Service
+                      </span>
                     </div>
-                    <div className='flex items-center justify-start gap-3 mt-2'>
-                      <div className='flex items-center justify-start text-sm md:text-base text-yellow-500 gap-1'>
-                        <span><FaStar /></span>
-                        <span><FaStar /></span>
-                        <span><FaStar /></span>
-                        <span><FaStar /></span>
-                        <span><FaStar /></span>
+                    <div className="flex items-center justify-start gap-3 mt-2">
+                      <div className="flex items-center justify-start text-sm md:text-base text-yellow-500 gap-1">
+                        <span>
+                          <FaStar />
+                        </span>
+                        <span>
+                          <FaStar />
+                        </span>
+                        <span>
+                          <FaStar />
+                        </span>
+                        <span>
+                          <FaStar />
+                        </span>
+                        <span>
+                          <FaStar />
+                        </span>
                       </div>
-                      <span className='flex items-center justify-start gap-1 text-sm text-textColor font-normal cursor-pointer'><MessageSquareMore size={16} /> Review (12) </span>
+                      <span className="flex items-center justify-start gap-1 text-sm text-textColor font-normal cursor-pointer">
+                        <MessageSquareMore size={16} /> Review (12){" "}
+                      </span>
                     </div>
                     <span className="text-sm mt-1 block text-paraColor font-normal">
                       Dhaka, Bangladesh
@@ -202,11 +263,15 @@ const Page = () => {
                   </div>
                   {/* call section  */}
                   <div className="mt-5 flex items-center justify-start gap-5">
-                    <div className='flex items-center gap-1'>
-                      <span className='btn'><Phone size={18} /> Call Now </span>
+                    <div className="flex items-center gap-1">
+                      <span className="btn">
+                        <Phone size={18} /> Call Now{" "}
+                      </span>
                     </div>
-                    <div className='flex items-center gap-1'>
-                      <span className='btn'><Send size={18} /> Message </span>
+                    <div className="flex items-center gap-1">
+                      <span className="btn">
+                        <Send size={18} /> Message{" "}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -215,10 +280,19 @@ const Page = () => {
 
             {/* about me  */}
             <div className="bg-white p-4 rounded border border-borderInputColor mt-4">
-              <h1 className="text-xl mb-4 font-semibold text-textHeadingColor ">About me</h1>
-              <p className="text-textColor leading-6 text-sm">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non atque eos rem consequuntur architecto quos, itaque culpa perferendis ex dignissimos voluptatem commodi illum eaque! Deserunt dolores, officia et quas quia expedita blanditiis suscipit laudantium nobis mollitia repudiandae nostrum minus. Unde tempora officiis eos modi ut aspernatur aperiam in id quisquam?</p>
+              <h1 className="text-xl mb-4 font-semibold text-textHeadingColor ">
+                About me
+              </h1>
+              <p className="text-textColor leading-6 text-sm">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non
+                atque eos rem consequuntur architecto quos, itaque culpa
+                perferendis ex dignissimos voluptatem commodi illum eaque!
+                Deserunt dolores, officia et quas quia expedita blanditiis
+                suscipit laudantium nobis mollitia repudiandae nostrum minus.
+                Unde tempora officiis eos modi ut aspernatur aperiam in id
+                quisquam?
+              </p>
             </div>
-
 
             {/* Tabs Section */}
             <div className="border border-borderInputColor mt-5 rounded bg-white">
@@ -228,7 +302,9 @@ const Page = () => {
                     aria-selected={activeTab === tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     key={index}
-                    className={`w-full text-center bg-gray-200 py-2 text-sm font-semibold ${activeTab === tab.id ? 'bg-white' : ''}`}
+                    className={`w-full text-center bg-gray-200 py-2 text-sm font-semibold ${
+                      activeTab === tab.id ? "bg-white" : ""
+                    }`}
                   >
                     {tab.label}
                   </button>
@@ -237,22 +313,31 @@ const Page = () => {
 
               {/* tab content */}
               <div>
-                {activeTab === 'overview' && (
-                  <div className="p-4 text-sm text-textColor leading-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae provident cumque omnis pariatur repellendus enim sed accusamus labore quidem in tempore animi dolor quas, itaque reprehenderit inventore quod beatae temporibus.</div>
+                {activeTab === "overview" && (
+                  <div className="p-4 text-sm text-textColor leading-6">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Recusandae provident cumque omnis pariatur repellendus enim
+                    sed accusamus labore quidem in tempore animi dolor quas,
+                    itaque reprehenderit inventore quod beatae temporibus.
+                  </div>
                 )}
 
                 {/* contact  */}
 
-                {activeTab === 'contact' && (
+                {activeTab === "contact" && (
                   <div className="bg-white rounded-lg w-full py-3">
                     {/* Contact Information Section */}
                     <div className="mb-6">
-                      <h2 className="text-xl font-semibold text-textHeadingColor mb-4 pl-5">Contact Information</h2>
+                      <h2 className="text-xl font-semibold text-textHeadingColor mb-4 pl-5">
+                        Contact Information
+                      </h2>
                       <div className="overflow-x-auto ">
                         <table className="w-full text-left border-collapse">
                           <tbody>
                             <tr className="border-b border-gray-200">
-                              <td className="py-2 px-4 text-[#222222] text-sm font-medium sm:w-1/4">Phone</td>
+                              <td className="py-2 px-4 text-[#222222] text-sm font-medium sm:w-1/4">
+                                Phone
+                              </td>
                               <td className="py-2 px-4 text-gray-700 text-sm">
                                 <a
                                   href="tel:+1234567890"
@@ -263,7 +348,9 @@ const Page = () => {
                               </td>
                             </tr>
                             <tr className="border-b border-gray-200">
-                              <td className="py-2 px-4 text-[#222222] text-sm font-medium sm:w-1/4">Email</td>
+                              <td className="py-2 px-4 text-[#222222] text-sm font-medium sm:w-1/4">
+                                Email
+                              </td>
                               <td className="py-2 px-4 text-gray-700 text-sm">
                                 <a
                                   href="mailto:contact@example.com"
@@ -274,7 +361,9 @@ const Page = () => {
                               </td>
                             </tr>
                             <tr className="border-b border-gray-200">
-                              <td className="py-2 px-4 text-[#222222] text-sm font-medium sm:w-1/4">Website</td>
+                              <td className="py-2 px-4 text-[#222222] text-sm font-medium sm:w-1/4">
+                                Website
+                              </td>
                               <td className="py-2 px-4 text-gray-700 text-sm">
                                 <a
                                   href="https://www.example.com"
@@ -287,7 +376,9 @@ const Page = () => {
                               </td>
                             </tr>
                             <tr className="border-b border-gray-200">
-                              <td className="py-2 px-4 text-[#222222] text-sm font-medium sm:w-1/4">Address</td>
+                              <td className="py-2 px-4 text-[#222222] text-sm font-medium sm:w-1/4">
+                                Address
+                              </td>
                               <td className="py-2 px-4 text-gray-700 text-sm">
                                 123 Main St, City, Country
                               </td>
@@ -299,7 +390,7 @@ const Page = () => {
                   </div>
                 )}
                 {/* review  */}
-                {activeTab === 'reviews' && (
+                {activeTab === "reviews" && (
                   <div className="bg-white rounded border border-gray-200 mt-5 p-4">
                     <div className="flex items-center justify-between mb-4">
                       <h2 className="text-xl font-semibold">Reviews</h2>
@@ -313,7 +404,10 @@ const Page = () => {
 
                     <div className="space-y-4">
                       {reviews.map((review) => (
-                        <div key={review.id} className="border-b pb-4 last:border-b-0">
+                        <div
+                          key={review.id}
+                          className="border-b pb-4 last:border-b-0"
+                        >
                           <div className="flex items-center justify-between">
                             <div>
                               <h3 className="font-medium">{review.name}</h3>
@@ -323,7 +417,9 @@ const Page = () => {
                                     <FaStar key={i} />
                                   ))}
                                 </div>
-                                <span className="text-sm text-gray-500">{review.date}</span>
+                                <span className="text-sm text-gray-500">
+                                  {review.date}
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -335,64 +431,63 @@ const Page = () => {
                 )}
 
                 {/* servercs  */}
-                {activeTab === 'services' && (
-                 <div className="mt-5">
-                   <div className="p-4 border-b border-t border-borderInputColor bg-white shadow-sm hover:shadow-md transition-shadow duration-300 flex gap-4 items-center">
-                  {/* Service Details */}
-                  <div className="flex flex-col gap-3 basis-4/5">
-                    <h2 className="text-base font-semibold text-gray-900 leading-tight hover:text-blue-600 transition-colors duration-200">
-                      All aspects of Audi, Volkswagen, and MINI service repair and maintenance using the latest in diagnostic technology
-                    </h2>
-                    <span className="bg-blue-100 text-blue-800 inline-block rounded-full px-4 text-sm font-medium w-fit shadow-sm">
-                      ৳ 1200
-                    </span>
-                  </div>
-            
-                  {/* CTA Button */}
-                  <Link
-                    href={'#'}
-                    className="bg-buttonBgColor text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-opacity-90 transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
-                  >
-                    Select Service
-                  </Link>
-                </div>
+                {activeTab === "services" && (
+                  <div className="mt-5">
+                    <div className="p-4 border-b border-t border-borderInputColor bg-white shadow-sm hover:shadow-md transition-shadow duration-300 flex gap-4 items-center">
+                      {/* Service Details */}
+                      <div className="flex flex-col gap-3 basis-4/5">
+                        <h2 className="text-base font-semibold text-gray-900 leading-tight hover:text-blue-600 transition-colors duration-200">
+                          All aspects of Audi, Volkswagen, and MINI service
+                          repair and maintenance using the latest in diagnostic
+                          technology
+                        </h2>
+                        <span className="bg-blue-100 text-blue-800 inline-block rounded-full px-4 text-sm font-medium w-fit shadow-sm">
+                          ৳ 1200
+                        </span>
+                      </div>
 
-                <div className="p-4 border-b border-borderInputColor bg-white shadow-sm hover:shadow-md transition-shadow duration-300 flex gap-4 items-center">
-                  {/* Service Details */}
-                  <div className="flex flex-col gap-3 basis-4/5">
-                    <h2 className="text-base font-semibold text-gray-900 leading-tight hover:text-blue-600 transition-colors duration-200">
-                      All aspects of Audi, Volkswagen, and MINI service repair and maintenance using the latest in diagnostic technology
-                    </h2>
-                    <span className="bg-blue-100 text-blue-800 inline-block rounded-full px-4 text-sm font-medium w-fit shadow-sm">
-                      ৳ 1200
-                    </span>
+                      {/* CTA Button */}
+                      <Link
+                        href={"#"}
+                        className="bg-buttonBgColor text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-opacity-90 transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
+                      >
+                        Select Service
+                      </Link>
+                    </div>
+
+                    <div className="p-4 border-b border-borderInputColor bg-white shadow-sm hover:shadow-md transition-shadow duration-300 flex gap-4 items-center">
+                      {/* Service Details */}
+                      <div className="flex flex-col gap-3 basis-4/5">
+                        <h2 className="text-base font-semibold text-gray-900 leading-tight hover:text-blue-600 transition-colors duration-200">
+                          All aspects of Audi, Volkswagen, and MINI service
+                          repair and maintenance using the latest in diagnostic
+                          technology
+                        </h2>
+                        <span className="bg-blue-100 text-blue-800 inline-block rounded-full px-4 text-sm font-medium w-fit shadow-sm">
+                          ৳ 1200
+                        </span>
+                      </div>
+
+                      {/* CTA Button */}
+                      <Link
+                        href={"#"}
+                        className="bg-buttonBgColor text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-opacity-90 transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
+                      >
+                        Select Service
+                      </Link>
+                    </div>
                   </div>
-            
-                  {/* CTA Button */}
-                  <Link
-                    href={'#'}
-                    className="bg-buttonBgColor text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-opacity-90 transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
-                  >
-                    Select Service
-                  </Link>
-                </div>
-                 </div>
-                
                 )}
-
-
-
               </div>
             </div>
-
-
-
 
             {/* Photos Section */}
             <div className="bg-white rounded border border-borderInputColor mt-5 p-4 w-full">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h2 className="text-textHeadingColor text-xl font-semibold">Photos</h2>
+                  <h2 className="text-textHeadingColor text-xl font-semibold">
+                    Photos
+                  </h2>
                   <span className="text-gray-500 text-sm">Working Photos</span>
                 </div>
                 <button className="text-sm text-blue-600 hover:text-blue-700 transition font-medium">
@@ -421,7 +516,7 @@ const Page = () => {
                       style={{
                         scrollBehavior: "smooth",
                         scrollbarWidth: "none",
-                        msOverflowStyle: "none"
+                        msOverflowStyle: "none",
                       }}
                     >
                       {photos.map((photo, index) => (
@@ -459,49 +554,87 @@ const Page = () => {
                 )}
               </div>
             </div>
-
           </div>
 
-
-
-
           {/* Right Section */}
-          <div className='w-full'>
+          <div className="w-full">
             <div className="sticky top-24">
               <Image
                 src={ProfileBanner}
                 width={80}
                 height={50}
                 alt="profile banner"
-                layout='responsive'
-                className='w-full rounded-lg'
+                layout="responsive"
+                className="w-full rounded-lg"
               />
             </div>
           </div>
         </div>
       </div>
 
-
-
       {/* Share content popup */}
       {showSharePopup && (
-        <div className='fixed left-0 top-0 flex items-center justify-center inset-0 bg-black bg-opacity-10 backdrop-blur-sm z-50 px-3'>
-          <div className='w-full md:w-1/2 bg-white rounded border border-gray-200 relative'>
-            <button onClick={() => setShowSharePopup(false)} className='absolute right-2 top-2'> <X size={20} /> </button>
-            <div className='p-4 mt-3'>
-              <h2 className="text-center text-base md:text-xl font-semibold">Share this profile with others</h2>
-              <div className='flex items-center justify-center gap-3 mt-4'>
-                <Image className='bg-gray-200 p-2 rounded hover:bg-gray-300 transition cursor-pointer ' src={facebook} width={50} height={50} alt="facebook" />
-                <Image className='bg-gray-200 p-2 rounded hover:bg-gray-300 transition cursor-pointer ' src={linkedin} width={50} height={50} alt="linkedin" />
-                <Image className='bg-gray-200 p-2 rounded hover:bg-gray-300 transition cursor-pointer ' src={x} width={50} height={50} alt="x" />
-                <Image className='bg-gray-200 p-2 rounded hover:bg-gray-300 transition cursor-pointer ' src={telegram} width={50} height={50} alt="telegram" />
+        <div className="fixed left-0 top-0 flex items-center justify-center inset-0 bg-black bg-opacity-10 backdrop-blur-sm z-50 px-3">
+          <div className="w-full md:w-1/2 bg-white rounded border border-gray-200 relative">
+            <button
+              onClick={() => setShowSharePopup(false)}
+              className="absolute right-2 top-2"
+            >
+              {" "}
+              <X size={20} />{" "}
+            </button>
+            <div className="p-4 mt-3">
+              <h2 className="text-center text-base md:text-xl font-semibold">
+                Share this profile with others
+              </h2>
+              <div className="flex items-center justify-center gap-3 mt-4">
+                <Image
+                  className="bg-gray-200 p-2 rounded hover:bg-gray-300 transition cursor-pointer "
+                  src={facebook}
+                  width={50}
+                  height={50}
+                  alt="facebook"
+                />
+                <Image
+                  className="bg-gray-200 p-2 rounded hover:bg-gray-300 transition cursor-pointer "
+                  src={linkedin}
+                  width={50}
+                  height={50}
+                  alt="linkedin"
+                />
+                <Image
+                  className="bg-gray-200 p-2 rounded hover:bg-gray-300 transition cursor-pointer "
+                  src={x}
+                  width={50}
+                  height={50}
+                  alt="x"
+                />
+                <Image
+                  className="bg-gray-200 p-2 rounded hover:bg-gray-300 transition cursor-pointer "
+                  src={telegram}
+                  width={50}
+                  height={50}
+                  alt="telegram"
+                />
               </div>
               {/* copy link  */}
-              <div className='mt-4'>
-                <h2 className="text-black90 font-semibold text-sm">Copy Link</h2>
-                <div className='flex items-center border border-gray-200 rounded mt-2'>
-                  <input className='outline-none w-full py-2 pl-2' type="text" value={linkUrl} />
-                  <button onClick={handleCopy} className='w-24 bg-gray-200 text-sm py-2 h-full cursor-pointer'> {copied ? "Copied!" : "Copy Link"} </button>
+              <div className="mt-4">
+                <h2 className="text-black90 font-semibold text-sm">
+                  Copy Link
+                </h2>
+                <div className="flex items-center border border-gray-200 rounded mt-2">
+                  <input
+                    className="outline-none w-full py-2 pl-2"
+                    type="text"
+                    value={linkUrl}
+                  />
+                  <button
+                    onClick={handleCopy}
+                    className="w-24 bg-gray-200 text-sm py-2 h-full cursor-pointer"
+                  >
+                    {" "}
+                    {copied ? "Copied!" : "Copy Link"}{" "}
+                  </button>
                 </div>
               </div>
             </div>
@@ -551,15 +684,17 @@ const Page = () => {
               </button>
             </div>
 
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              const formData = new FormData(e.target);
-              handleAddReview({
-                name: formData.get('name'),
-                rating: parseInt(formData.get('rating')),
-                comment: formData.get('comment')
-              });
-            }}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                handleAddReview({
+                  name: formData.get("name"),
+                  rating: parseInt(formData.get("rating")),
+                  comment: formData.get("comment"),
+                });
+              }}
+            >
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">Name</label>
@@ -572,20 +707,26 @@ const Page = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Rating</label>
+                  <label className="block text-sm font-medium mb-1">
+                    Rating
+                  </label>
                   <select
                     name="rating"
                     required
                     className="w-full border rounded-lg p-2"
                   >
                     {[5, 4, 3, 2, 1].map((num) => (
-                      <option key={num} value={num}>{num} Stars</option>
+                      <option key={num} value={num}>
+                        {num} Stars
+                      </option>
                     ))}
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Comment</label>
+                  <label className="block text-sm font-medium mb-1">
+                    Comment
+                  </label>
                   <textarea
                     name="comment"
                     required
