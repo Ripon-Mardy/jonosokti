@@ -103,5 +103,13 @@
         "address" : "feni",
         "category" :[ "Computer Servicing"],
          "star" : "1"
+    },
+    {
+        "id": 13,
+        "name": "John Doe",
+        "email": "demo@gmail.com",
+        "address" : "feni",
+        "category" :[ "Computer Servicing"],
+         "star" : "1"
     }
 ]
