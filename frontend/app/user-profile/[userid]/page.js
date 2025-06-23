@@ -632,8 +632,7 @@ const Page = ({ params }) => {
                     onClick={handleCopy}
                     className="w-24 bg-gray-200 text-sm py-2 h-full cursor-pointer"
                   >
-                    {" "}
-                    {copied ? "Copied!" : "Copy Link"}{" "}
+                    {copied ? "Copied!" : "Copy Link"}
                   </button>
                 </div>
               </div>

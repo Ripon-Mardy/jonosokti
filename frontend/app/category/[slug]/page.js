@@ -5,10 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Loading from "@/components/Loading";
-import Users from "@/components/Users";
 import jobCategory from "@/public/images/Jobcategory/computer.webp";
 import { ChevronRight, Search, MapPin, Filter, ArrowLeft ,   } from "lucide-react";
 import NoDataFound from "@/components/NoDataFound/NoDataFound";
+import UsersCard from "@/components/UsersCard";
 
 const CategoryPage = ({ params }) => {
   const [category, setCategory] = useState(null); // get single category object
@@ -339,8 +339,8 @@ const CategoryPage = ({ params }) => {
             } */}
             {userByCateogory?.data?.length > 0 ?(
               userByCateogory?.data?.map((user, index) => (
-                <Users
-                  key={index}
+                <UsersCard
+                key={index}
                   image={user?.image}
                   first_name={user?.first_name}
                   last_name={user?.last_name}

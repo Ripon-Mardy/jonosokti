@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import Image from "next/image";
-import customProfile from "@/public/images/user.png";
 import Link from "next/link";
 import { 
   Phone, 
@@ -20,14 +19,9 @@ import {
 } from "lucide-react";
 
 import useOutsideClick from "@/hooks/useClickOutside";
-import jsonUsers from "@/lib/Users.json";
-import NoDataFound from "@/components/NoDataFound/NoDataFound";
-import UsersData from "@/components/Users";
+import UsersCard from "@/components/UsersCard";
 
 const page = () => {
-
-
-  // State management
   const [searchQuery, setSearchQuery] = useState("");
   const [formData, setFormData] = useState({ location: "" });
   const [filters, setFilters] = useState({
@@ -36,9 +30,10 @@ const page = () => {
     rating: "",
     verified: false,
   });
-  const [filteredUsers, setFilteredUsers] = useState(jsonUsers);
-  const [category, setCategory] = useState([]);
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  console.log('filteredUsers', filteredUsers)
+  const [category, setCategory] = useState([]);
   const [location, setLocation] = useState([]);
   const [filteredLocation, setFilteredLocation] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -60,48 +55,65 @@ const page = () => {
 
 
   // Enhanced filter function with search and sorting
-  const applyFilters = useMemo(() => {
-    let filtered = jsonUsers.filter((user) => {
-      // Search filter
-      const matchSearch = searchQuery === "" || 
-        user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        user?.category?.some(cat => cat.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        user?.address?.toLowerCase().includes(searchQuery.toLowerCase());
+  // const applyFilters = useMemo(() => {
+  //   let filtered = users.filter((user) => {
+  //     // Search filter
+  //     const matchSearch = searchQuery === "" || 
+  //       user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //       user?.category?.some(cat => cat.toLowerCase().includes(searchQuery.toLowerCase())) ||
+  //       user?.address?.toLowerCase().includes(searchQuery.toLowerCase());
 
-      // Location filter
-      const matchLocation = !filters.location || 
-        user?.address?.toLowerCase().includes(filters.location.toLowerCase());
+  //     // Location filter
+  //     const matchLocation = !filters.location || 
+  //       user?.address?.toLowerCase().includes(filters.location.toLowerCase());
 
-      // Category filter
-      const matchCategory = !filters.category ||
-        user?.category?.some(cat => cat.toLowerCase() === filters.category.toLowerCase());
+  //     // Category filter
+  //     const matchCategory = !filters.category ||
+  //       user?.category?.some(cat => cat.toLowerCase() === filters.category.toLowerCase());
 
-      // Rating filter
-      const matchRating = !filters.rating ||
-        Math.floor(user?.rating || 0) >= parseInt(filters.rating);
+  //     // Rating filter
+  //     const matchRating = !filters.rating ||
+  //       Math.floor(user?.rating || 0) >= parseInt(filters.rating);
 
-      // Verification filter
-      const matchVerified = !filters.verified || user?.is_verified;
+  //     // Verification filter
+  //     const matchVerified = !filters.verified || user?.is_verified;
 
-      return matchSearch && matchLocation && matchCategory && matchRating && matchVerified;
-    });
+  //     return matchSearch && matchLocation && matchCategory && matchRating && matchVerified;
+  //   });
 
-    // Apply sorting
-    if (sortBy === "rating") {
-      filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-    } else if (sortBy === "name") {
-      filtered.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
-    } else if (sortBy === "experience") {
-      filtered.sort((a, b) => (b.experience || 0) - (a.experience || 0));
-    }
+  //   // Apply sorting
+  //   if (sortBy === "rating") {
+  //     filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+  //   } else if (sortBy === "name") {
+  //     filtered.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+  //   } else if (sortBy === "experience") {
+  //     filtered.sort((a, b) => (b.experience || 0) - (a.experience || 0));
+  //   }
 
-    return filtered;
-  }, [searchQuery, filters, sortBy]);
+  //   return filtered;
+  // }, [searchQuery, filters, sortBy]);
+
+const getFilteredUsers = useMemo(() => {
+  return users.filter((user) => {
+
+    const matchLocation = !filters.location || user?.address?.toLowerCase() === filters.location.toLowerCase();
+    const matchCategory = !filters.category || user?.category.some((cat) => cat.toLowerCase() === filters.category.toLowerCase());
+    const matchRating = !filters.rating || Math.floor(user?.rating) >= parseInt(filters.rating)
+    const matchVerified = !filters.verified || user.is_verified;
+
+    return matchLocation && matchCategory && matchRating && matchVerified;
+  });
+
+}, [users, filters])
+
+useEffect(() => {
+  setFilteredUsers(getFilteredUsers)
+}, [getFilteredUsers])
 
 
-  useEffect(() => {
-    setFilteredUsers(applyFilters);
-  }, [applyFilters]);
+  // useEffect(() => {
+  //   setFilteredUsers(applyFilters);
+  // }, [applyFilters]);
 
 
 
@@ -170,7 +182,7 @@ const page = () => {
       const filtered = location.filter(loc =>
         loc.name.toLowerCase().includes(value.toLowerCase())
       );
-      setFilteredLocation(filtered.slice(0, 5)); // Limit suggestions
+      setFilteredLocation(filtered.slice(0, 10)); // Limit suggestions
     } else {
       setFilteredLocation([]);
     }
@@ -324,7 +336,7 @@ const page = () => {
 
 
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="flex items-start justify-center gap-4">
           {/* Desktop Filters Sidebar */}
           <div className="hidden md:block lg:col-span-3">
             <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-20 space-y-6" ref={locationRef}>
@@ -332,6 +344,7 @@ const page = () => {
                 <Filter className="text-blue-600" size={20} />
                 <h3 className="font-semibold text-gray-800">Filters</h3>
               </div>
+
 
               {/* Location Filter */}
               <div className="space-y-3">
@@ -369,6 +382,7 @@ const page = () => {
                   )}
                 </div>
               </div>
+
 
               {/* Category Filter */}
               <div className="space-y-3">
@@ -521,9 +535,16 @@ const page = () => {
           )}
 
           {/* Experts Grid */}
-          <div>
-            {/* total users  */}
-            
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full max-w-6xl mx-auto">
+
+            {filteredUsers && filteredUsers.length > 0 ? (
+              filteredUsers.map((user, index) => (
+                <UsersCard/>
+              ))
+            ) : (
+              <div>no users found</div>
+            )}
+
           </div>
         </div>
 

@@ -6,8 +6,7 @@ import Image from "next/image";
 import { MapPin, Phone, Star, User  } from "lucide-react";
 import { FaStar } from "react-icons/fa6";
 
-const Users = ({image, first_name, last_name, address, userId}) => {
-  console.log('user id', userId)
+const UsersCard = ({image, first_name, last_name, address, userId}) => {
   return (
     <>
        <div
@@ -36,9 +35,9 @@ const Users = ({image, first_name, last_name, address, userId}) => {
                     {cat}
                   </span>
                 )) || "Electrician, Plumber"}
-                {image.length > 2 && (
+                {['Electronics Service', 'Electric Service', 'Plumber'].length > 2 && (
                   <span className="text-xs bg-gray-100 rounded-full px-2">
-                    +{image.category?.length - 2} more
+                    +{['Electronics Service', 'Electric Service', 'Plumber'].category?.length - 2} more
                   </span>
                 )}
               </div>
@@ -86,4 +85,4 @@ const Users = ({image, first_name, last_name, address, userId}) => {
   );
 };
 
-export default Users;
+export default UsersCard;
