@@ -150,7 +150,7 @@ export default function Page() {
               </div>
               <div className="text-sm">
                 <Link
-                  href="/forgot-password"
+                  href="/login/reset-password"
                   className="text-blue-600 hover:underline hover:text-blue-800 transition-colors"
                 >
                   Forgot your password?

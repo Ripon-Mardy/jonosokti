@@ -3,19 +3,16 @@ import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import {
   Phone,
-  Forward,
   Send,
-  Star,
   Share2,
-  MessageSquareMore,
   X,
-  Camera,
+  ShieldCheck ,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 import coverImage from "@/public/images/jonosokti_cover.jpeg";
-import userImage from "@/public/images/user.png";
+import userImage from "@/public/images/profile.jpg";
 import ProfileBanner from "@/public/images/profile-banner.jpg";
 import { FaStar } from "react-icons/fa6";
 import facebook from "@/public/images/social/facebook.png";
@@ -24,19 +21,34 @@ import linkedin from "@/public/images/social/linkedin.png";
 import telegram from "@/public/images/social/telegram.png";
 
 const Page = ({ params }) => {
-  const [singleUser, setSingleUser] = useState({});
+  const [singleUser, setSingleUser] = useState({}); // state to hold single user data
   console.log("single user", singleUser);
-  const [bannerImage, setBannerImage] = useState(coverImage);
-  const [profileImage, setProfileImage] = useState(userImage);
-  const [activeTab, setActiveTab] = useState("overview");
-  const [copied, setCopied] = useState(false);
-  const [showSharePopup, setShowSharePopup] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [showReviewModal, setShowReviewModal] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [bannerImage, setBannerImage] = useState(coverImage); // state for banner image
+  const [profileImage, setProfileImage] = useState(userImage); // state for profile image
+  const [activeTab, setActiveTab] = useState("overview"); // state for active tab
+  const [copied, setCopied] = useState(false); // state for copied link
+  const [showSharePopup, setShowSharePopup] = useState(false); // state for share popup
+  const [selectedImage, setSelectedImage] = useState(null); // state for selected image in full screen
+  const [showReviewModal, setShowReviewModal] = useState(false); // state for review modal
+  const [loading, setLoading] = useState(false); // state for loading
+  const [tapToShowPhone, setTapToShowPhone] = useState(true); // state for tap to show phone
+
+  // handle phone click 
+  const handlePhoneClick = () => {
+    if(!singleUser?.phone) {
+      alert("No phone number available");
+      return;
+    }
+
+    if(tapToShowPhone) {
+      setTapToShowPhone(false);
+    } else {
+      window.location.href = `tel:${singleUser?.phone}`;
+    }
+  }
 
   // get user params id
-  const userId = params?.id || ""; // default id for testing
+  const userId = params?.userid;
 
   // api key
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
@@ -90,21 +102,19 @@ const Page = ({ params }) => {
   useEffect(() => {
     const fetchSingleUser = async () => {
       try {
-        // setLoading(true);
-        const res = await fetch(
-          `${apiKey}/user/get-user?id=6835582d32384de6c21ec471}`
-        );
+        setLoading(true);
+        const res = await fetch(`${apiKey}/user/get-user?id=${userId}`);
         if (!res.ok) throw new Error("Failed to fetch user data");
         const userData = await res.json();
-        setSingleUser(userData || {});
+        setSingleUser(userData?.data || {});
       } catch (error) {
         console.error("Error fetching user data:", error);
       } finally {
-        // setLoading(false);
+        setLoading(false);
       }
     };
     fetchSingleUser();
-  }, []);
+  }, [userId]);
 
   const handleCopy = async () => {
     try {
@@ -175,6 +185,11 @@ const Page = ({ params }) => {
     }
   };
 
+
+  if(loading) {
+    <div>Loading...</div>
+  }
+
   return (
     <section className="pt-20 pb-20">
       <div className="xl:container xl:mx-auto px-2 xl:px-0">
@@ -196,7 +211,7 @@ const Page = ({ params }) => {
                 </div>
                 <div className="absolute left-3 -bottom-12 w-24 h-24 md:w-40 md:h-40 border-4 border-white rounded-full shadow-lg">
                   <Image
-                    src={profileImage}
+                    src={singleUser?.image || profileImage}
                     alt="profile image"
                     layout="fill"
                     objectFit="cover"
@@ -209,9 +224,12 @@ const Page = ({ params }) => {
               <div className="mt-14 md:mt-16">
                 <div className="mt-12 md:mt-16 px-5 space-y-4">
                   <div className="flex items-center justify-between gap-2 mb-3">
-                    <h2 className="text-xl md:text-3xl font-semibold text-[#000000] flex items-center">
-                      Ripon Mardy Axel
+                    <div className="flex items-center justify-center gap-5">
+                      <h2 className="text-xl md:text-2xl font-semibold text-textHeadingColor flex items-center">
+                      {singleUser?.first_name || ""} {singleUser?.last_name || ""}
                     </h2>
+                    <Link href={'#'} className="flex items-center justify-center gap-1 text-xs text-blue-600 hover:bg-blue-100 transition font-medium border border-blue-800 rounded-full px-2 py-0.5 border-dashed"> <ShieldCheck size={18}/> Add verification badge </Link>
+                    </div>
                     <span
                       onClick={() => setShowSharePopup(true)}
                       className="cursor-pointer text-paraColor pr-5 hover:text-gray-900 transition "
@@ -220,60 +238,55 @@ const Page = ({ params }) => {
                       <Share2 className="md:scale-110" />
                     </span>
                   </div>
-                  <div className="space-y-2 mt-4">
+
+                  <div className="space-y-2">
+                    {/* services  */}
                     <div className="flex items-center justify-start flex-wrap text-sm md:text-base gap-2 text-black90 font-normal mt-1 leading-4 mb-2">
-                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">
-                        Cleaning Service
+                      {[
+                        "Cleaning Service",
+                        "Electric Service",
+                        "Electronics Service",
+                      ].map((name, index) => (
+                        <span
+                          key={index}
+                          className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium"
+                        >
+                          {name}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* star rating  */}
+                    <div className="flex items-center justify-start gap-2">
+                      <span className="text-sm text-textColor flex items-center justify-center font-medium gap-1">
+                        <FaStar className="text-yellow-500" size={16} />
+                        {singleUser?.rating || 4}
                       </span>
-                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">
-                        Electric Service
-                      </span>
-                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">
-                        Electronics Service
-                      </span>
-                      <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium">
-                        Electronics Service
+                      <span className="text-xs text-textColor font-medium">
+                        ({singleUser?.reviews || 100} reviews)
                       </span>
                     </div>
-                    <div className="flex items-center justify-start gap-3 mt-2">
-                      <div className="flex items-center justify-start text-sm md:text-base text-yellow-500 gap-1">
-                        <span>
-                          <FaStar />
-                        </span>
-                        <span>
-                          <FaStar />
-                        </span>
-                        <span>
-                          <FaStar />
-                        </span>
-                        <span>
-                          <FaStar />
-                        </span>
-                        <span>
-                          <FaStar />
-                        </span>
-                      </div>
-                      <span className="flex items-center justify-start gap-1 text-sm text-textColor font-normal cursor-pointer">
-                        <MessageSquareMore size={16} /> Review (12){" "}
-                      </span>
-                    </div>
+
                     <span className="text-sm mt-1 block text-paraColor font-normal">
-                      Dhaka, Bangladesh
+                      {singleUser?.address?.address || ''}
                     </span>
                   </div>
+
                   {/* call section  */}
                   <div className="mt-5 flex items-center justify-start gap-5">
                     <div className="flex items-center gap-1">
-                      <span className="btn">
-                        <Phone size={18} /> Call Now{" "}
+                      <span className="btn cursor-pointer" onClick={handlePhoneClick}>
+                        {tapToShowPhone ? 'Tap to Show Number' : <div className="flex items-center justify-center gap-2"> <Phone size={16}/> {singleUser?.phone || 'no phone'} </div> }
                       </span>
                     </div>
                     <div className="flex items-center gap-1">
                       <span className="btn">
-                        <Send size={18} /> Message{" "}
+                        <Send size={18} /> Message
                       </span>
                     </div>
                   </div>
+
+
                 </div>
               </div>
             </div>
@@ -580,8 +593,7 @@ const Page = ({ params }) => {
               onClick={() => setShowSharePopup(false)}
               className="absolute right-2 top-2"
             >
-              {" "}
-              <X size={20} />{" "}
+              <X size={20} />
             </button>
             <div className="p-4 mt-3">
               <h2 className="text-center text-base md:text-xl font-semibold">
