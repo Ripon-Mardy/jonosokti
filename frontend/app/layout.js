@@ -1,10 +1,10 @@
-
-import {Poppins, Open_Sans, Roboto, Ubuntu} from "next/font/google";
+import { Poppins, Open_Sans, Roboto, Ubuntu } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Header/Navbar";
 import NavbarWrapper from "@/context/NavbarWrapper";
 import Footer from "@/components/Footer/Footer";
-
+import Script from "next/script";
+import Analytics from "./analytics";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,49 +26,38 @@ const ubutntu = Ubuntu({
   weight: ["300", "400", "500", "700"],
 });
 
-
 export const metadata = {
   title: "Jonosokti - জনশক্তি  ",
   description: "Hire Experts & Get Your Job Done",
 };
 
 export default function RootLayout({ children }) {
-
   return (
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "JonoSokti",
-              "url": "https://jonosokti.com",
-              "logo": "https://jonosokti.com/logo.png",
-              "sameAs": [
-                "https://www.facebook.com/jonosokti",
-                "https://www.instagram.com/jonosokti",
-                "https://www.linkedin.com/company/jonosokti"
-              ],
-              "contactPoint": {
-                "@type": "ContactPoint",
-                "telephone": "+8801234567890",
-                "contactType": "Customer Service"
-              }
-            })
-          }}
+
+        {/* Google Analytics Script */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=G-7G1X0Z2Y54`} // Replace with your Measurement ID
         />
-        
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-7G1X0Z2Y54);
+          `}
+        </Script>
       </head>
       <body suppressHydrationWarning={true} className={poppins.className}>
         <div>
           {/* <Navbar /> */}
-          <NavbarWrapper/>
+          <NavbarWrapper />
+          <Analytics/>
           {children}
-          <Footer/>
+          <Footer />
         </div>
       </body>
     </html>
