@@ -2,24 +2,26 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { 
-  Phone, 
-  User, 
-  Star, 
-  Loader2, 
-  Users, 
-  MapPin, 
+import {
+  Phone,
+  User,
+  Star,
+  Loader2,
+  Users,
+  MapPin,
   Filter,
   X,
   Search,
   ChevronDown,
   Award,
   Clock,
-  Shield
+  UsersRound,
+  Shield,
 } from "lucide-react";
 
 import useOutsideClick from "@/hooks/useClickOutside";
 import UsersCard from "@/components/UsersCard";
+import NoDataFound from "@/components/NoDataFound/NoDataFound";
 
 const page = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,7 +34,7 @@ const page = () => {
   });
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
-  console.log('filteredUsers', filteredUsers)
+  console.log("filteredUsers", filteredUsers);
   const [category, setCategory] = useState([]);
   const [location, setLocation] = useState([]);
   const [filteredLocation, setFilteredLocation] = useState([]);
@@ -52,19 +54,17 @@ const page = () => {
   useOutsideClick(locationRef, () => setFilteredLocation([]));
   useOutsideClick(filterRef, () => setShowMobileFilters(false));
 
-
-
   // Enhanced filter function with search and sorting
   // const applyFilters = useMemo(() => {
   //   let filtered = users.filter((user) => {
   //     // Search filter
-  //     const matchSearch = searchQuery === "" || 
+  //     const matchSearch = searchQuery === "" ||
   //       user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
   //       user?.category?.some(cat => cat.toLowerCase().includes(searchQuery.toLowerCase())) ||
   //       user?.address?.toLowerCase().includes(searchQuery.toLowerCase());
 
   //     // Location filter
-  //     const matchLocation = !filters.location || 
+  //     const matchLocation = !filters.location ||
   //       user?.address?.toLowerCase().includes(filters.location.toLowerCase());
 
   //     // Category filter
@@ -93,39 +93,37 @@ const page = () => {
   //   return filtered;
   // }, [searchQuery, filters, sortBy]);
 
-const getFilteredUsers = useMemo(() => {
-  return users.filter((user) => {
+  const getFilteredUsers = useMemo(() => {
+    return users.filter((user) => {
+      const matchLocation =
+        !filters.location ||
+        user?.address?.toLowerCase() === filters.location.toLowerCase();
 
-    const matchLocation = !filters.location || user?.address?.toLowerCase() === filters.location.toLowerCase();
-    const matchCategory = !filters.category || user?.category.some((cat) => cat.toLowerCase() === filters.category.toLowerCase());
-    const matchRating = !filters.rating || Math.floor(user?.rating) >= parseInt(filters.rating)
-    const matchVerified = !filters.verified || user.is_verified;
+      const matchCategory = !filters?.category || (Array.isArray(user?.category) && user?.category?.some((cat) => cat.toLowerCase() === filters.category.toLowerCase()))
 
-    return matchLocation && matchCategory && matchRating && matchVerified;
-  });
+      const matchRating =
+        !filters.rating || Math.floor(user?.rating) >= parseInt(filters.rating);
+      const matchVerified = !filters.verified || user.is_verified;
 
-}, [users, filters])
+      return matchLocation && matchCategory && matchRating && matchVerified;
+    });
+  }, [users, filters]);
 
-useEffect(() => {
-  setFilteredUsers(getFilteredUsers)
-}, [getFilteredUsers])
-
+  useEffect(() => {
+    setFilteredUsers(getFilteredUsers);
+  }, [getFilteredUsers]);
 
   // useEffect(() => {
   //   setFilteredUsers(applyFilters);
   // }, [applyFilters]);
 
-
-
   // Handle filter changes
   const handleFilter = (type, value) => {
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
-      [type]: prev[type] === value ? (type === 'verified' ? false : "") : value,
+      [type]: prev[type] === value ? (type === "verified" ? false : "") : value,
     }));
   };
-
-
 
   // Clear all filters
   const clearFilters = () => {
@@ -139,8 +137,6 @@ useEffect(() => {
     setSearchQuery("");
   };
 
-
-
   // Fetch data from API
   useEffect(() => {
     const fetchData = async () => {
@@ -153,9 +149,15 @@ useEffect(() => {
           fetch(`https://bdapi.vercel.app/api/v.1/district`),
         ]);
 
-        const categoryData = categoryRes.ok ? await categoryRes.json() : { data: [] };
-        const userData = userRes.ok ? await userRes.json() : { data: { users: [] } };
-        const locationData = locationRes.ok ? await locationRes.json() : { data: [] };
+        const categoryData = categoryRes.ok
+          ? await categoryRes.json()
+          : { data: [] };
+        const userData = userRes.ok
+          ? await userRes.json()
+          : { data: { users: [] } };
+        const locationData = locationRes.ok
+          ? await locationRes.json()
+          : { data: [] };
 
         setCategory(categoryData?.data || []);
         setUsers(userData?.data?.users || []);
@@ -171,15 +173,13 @@ useEffect(() => {
     fetchData();
   }, [apiKey]);
 
-
-
   // Handle location input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
     if (name === "location" && value.length > 0) {
-      const filtered = location.filter(loc =>
+      const filtered = location.filter((loc) =>
         loc.name.toLowerCase().includes(value.toLowerCase())
       );
       setFilteredLocation(filtered.slice(0, 10)); // Limit suggestions
@@ -187,8 +187,6 @@ useEffect(() => {
       setFilteredLocation([]);
     }
   };
-
-
 
   // Generate star rating
   const renderStars = (rating) => {
@@ -214,8 +212,6 @@ useEffect(() => {
     return stars;
   };
 
-
-
   // Loading state
   if (loading) {
     return (
@@ -231,31 +227,32 @@ useEffect(() => {
     );
   }
 
-
-
   return (
     <div>
       <div className="xl:container xl:mx-auto px-4 pt-24 pb-20">
-
-
         {/* Header */}
         <div className="text-center mb-8 bg-headerBgColor rounded-md p-3 space-y-2 py-5 max-w-4xl mx-auto">
           <div className="flex items-center justify-center gap-2">
             <Award className="text-yellow-300" size={28} />
-            <h1 className="text-base md:text-xl font-bold text-white">Hire Expert Professionals</h1>
+            <h1 className="text-base md:text-xl font-bold text-white">
+              Hire Expert Professionals
+            </h1>
           </div>
           <p className="text-white text-sm max-w-2xl mx-auto">
-            Connect with verified professionals in your area. Quality service guaranteed.
+            Connect with verified professionals in your area. Quality service
+            guaranteed.
           </p>
         </div>
-
 
         {/* Search and Sort Bar */}
         <div className="bg-white rounded-2xl shadow-lg p-2 mb-8">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search Input */}
             <div className="flex-1 relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <Search
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+                size={20}
+              />
               <input
                 type="text"
                 placeholder="Search experts, categories, or locations..."
@@ -276,7 +273,10 @@ useEffect(() => {
                 <option value="name">Sort by Name</option>
                 <option value="experience">Sort by Experience</option>
               </select>
-              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <ChevronDown
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                size={20}
+              />
             </div>
 
             {/* Mobile Filter Toggle */}
@@ -284,44 +284,72 @@ useEffect(() => {
               onClick={() => setShowMobileFilters(true)}
               className="md:hidden flex items-center justify-between gap-2 bg-blue-600 text-white px-4 py-3 rounded-xl hover:bg-blue-700 transition-colors"
             >
-              <span className="flex items-center gap-1"><Filter size={20} />
-              Filters</span>
+              <span className="flex items-center gap-1">
+                <Filter size={20} />
+                Filters
+              </span>
               <ChevronDown size={20} />
             </button>
           </div>
 
           {/* Active Filters */}
-          {(filters.location || filters.category || filters.rating || filters.verified || searchQuery) && (
+          {(filters.location ||
+            filters.category ||
+            filters.rating ||
+            filters.verified ||
+            searchQuery) && (
             <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-gray-100">
-              <span className="text-sm text-gray-600 font-medium">Active filters:</span>
+              <span className="text-sm text-gray-600 font-medium">
+                Active filters:
+              </span>
               {searchQuery && (
                 <span className="inline-flex items-center gap-1 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
                   Search: {searchQuery}
-                  <X size={14} className="cursor-pointer" onClick={() => setSearchQuery("")} />
+                  <X
+                    size={14}
+                    className="cursor-pointer"
+                    onClick={() => setSearchQuery("")}
+                  />
                 </span>
               )}
               {filters.location && (
                 <span className="inline-flex items-center gap-1 bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
                   {filters.location}
-                  <X size={14} className="cursor-pointer" onClick={() => handleFilter("location", "")} />
+                  <X
+                    size={14}
+                    className="cursor-pointer"
+                    onClick={() => handleFilter("location", "")}
+                  />
                 </span>
               )}
               {filters.category && (
                 <span className="inline-flex items-center gap-1 bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
                   {filters.category}
-                  <X size={14} className="cursor-pointer" onClick={() => handleFilter("category", "")} />
+                  <X
+                    size={14}
+                    className="cursor-pointer"
+                    onClick={() => handleFilter("category", "")}
+                  />
                 </span>
               )}
               {filters.rating && (
                 <span className="inline-flex items-center gap-1 bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">
                   {filters.rating}+ Stars
-                  <X size={14} className="cursor-pointer" onClick={() => handleFilter("rating", "")} />
+                  <X
+                    size={14}
+                    className="cursor-pointer"
+                    onClick={() => handleFilter("rating", "")}
+                  />
                 </span>
               )}
               {filters.verified && (
                 <span className="inline-flex items-center gap-1 bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">
                   Verified Only
-                  <X size={14} className="cursor-pointer" onClick={() => handleFilter("verified", false)} />
+                  <X
+                    size={14}
+                    className="cursor-pointer"
+                    onClick={() => handleFilter("verified", false)}
+                  />
                 </span>
               )}
               <button
@@ -334,23 +362,28 @@ useEffect(() => {
           )}
         </div>
 
-
-
         <div className="flex items-start justify-center gap-4">
           {/* Desktop Filters Sidebar */}
           <div className="hidden md:block lg:col-span-3">
-            <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-20 space-y-6" ref={locationRef}>
+            <div
+              className="bg-white rounded-2xl shadow-lg p-6 sticky top-20 space-y-6"
+              ref={locationRef}
+            >
               <div className="flex items-center gap-2 pb-4 border-b border-gray-100">
                 <Filter className="text-blue-600" size={20} />
                 <h3 className="font-semibold text-gray-800">Filters</h3>
               </div>
 
-
               {/* Location Filter */}
               <div className="space-y-3">
-                <label className="text-sm font-medium text-gray-700">Location</label>
+                <label className="text-sm font-medium text-gray-700">
+                  Location
+                </label>
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                  <MapPin
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                    size={18}
+                  />
                   <input
                     onChange={handleInputChange}
                     name="location"
@@ -383,10 +416,11 @@ useEffect(() => {
                 </div>
               </div>
 
-
               {/* Category Filter */}
               <div className="space-y-3">
-                <label className="text-sm font-medium text-gray-700">Category</label>
+                <label className="text-sm font-medium text-gray-700">
+                  Category
+                </label>
                 <select
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm text-paraColor"
                   onChange={(e) => handleFilter("category", e.target.value)}
@@ -403,7 +437,9 @@ useEffect(() => {
 
               {/* Rating Filter */}
               <div className="space-y-3">
-                <label className="text-sm font-medium text-gray-700">Minimum Rating</label>
+                <label className="text-sm font-medium text-gray-700">
+                  Minimum Rating
+                </label>
                 <select
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm text-paraColor"
                   onChange={(e) => handleFilter("rating", e.target.value)}
@@ -427,7 +463,9 @@ useEffect(() => {
                     onChange={(e) => handleFilter("verified", e.target.checked)}
                     className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
-                  <span className="text-sm font-medium text-gray-700">Verified Professionals</span>
+                  <span className="text-sm font-medium text-gray-700">
+                    Verified Professionals
+                  </span>
                   <Shield className="text-blue-600" size={16} />
                 </label>
               </div>
@@ -437,7 +475,10 @@ useEffect(() => {
           {/* Mobile Filters Modal */}
           {showMobileFilters && (
             <div className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end">
-              <div className="bg-white w-full max-h-[80vh] overflow-y-auto rounded-t-2xl" ref={filterRef}>
+              <div
+                className="bg-white w-full max-h-[80vh] overflow-y-auto rounded-t-2xl"
+                ref={filterRef}
+              >
                 <div className="p-6 space-y-6">
                   <div className="flex items-center justify-between">
                     <h3 className="text-lg font-semibold">Filters</h3>
@@ -448,14 +489,19 @@ useEffect(() => {
                       <X size={20} />
                     </button>
                   </div>
-                  
+
                   {/* Mobile filter content - same as desktop but in modal */}
                   <div className="space-y-6">
                     {/* Location Filter */}
                     <div className="space-y-3">
-                      <label className="text-sm font-medium text-gray-700">Location</label>
+                      <label className="text-sm font-medium text-gray-700">
+                        Location
+                      </label>
                       <div className="relative">
-                        <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                        <MapPin
+                          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                          size={18}
+                        />
                         <input
                           onChange={handleInputChange}
                           name="location"
@@ -469,10 +515,14 @@ useEffect(() => {
 
                     {/* Category Filter */}
                     <div className="space-y-3">
-                      <label className="text-sm font-medium text-gray-700">Category</label>
+                      <label className="text-sm font-medium text-gray-700">
+                        Category
+                      </label>
                       <select
                         className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm text-paraColor"
-                        onChange={(e) => handleFilter("category", e.target.value)}
+                        onChange={(e) =>
+                          handleFilter("category", e.target.value)
+                        }
                         value={filters.category}
                       >
                         <option value="">All Categories</option>
@@ -484,10 +534,11 @@ useEffect(() => {
                       </select>
                     </div>
 
-
                     {/* Rating Filter */}
                     <div className="space-y-3">
-                      <label className="text-sm font-medium text-gray-700">Minimum Rating</label>
+                      <label className="text-sm font-medium text-gray-700">
+                        Minimum Rating
+                      </label>
                       <select
                         className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm text-paraColor"
                         onChange={(e) => handleFilter("rating", e.target.value)}
@@ -502,21 +553,23 @@ useEffect(() => {
                       </select>
                     </div>
 
-
                     {/* Verification Filter */}
                     <div className="space-y-3">
                       <label className="flex items-center gap-3 cursor-pointer">
                         <input
                           type="checkbox"
                           checked={filters.verified}
-                          onChange={(e) => handleFilter("verified", e.target.checked)}
+                          onChange={(e) =>
+                            handleFilter("verified", e.target.checked)
+                          }
                           className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                         />
-                        <span className="text-sm font-medium text-gray-700">Verified Professionals</span>
+                        <span className="text-sm font-medium text-gray-700">
+                          Verified Professionals
+                        </span>
                         <Shield className="text-blue-600" size={16} />
                       </label>
                     </div>
-
 
                     <div className="pt-4 border-t border-gray-200">
                       <button
@@ -526,8 +579,6 @@ useEffect(() => {
                         Apply Filters
                       </button>
                     </div>
-
-
                   </div>
                 </div>
               </div>
@@ -535,21 +586,20 @@ useEffect(() => {
           )}
 
           {/* Experts Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full max-w-6xl mx-auto">
-
+          <div className="w-full">
             {filteredUsers && filteredUsers.length > 0 ? (
-              filteredUsers.map((user, index) => (
-                <UsersCard/>
-              ))
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full max-w-6xl mx-auto">
+                {filteredUsers.map((user, index) => (
+                  <UsersCard key={index} userId={user?._id}  />
+                ))}
+              </div>
             ) : (
-              <div>no users found</div>
+              <div className="flex items-center justify-center">
+                <NoDataFound icon={<UsersRound />} text={'No Experts Found'} subText={' Try adjusting your search or filters to find the right professionals.'} />
+              </div>
             )}
-
           </div>
         </div>
-
-
-
       </div>
     </div>
   );

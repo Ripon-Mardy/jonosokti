@@ -432,7 +432,9 @@ const page = () => {
 
           {/* Job Listings */}
           <div className="lg:col-span-8">
-            <div className="flex items-center justify-between mb-6">
+
+
+            {/* <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-xl md:text-xl font-bold text-gray-800">
                   {filteredJobs.length > 0
@@ -441,7 +443,7 @@ const page = () => {
                 </h2>
                 <p className="text-gray-600 text-sm">Discover your next opportunity</p>
               </div>
-            </div>
+            </div> */}
 
             {loading ? (
               <div className="flex justify-center items-center h-96 bg-white rounded-2xl shadow-lg">
@@ -544,7 +546,7 @@ const page = () => {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
+              <div className="text-center py-16 bg-white rounded-2xl">
                 <div className="max-w-md mx-auto">
                   <div className="bg-gray-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
                     <Search size={32} className="text-gray-400" />
