@@ -33,6 +33,7 @@ const page = () => {
     verified: false,
   });
   const [users, setUsers] = useState([]);
+  console.log("users", users);
   const [filteredUsers, setFilteredUsers] = useState([]);
   console.log("filteredUsers", filteredUsers);
   const [category, setCategory] = useState([]);
@@ -54,45 +55,6 @@ const page = () => {
   useOutsideClick(locationRef, () => setFilteredLocation([]));
   useOutsideClick(filterRef, () => setShowMobileFilters(false));
 
-  // Enhanced filter function with search and sorting
-  // const applyFilters = useMemo(() => {
-  //   let filtered = users.filter((user) => {
-  //     // Search filter
-  //     const matchSearch = searchQuery === "" ||
-  //       user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //       user?.category?.some(cat => cat.toLowerCase().includes(searchQuery.toLowerCase())) ||
-  //       user?.address?.toLowerCase().includes(searchQuery.toLowerCase());
-
-  //     // Location filter
-  //     const matchLocation = !filters.location ||
-  //       user?.address?.toLowerCase().includes(filters.location.toLowerCase());
-
-  //     // Category filter
-  //     const matchCategory = !filters.category ||
-  //       user?.category?.some(cat => cat.toLowerCase() === filters.category.toLowerCase());
-
-  //     // Rating filter
-  //     const matchRating = !filters.rating ||
-  //       Math.floor(user?.rating || 0) >= parseInt(filters.rating);
-
-  //     // Verification filter
-  //     const matchVerified = !filters.verified || user?.is_verified;
-
-  //     return matchSearch && matchLocation && matchCategory && matchRating && matchVerified;
-  //   });
-
-  //   // Apply sorting
-  //   if (sortBy === "rating") {
-  //     filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-  //   } else if (sortBy === "name") {
-  //     filtered.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
-  //   } else if (sortBy === "experience") {
-  //     filtered.sort((a, b) => (b.experience || 0) - (a.experience || 0));
-  //   }
-
-  //   return filtered;
-  // }, [searchQuery, filters, sortBy]);
-
   const getFilteredUsers = useMemo(() => {
     return users.filter((user) => {
       const matchLocation =
@@ -112,10 +74,6 @@ const page = () => {
   useEffect(() => {
     setFilteredUsers(getFilteredUsers);
   }, [getFilteredUsers]);
-
-  // useEffect(() => {
-  //   setFilteredUsers(applyFilters);
-  // }, [applyFilters]);
 
   // Handle filter changes
   const handleFilter = (type, value) => {

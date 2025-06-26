@@ -1,24 +1,27 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
+import { Suspense } from "react";
 import Image from "next/image";
 import {
   Phone,
   Send,
   Share2,
   X,
-  ShieldCheck ,
+  ShieldCheck,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 import coverImage from "@/public/images/jonosokti_cover.jpeg";
 import userImage from "@/public/images/profile.jpg";
+import jsLogo from "@/public/images/jslogo2.png";
 import ProfileBanner from "@/public/images/profile-banner.jpg";
 import { FaStar } from "react-icons/fa6";
 import facebook from "@/public/images/social/facebook.png";
 import x from "@/public/images/social/x.png";
 import linkedin from "@/public/images/social/linkedin.png";
 import telegram from "@/public/images/social/telegram.png";
+import JobLoader from "@/components/Loader/JobLoader";
 
 const Page = ({ params }) => {
   const [singleUser, setSingleUser] = useState({}); // state to hold single user data
@@ -33,19 +36,19 @@ const Page = ({ params }) => {
   const [loading, setLoading] = useState(false); // state for loading
   const [tapToShowPhone, setTapToShowPhone] = useState(true); // state for tap to show phone
 
-  // handle phone click 
+  // handle phone click
   const handlePhoneClick = () => {
-    if(!singleUser?.phone) {
+    if (!singleUser?.phone) {
       alert("No phone number available");
       return;
     }
 
-    if(tapToShowPhone) {
+    if (tapToShowPhone) {
       setTapToShowPhone(false);
     } else {
       window.location.href = `tel:${singleUser?.phone}`;
     }
-  }
+  };
 
   // get user params id
   const userId = params?.userid;
@@ -185,17 +188,12 @@ const Page = ({ params }) => {
     }
   };
 
-
-  if(loading) {
-    <div>Loading...</div>
-  }
-
   return (
     <section className="pt-20 pb-20">
       <div className="xl:container xl:mx-auto px-2 xl:px-0">
-        <div className="flex gap-6">
+        <div className="flex flex-col md:flex-row gap-6">
           {/* Left Section */}
-          <div className=" w-full sm:w-[70%]">
+          <div className="w-full md:w-3/4">
             {/* Profile Card */}
             <div className="bg-white rounded border border-gray-200 pb-5">
               {/* Cover Image */}
@@ -224,11 +222,17 @@ const Page = ({ params }) => {
               <div className="mt-14 md:mt-16">
                 <div className="mt-12 md:mt-16 px-5 space-y-4">
                   <div className="flex items-center justify-between gap-2 mb-3">
-                    <div className="flex items-center justify-center gap-5">
+                    <div className="flex flex-wrap items-center justify-center gap-5">
                       <h2 className="text-xl md:text-2xl font-semibold text-textHeadingColor flex items-center">
-                      {singleUser?.first_name || ""} {singleUser?.last_name || ""}
-                    </h2>
-                    <Link href={'#'} className="flex items-center justify-center gap-1 text-xs text-blue-600 hover:bg-blue-100 transition font-medium border border-blue-800 rounded-full px-2 py-0.5 border-dashed"> <ShieldCheck size={18}/> Add verification badge </Link>
+                        {singleUser?.first_name || ""}
+                        {singleUser?.last_name || ""}
+                      </h2>
+                      <Link
+                        href={"#"}
+                        className="flex items-center justify-center gap-1 text-xs text-blue-600 hover:bg-blue-100 transition font-medium border border-blue-800 rounded-full px-2 py-0.5 border-dashed"
+                      >
+                        <ShieldCheck size={18} /> Add verification badge
+                      </Link>
                     </div>
                     <span
                       onClick={() => setShowSharePopup(true)}
@@ -268,25 +272,39 @@ const Page = ({ params }) => {
                     </div>
 
                     <span className="text-sm mt-1 block text-paraColor font-normal">
-                      {singleUser?.address?.address || ''}
+                      {singleUser?.address?.address || ""}
                     </span>
                   </div>
 
                   {/* call section  */}
                   <div className="mt-5 flex items-center justify-start gap-5">
                     <div className="flex items-center gap-1">
-                      <span className="btn cursor-pointer" onClick={handlePhoneClick}>
-                        {tapToShowPhone ? 'Tap to Show Number' : <div className="flex items-center justify-center gap-2"> <Phone size={16}/> {singleUser?.phone || 'no phone'} </div> }
+                      <span
+                        className="btn cursor-pointer"
+                        onClick={handlePhoneClick}
+                      >
+                        {tapToShowPhone ? (
+                          "Tap to Show Number"
+                        ) : (
+                          <div className="flex items-center justify-center gap-2">
+                            {" "}
+                            <Phone size={16} />{" "}
+                            {singleUser?.phone || "no phone"}{" "}
+                          </div>
+                        )}
                       </span>
                     </div>
-                    <div className="flex items-center gap-1">
+                    <div
+                      className="flex items-center gap-1 cursor-pointer"
+                      onClick={() =>
+                        alert("Message feature is not implemented yet")
+                      }
+                    >
                       <span className="btn">
                         <Send size={18} /> Message
                       </span>
                     </div>
                   </div>
-
-
                 </div>
               </div>
             </div>
@@ -294,7 +312,7 @@ const Page = ({ params }) => {
             {/* about me  */}
             <div className="bg-white p-4 rounded border border-borderInputColor mt-4">
               <h1 className="text-xl mb-4 font-semibold text-textHeadingColor ">
-                About me
+                About
               </h1>
               <p className="text-textColor leading-6 text-sm">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non
@@ -571,15 +589,84 @@ const Page = ({ params }) => {
 
           {/* Right Section */}
           <div className="w-full">
-            <div className="sticky top-24">
-              <Image
-                src={ProfileBanner}
-                width={80}
-                height={50}
-                alt="profile banner"
-                layout="responsive"
-                className="w-full rounded-lg"
-              />
+            {/* Get verified now  */}
+            <div className=" p-4 border rounded-lg bg-white text-center space-y-4">
+              <p className="text-sm text-textColor">
+                <strong>Ripon</strong>, learn how to grow your service business
+                with Jonosokti!
+              </p>
+              <div className="flex justify-center">
+                <Image
+                  src={userImage}
+                  alt="Ripon"
+                  className="w-16 h-16 rounded-full object-cover"
+                />
+              </div>
+              {/* <Image
+                src={jsLogo} // replace with your actual logo
+                alt="Jonosokti Ads"
+                className="mx-auto h-6"
+              /> */}
+              <p className="text-sm text-textColor">
+                Check out our free Jonosokti Ads & Business Setup course!
+              </p>
+              <button className="w-full py-2 text-sm text-blue-700 font-medium rounded border border-gray-300">
+                Get verified Now
+              </button>
+            </div>
+
+            {/* more profile features */}
+            <div className="bg-white p-3 rounded-md border border-borderInputColor mt-5">
+              <h2 className="text-textColor text-base font-medium">
+                More Profile for you
+              </h2>
+
+             <div>
+               {Array.from({ length: 5 }, (_, index) => (
+                <div className="flex items-start justify-start gap-4 mt-4">
+                  <Image
+                    className="w-10 h-10 rounded-full"
+                    src={userImage}
+                    alt="user image"
+                  />
+                  <div className="space-y-3 border-b border-gray-200 pb-3 w-full">
+                    <h3 className="text-textHeadingColor font-medium">
+                      James Baskey
+                    </h3>
+                    <div key={index}>
+                      {[
+                        "Cleaning Service",
+                        "Electric Service",
+                        "Electronics Service",
+                      ]
+                        .slice(0, 2)
+                        .map((service, index) => (
+                          <span
+                            key={index}
+                            className="text-xs text-blue-800 bg-blue-50 rounded-full px-2 border border-gray-50"
+                          >
+                            {service}
+                          </span>
+                        ))}
+                      {[
+                        "Cleaning Service",
+                        "Electric Service",
+                        "Electronics Service",
+                      ].length > 2 && (
+                        <span className="text-xs text-textColor bg-gray-200 px-2 rounded-full">
+                          more
+                        </span>
+                      )}
+                      <button className="bg-bgColor block text-white font-medium text-xs py-1 px-3 rounded-full mt-2">
+                        View Profile
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+             </div>
+
+
             </div>
           </div>
         </div>
