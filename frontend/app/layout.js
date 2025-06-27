@@ -1,10 +1,8 @@
 import { Poppins, Open_Sans, Roboto, Ubuntu } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Header/Navbar";
-import NavbarWrapper from "@/context/NavbarWrapper";
 import Footer from "@/components/Footer/Footer";
 import Script from "next/script";
-import Analytics from "./analytics";
+import AuthContext from "@/components/NavbarContext/AuthContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -50,12 +48,12 @@ export default function RootLayout({ children }) {
             gtag('config', 'G-7G1X0Z2Y54);
           `}
         </Script>
+
+
       </head>
       <body suppressHydrationWarning={true} className={poppins.className}>
         <div>
-          {/* <Navbar /> */}
-          <NavbarWrapper />
-          <Analytics/>
+          <AuthContext/>
           {children}
           <Footer />
         </div>
