@@ -1,14 +1,17 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react"; // React hooks
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import jsLogo from '@/public/images/jslogo2.png'
+import jsLogo from "@/public/images/jslogo2.png"; // jonosokti logo
+import defauldProfile from "@/public/images/profile.jpg"; // default profile image
 import { HiBars3, HiXMark } from "react-icons/hi2";
 import { IoLogInOutline } from "react-icons/io5";
 import { FiUser, FiChevronDown } from "react-icons/fi";
 import { GoArrowUpRight } from "react-icons/go";
+import { ChevronDown, UserRound, Settings, LogOut } from "lucide-react";
+import useOutsideClick from "@/hooks/useClickOutside";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,8 +19,12 @@ const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const menuRef = useRef(null);
   const router = useRouter();
+
+  const dropdownRef = useRef(null);
+  useOutsideClick(dropdownRef, () => setShowProfileDropdown(false))
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -31,7 +38,7 @@ const Navbar = () => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/alljobs", label: "Jobs" },
-    // {href : "/post-a-jobs", label : "post a job"},
+    { href: "/post-a-jobs", label: "post a job" },
     { href: "/pricing", label: "Pricing" },
     { href: "/how-it-work", label: "How it works" },
     { href: "/Bn", label: "বাংলা", isSpecial: true },
@@ -88,14 +95,11 @@ const Navbar = () => {
     <motion.nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         showNavbar ? "translate-y-0" : "-translate-y-full"
-      } ${
-        isScrolled 
-          ? "bg-white shadow-md py-2" 
-          : "bg-transparent py-3"
-      }`}
+      } ${isScrolled ? "bg-white shadow-md py-2" : "bg-transparent py-3"}`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.3 }}
+      ref={dropdownRef}
     >
       <div className="xl:container xl:mx-auto flex justify-between items-center px-2 sm:px-0">
         <Link href="/" className="flex items-center relative z-10">
@@ -130,8 +134,70 @@ const Navbar = () => {
             ))}
           </ul>
 
+          {/* desktop mode  */}
           <div className="flex items-center space-x-3">
-            <Link
+            <div className="relative" onClick={() => setShowProfileDropdown(!showProfileDropdown)}>
+              <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md cursor-pointer transition-colors duration-200">
+                <Image
+                  src={defauldProfile}
+                  width={30}
+                  height={30}
+                  alt="profile"
+                  className="rounded-full"
+                />
+                <div className="flex items-center gap-1">
+                  <span className="text-textColor text-sm"> James Baskey </span>
+                  <span>
+                    <ChevronDown size={15} />
+                  </span>
+                </div>
+              </div>
+
+              {/* profile dropdown menu  */}
+              {showProfileDropdown && (
+                <div className="absolute left-0 top-full w-full rounded-md bg-white shadow-lg ring-1 ring-gray-200 z-50">
+                <div className="py-2">
+                  {[
+                    {
+                      label: "Profile",
+                      icon: <UserRound size={18} />,
+                      href: "/profile",
+                    },
+                    {
+                      label: "Settings",
+                      icon: <Settings size={18} />,
+                      href: "/settings",
+                    },
+                    {
+                      label: "Logout",
+                      icon: <LogOut size={18} />,
+                      href: "#",
+                    },
+                  ].map((item, index) => (
+                    <Link
+                      href={item.href}
+                      key={index}
+                      onClick={() => {
+                        if(item.label === 'Logout') {
+                          localStorage.removeItem('authToken')
+                          window.location.href = '/login';
+                          // router.push('/login');
+                        }
+                        setShowProfileDropdown(false);
+                      }}
+                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200"
+                    >
+                      <span className="text-gray-500">{item.icon}</span>
+                      <span>{item.label}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              )}
+
+            </div>
+
+            {/* <Link
               href="/login"
               className="flex items-center gap-1.5 px-4 py-2 font-medium text-sm text-gray-700 hover:text-blue-600 transition-colors duration-200"
             >
@@ -145,13 +211,13 @@ const Navbar = () => {
               <FiUser className="text-sm" />
               <span>Sign Up</span>
               <GoArrowUpRight className="text-sm" />
-            </Link>
+            </Link> */}
           </div>
         </div>
 
         {/* Mobile Navigation Buttons */}
         <div className="flex items-center xl:hidden gap-2 sm:gap-3">
-          <Link 
+          <Link
             href="/login"
             className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors duration-200"
           >
@@ -186,7 +252,7 @@ const Navbar = () => {
                 transition={{ duration: 0.2 }}
                 onClick={() => setIsMenuOpen(false)}
               />
-              
+
               {/* Mobile Menu Panel */}
               <motion.div
                 ref={menuRef}
@@ -204,15 +270,15 @@ const Navbar = () => {
                     alt="jonosokti"
                     className="h-8 w-auto"
                   />
-                  <button 
-                    onClick={toggleMenu} 
+                  <button
+                    onClick={toggleMenu}
                     className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition-colors duration-200"
                     aria-label="Close menu"
                   >
                     <HiXMark className="text-2xl" />
                   </button>
                 </div>
-                
+
                 <div className="flex-1 overflow-y-auto py-4">
                   <ul className="space-y-1 px-3">
                     {navLinks.map(({ href, label, isSpecial }) => (
@@ -228,13 +294,15 @@ const Navbar = () => {
                           }`}
                         >
                           {label}
-                        </button> 
+                        </button>
                       </li>
                     ))}
                   </ul>
-                  
+
                   <div className="mt-6 px-7 space-y-4">
-                    <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Account</h3>
+                    <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                      Account
+                    </h3>
                     <Link
                       href="/login"
                       className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
@@ -253,7 +321,7 @@ const Navbar = () => {
                     </Link>
                   </div>
                 </div>
-                
+
                 <div className="p-4 border-t text-center text-sm text-gray-500">
                   <p>© {new Date().getFullYear()} Jonosokti</p>
                 </div>

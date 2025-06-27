@@ -19,6 +19,15 @@ const Navbar = () => {
   const menuRef = useRef(null);
   const router = useRouter();
 
+  // is loggedIn State 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+      const token = localStorage.getItem('authToken');
+      setIsLoggedIn(!!token); // true or false
+    }, [])
+
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleTabClick = (path) => {
@@ -31,7 +40,7 @@ const Navbar = () => {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/alljobs", label: "Jobs" },
-    {href : "/post-a-jobs", label : "post a job"},
+    // {href : "/post-a-jobs", label : "post a job"},
     { href: "/pricing", label: "Pricing" },
     { href: "/how-it-work", label: "How it works" },
     { href: "/Bn", label: "বাংলা", isSpecial: true },
@@ -109,6 +118,8 @@ const Navbar = () => {
           />
         </Link>
 
+
+
         {/* Desktop Navigation */}
         <div className="hidden xl:flex items-center space-x-1">
           <ul className="flex items-center space-x-1 mr-6">
@@ -148,6 +159,9 @@ const Navbar = () => {
             </Link>
           </div>
         </div>
+
+
+
 
         {/* Mobile Navigation Buttons */}
         <div className="flex items-center xl:hidden gap-2 sm:gap-3">

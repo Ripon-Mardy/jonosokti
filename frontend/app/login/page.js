@@ -53,7 +53,9 @@ export default function Page() {
       const data = await res.json();
       localStorage.setItem('authToken', data?.token);
 
-      router.push('/')
+      // router.push('/')
+      // window.location.href = '/user-profil';
+      window.location.href = '/'
       // Redirect or handle successful login (e.g., router.push('/dashboard'))
     } catch (err) {
       setError(err.message);
@@ -75,6 +77,8 @@ export default function Page() {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-6 shadow-lg rounded-xl sm:px-10">
+
+          {/* login form  */}
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-md flex items-center">
@@ -158,6 +162,8 @@ export default function Page() {
               </div>
             </div>
 
+
+            {/* sign in button  */}
             <div>
               <button
                 type="submit"
@@ -193,6 +199,8 @@ export default function Page() {
                 )}
               </button>
             </div>
+
+
           </form>
 
           <div className="mt-6">
