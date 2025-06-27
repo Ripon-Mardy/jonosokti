@@ -51,7 +51,7 @@ export default function RootLayout({ children }) {
 
 
       </head>
-      <body suppressHydrationWarning={true} className={poppins.className}>
+      <body suppressHydrationWarning={true} className={ubutntu.className}>
         <div>
           <AuthContext/>
           {children}

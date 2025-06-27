@@ -9,7 +9,6 @@ import defauldProfile from "@/public/images/profile.jpg"; // default profile ima
 import { HiBars3, HiXMark } from "react-icons/hi2";
 import { IoLogInOutline } from "react-icons/io5";
 import { FiUser, FiChevronDown } from "react-icons/fi";
-import { GoArrowUpRight } from "react-icons/go";
 import { ChevronDown, UserRound, Settings, LogOut } from "lucide-react";
 import useOutsideClick from "@/hooks/useClickOutside";
 
@@ -217,20 +216,75 @@ const Navbar = () => {
 
         {/* Mobile Navigation Buttons */}
         <div className="flex items-center xl:hidden gap-2 sm:gap-3">
-          <Link
-            href="/login"
-            className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors duration-200"
-          >
-            <IoLogInOutline className="text-lg" />
-            <span className="hidden sm:inline">Login</span>
-          </Link>
-          <Link
-            href="/mobile-signup"
-            className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-200 text-sm font-medium shadow-sm"
-          >
-            <span className="hidden sm:inline">Sign Up</span>
-            <FiUser className="text-sm" />
-          </Link>
+
+          {/* profile dropdown button  */}
+
+
+           <div className="flex items-center space-x-3">
+            <div className="relative" onClick={() => setShowProfileDropdown(!showProfileDropdown)}>
+              <div className="flex items-center gap-2 px-1 bg-gray-100 hover:bg-gray-200 rounded-md cursor-pointer transition-colors duration-200">
+                <Image
+                  src={defauldProfile}
+                  width={30}
+                  height={30}
+                  alt="profile"
+                  className="rounded-full"
+                />
+                <div className="flex items-center gap-1">
+                  <span>
+                    <ChevronDown size={15} />
+                  </span>
+                </div>
+              </div>
+
+              {/* profile dropdown menu  */}
+              {showProfileDropdown && (
+                <div className="absolute -left-10 top-full w-32 rounded-md bg-white shadow-lg ring-1 ring-gray-200 z-50">
+                <div className="py-2">
+                  {[
+                    {
+                      label: "Profile",
+                      icon: <UserRound size={18} />,
+                      href: "/profile",
+                    },
+                    {
+                      label: "Settings",
+                      icon: <Settings size={18} />,
+                      href: "/settings",
+                    },
+                    {
+                      label: "Logout",
+                      icon: <LogOut size={18} />,
+                      href: "#",
+                    },
+                  ].map((item, index) => (
+                    <Link
+                      href={item.href}
+                      key={index}
+                      onClick={() => {
+                        if(item.label === 'Logout') {
+                          localStorage.removeItem('authToken')
+                          window.location.href = '/login';
+                        }
+                        setShowProfileDropdown(false);
+                      }}
+                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200"
+                    >
+                      <span className="text-gray-500">{item.icon}</span>
+                      <span>{item.label}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              )}
+
+            </div>
+
+            
+          </div>
+
+
+
           <button
             onClick={toggleMenu}
             className="p-2 rounded-md text-gray-700 hover:bg-gray-100 transition-colors duration-200 focus:outline-none"
@@ -299,27 +353,7 @@ const Navbar = () => {
                     ))}
                   </ul>
 
-                  <div className="mt-6 px-7 space-y-4">
-                    <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                      Account
-                    </h3>
-                    <Link
-                      href="/login"
-                      className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
-                      onClick={toggleMenu}
-                    >
-                      <IoLogInOutline className="text-xl" />
-                      <span>Login to your account</span>
-                    </Link>
-                    <Link
-                      href="/mobile-signup"
-                      className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
-                      onClick={toggleMenu}
-                    >
-                      <FiUser className="text-lg" />
-                      <span>Create an account</span>
-                    </Link>
-                  </div>
+
                 </div>
 
                 <div className="p-4 border-t text-center text-sm text-gray-500">
