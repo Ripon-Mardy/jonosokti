@@ -151,7 +151,7 @@ const JobCategory = () => {
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           className="object-cover group-hover:scale-105 transition-transform duration-300 text-xs"
-                          src={jobItem?.image}
+                          src={`https://www.jonosokti.com${jobItem?.image}`}
                           alt={jobItem.name || "Category Image"}
                         />
                       </div>
