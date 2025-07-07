@@ -9,6 +9,7 @@ import { HiBars3, HiXMark } from "react-icons/hi2";
 import { IoLogInOutline } from "react-icons/io5";
 import { FiUser, FiChevronDown } from "react-icons/fi";
 import { GoArrowUpRight } from "react-icons/go";
+import mobileLogo from '@/public/images/logo.png'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -107,7 +108,8 @@ const Navbar = () => {
       transition={{ duration: 0.3 }}
     >
       <div className="xl:container xl:mx-auto flex justify-between items-center px-2 sm:px-0">
-        <Link href="/" className="flex items-center relative z-10">
+        <div>
+          {/* <Link href="/" className="flex items-center relative z-10">
           <Image
             width={150}
             height={50}
@@ -116,7 +118,14 @@ const Navbar = () => {
             className="w-32 md:w-40 h-auto"
             priority
           />
+        </Link> */}
+        <Link href={'/'} className="flex items-center justify-center gap-1">
+        <Image src={mobileLogo} width={150} height={50} className="w-10" />
+          <span className="hidden md:block font-extrabold text-gray-700 text-xl -tracking-tight">Jonosokti</span>
+
         </Link>
+
+        </div>
 
 
 
@@ -170,13 +179,13 @@ const Navbar = () => {
             className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors duration-200"
           >
             <IoLogInOutline className="text-lg" />
-            <span className="hidden sm:inline">Login</span>
+            <span className="text-sm ">Login</span>
           </Link>
           <Link
             href="/mobile-signup"
-            className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-200 text-sm font-medium shadow-sm"
+            className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-200 text-sm shadow-sm font-medium"
           >
-            <span className="hidden sm:inline">Sign Up</span>
+            <span className="text-sm">Sign Up</span>
             <FiUser className="text-sm" />
           </Link>
           <button
