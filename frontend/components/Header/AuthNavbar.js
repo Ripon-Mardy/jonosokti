@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react"; // React hooks
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import mobileLogo from '@/public/images/logo.png'
 import Link from "next/link";
 import jsLogo from "@/public/images/jslogo2.png"; // jonosokti logo
 import defauldProfile from "@/public/images/profile.jpg"; // default profile image
@@ -102,14 +103,19 @@ const Navbar = () => {
     >
       <div className="xl:container xl:mx-auto flex justify-between items-center px-2 sm:px-0">
         <Link href="/" className="flex items-center relative z-10">
-          <Image
+          {/* <Image
             width={150}
             height={50}
             src={jsLogo}
             alt="jonosokti"
             className="w-32 md:w-40 h-auto"
             priority
-          />
+          /> */}
+          <Link href={'/'} className="flex items-center justify-center gap-1">
+        <Image src={mobileLogo} width={150} height={50} className="w-10" />
+          <span className="hidden md:block font-extrabold text-gray-700 text-xl -tracking-tight">Jonosokti</span>
+
+        </Link>
         </Link>
 
         {/* Desktop Navigation */}
@@ -317,13 +323,18 @@ const Navbar = () => {
                 transition={{ type: "tween", duration: 0.3 }}
               >
                 <div className="flex items-center justify-between p-4 border-b">
-                  <Image
+                  {/* <Image
                     width={120}
                     height={40}
                     src={jsLogo}
                     alt="jonosokti"
                     className="h-8 w-auto"
-                  />
+                  /> */}
+                  <Link href={'/'} className="flex items-center justify-center gap-1">
+        <Image src={mobileLogo} width={150} height={50} className="w-10" />
+          <span className="hidden md:block font-extrabold text-gray-700 text-xl -tracking-tight">Jonosokti</span>
+
+        </Link>
                   <button
                     onClick={toggleMenu}
                     className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition-colors duration-200"

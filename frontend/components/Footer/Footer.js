@@ -6,6 +6,7 @@ import Link from "next/link";
 import jsLogo from "../../public/images/jslogo2.png";
 import android from "../../public/images/android.png";
 import appleStore from "../../public/images/appstore.webp";
+import mobileLogo from '@/public/images/logo.png'
 import footer_logo from "@/public/images/Footer-Logo.png";
 
 import { FaFacebook, FaLinkedin, FaInstagram} from "react-icons/fa";
@@ -21,13 +22,15 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
           {/* Company Info */}
           <div className="space-y-4 animate-fadeIn">
-            <Image
-              className="h-12 w-auto"
-              width={180}
-              height={60}
-              src={jsLogo}
-              alt="Jonosokti"
-            />
+            
+             <div>
+        <Link href={'/'} className="flex items-center justify-start gap-1">
+        <Image src={mobileLogo} width={150} height={50} className="w-10" />
+          <span className="hidden md:block font-extrabold text-gray-700 text-xl -tracking-tight">Jonosokti</span>
+
+        </Link>
+
+        </div>
             <p className="text-textColor text-sm leading-relaxed">
               Jonosokti - A Handy Service Solution Website In Bangladesh. Hire
               Experts & Get Your Job Done with our trusted platform connecting skilled professionals with customers.
