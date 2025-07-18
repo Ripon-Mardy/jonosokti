@@ -148,7 +148,7 @@ const JobCategory = () => {
                           width={4}
                           height={4}
                           layout="responsive"
-                          className="w-5 h-20"
+                          className="w-5 h-20 text-xs"
                           src={`https://www.jonosokti.com${jobItem?.image}`}
                           alt={jobItem.name || "Category Image"}
                         />
