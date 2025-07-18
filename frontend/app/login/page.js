@@ -51,12 +51,11 @@ export default function Page() {
       }
 
       const data = await res.json();
-      localStorage.setItem('authToken', data?.token);
-
-      // router.push('/')
-      // window.location.href = '/user-profil';
-      window.location.href = '/'
-      // Redirect or handle successful login (e.g., router.push('/dashboard'))
+      if(res.ok && data.status === true) {
+        localStorage.setItem('authToken', data?.token);
+        localStorage.setItem('userData', data?.data)
+      }
+      router.push('/');
     } catch (err) {
       setError(err.message);
     } finally {

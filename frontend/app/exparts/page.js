@@ -188,6 +188,8 @@ const page = () => {
   return (
     <div>
       <div className="xl:container xl:mx-auto px-4 pt-24 pb-20">
+
+
         {/* Header */}
         <div className="text-center mb-8 bg-headerBgColor rounded-md p-3 space-y-2 py-5 max-w-4xl mx-auto">
           <div className="flex items-center justify-center gap-2">
@@ -196,10 +198,12 @@ const page = () => {
               Hire Expert Professionals
             </h1>
           </div>
+
           <p className="text-white text-sm max-w-2xl mx-auto">
             Connect with verified professionals in your area. Quality service
             guaranteed.
           </p>
+
         </div>
 
         {/* Search and Sort Bar */}
@@ -427,8 +431,12 @@ const page = () => {
                   <Shield className="text-blue-600" size={16} />
                 </label>
               </div>
+
+
             </div>
           </div>
+
+
 
           {/* Mobile Filters Modal */}
           {showMobileFilters && (
@@ -546,7 +554,7 @@ const page = () => {
           {/* Experts Grid */}
           <div className="w-full">
             {filteredUsers && filteredUsers.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 {filteredUsers.map((user, index) => (
                   <UsersCard key={index} userId={user?._id}  />
                 ))}
@@ -557,6 +565,10 @@ const page = () => {
               </div>
             )}
           </div>
+
+
+
+
         </div>
       </div>
     </div>

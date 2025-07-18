@@ -5,21 +5,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import mobileLogo from "@/public/images/logo.png";
 import Link from "next/link";
-import jsLogo from "@/public/images/jslogo2.png"; // jonosokti logo
 import defauldProfile from "@/public/images/profile.jpg"; // default profile image
 import { HiBars3, HiXMark } from "react-icons/hi2";
-import { IoLogInOutline } from "react-icons/io5";
-import { FiUser, FiChevronDown } from "react-icons/fi";
 import { ChevronDown, UserRound, Settings, LogOut } from "lucide-react";
 import useOutsideClick from "@/hooks/useClickOutside";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("");
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+
+  const pathname = usePathname()
   const menuRef = useRef(null);
   const router = useRouter();
 
@@ -29,9 +28,7 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleTabClick = (path) => {
-    setActiveTab(path);
-    localStorage.setItem("activePath", path);
-    router.push(path);
+    router.push(path)
     if (isMenuOpen) toggleMenu();
   };
 
@@ -82,15 +79,6 @@ const Navbar = () => {
     };
   }, [menuRef]);
 
-  useEffect(() => {
-    const savedActivePath = localStorage.getItem("activePath");
-    if (savedActivePath) {
-      setActiveTab(savedActivePath);
-    } else {
-      setActiveTab(router.pathname);
-    }
-  }, [router.pathname]);
-
   return (
     <motion.nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -102,15 +90,8 @@ const Navbar = () => {
       ref={dropdownRef}
     >
       <div className="xl:container xl:mx-auto flex justify-between items-center px-2 sm:px-0">
+
         <Link href="/" className="flex items-center relative z-10">
-          {/* <Image
-            width={150}
-            height={50}
-            src={jsLogo}
-            alt="jonosokti"
-            className="w-32 md:w-40 h-auto"
-            priority
-          /> */}
           <Link href={"/"} className="flex items-center justify-center gap-1">
             <Image src={mobileLogo} width={150} height={50} className="w-10" />
             <span className="hidden md:block font-extrabold text-gray-700 text-xl -tracking-tight">
@@ -129,7 +110,7 @@ const Navbar = () => {
                   className={`px-4 py-2 rounded-md transition-all duration-200 font-medium text-sm ${
                     isSpecial
                       ? "bg-blue-600 text-white hover:bg-blue-700"
-                      : activeTab === href
+                      : pathname === href
                       ? "text-blue-600 bg-blue-50"
                       : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
                   }`}
@@ -155,7 +136,7 @@ const Navbar = () => {
                   className="rounded-full"
                 />
                 <div className="flex items-center gap-1">
-                  <span className="text-textColor text-sm"> James Baskey </span>
+                  <span className="text-textColor text-sm"> James Baskey</span>
                   <span>
                     <ChevronDown size={15} />
                   </span>
@@ -170,7 +151,7 @@ const Navbar = () => {
                       {
                         label: "Profile",
                         icon: <UserRound size={18} />,
-                        href: "/profile",
+                        href: "/in/profile",
                       },
                       {
                         label: "Settings",
@@ -203,6 +184,8 @@ const Navbar = () => {
                   </div>
                 </div>
               )}
+
+
             </div>
 
             {/* <Link
@@ -248,19 +231,19 @@ const Navbar = () => {
               </div>
 
               {/* profile dropdown menu  */}
-              {showProfileDropdown && (
+              {/* {showProfileDropdown && (
                 <div className="absolute -left-10 top-full w-32 rounded-md bg-white shadow-lg ring-1 ring-gray-200 z-50">
                   <div className="py-2">
                     {[
                       {
                         label: "Profile",
                         icon: <UserRound size={18} />,
-                        href: "/profile",
+                        href: "/alljobs",
                       },
                       {
-                        label: "Settings",
+                        label: "Setting dfefef",
                         icon: <Settings size={18} />,
-                        href: "/settings",
+                        href: "/set",
                       },
                       {
                         label: "Logout",
@@ -274,19 +257,21 @@ const Navbar = () => {
                         onClick={() => {
                           if (item.label === "Logout") {
                             localStorage.removeItem("authToken");
-                            window.location.href = "/login";
+                            // window.location.href = "/login";
+                            router.push('/login')
                           }
                           setShowProfileDropdown(false);
                         }}
+
                         className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200"
                       >
                         <span className="text-gray-500">{item.icon}</span>
-                        <span>{item.label}</span>
+                        <span>Hello</span>
                       </Link>
                     ))}
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
 
@@ -322,13 +307,6 @@ const Navbar = () => {
                 transition={{ type: "tween", duration: 0.3 }}
               >
                 <div className="flex items-center justify-between p-4 border-b">
-                  {/* <Image
-                    width={120}
-                    height={40}
-                    src={jsLogo}
-                    alt="jonosokti"
-                    className="h-8 w-auto"
-                  /> */}
                   <Link
                     href={"/"}
                     className="flex items-center justify-center gap-1"
@@ -361,7 +339,7 @@ const Navbar = () => {
                           className={`w-full text-left px-4 py-3 rounded-md transition-all duration-200 ${
                             isSpecial
                               ? "bg-blue-600 text-white"
-                              : activeTab === href
+                              : pathname === href
                               ? "text-blue-600 bg-blue-50 font-medium"
                               : "text-gray-700 hover:bg-gray-50"
                           }`}

@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Loading from "@/components/Loading";
-import jobCategory from "@/public/images/Jobcategory/computer.webp";
 import { ChevronRight, Search, MapPin, Filter, ArrowLeft ,   } from "lucide-react";
 import NoDataFound from "@/components/NoDataFound/NoDataFound";
 import UsersCard from "@/components/UsersCard";
@@ -149,7 +148,7 @@ const CategoryPage = ({ params }) => {
                 <motion.div variants={fadeIn}>
                   <div className="flex items-center justify-start gap-4">
                     <Image
-                      src={category?.image || jobCategory}
+                      src={`https://www.jonosokti.com${category?.image}`}
                       width={100}
                       height={100}
                       quality={90}
