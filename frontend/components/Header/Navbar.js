@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
@@ -13,12 +14,13 @@ import mobileLogo from '@/public/images/logo.png'
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("");
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const menuRef = useRef(null);
   const router = useRouter();
+
+  const pathname = usePathname();
 
   // is loggedIn State 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,7 +34,6 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleTabClick = (path) => {
-    setActiveTab(path);
     localStorage.setItem("activePath", path);
     router.push(path);
     if (isMenuOpen) toggleMenu();
@@ -85,15 +86,6 @@ const Navbar = () => {
     };
   }, [menuRef]);
 
-  useEffect(() => {
-    const savedActivePath = localStorage.getItem("activePath");
-    if (savedActivePath) {
-      setActiveTab(savedActivePath);
-    } else {
-      setActiveTab(router.pathname);
-    }
-  }, [router.pathname]);
-
   return (
     <motion.nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -129,7 +121,7 @@ const Navbar = () => {
                   className={`px-4 py-2 rounded-md transition-all duration-200 font-medium text-sm ${
                     isSpecial
                       ? "bg-blue-600 text-white hover:bg-blue-700"
-                      : activeTab === href
+                      : pathname === href
                       ? "text-blue-600 bg-blue-50"
                       : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
                   }`}
