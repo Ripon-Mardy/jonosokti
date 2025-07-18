@@ -219,7 +219,7 @@ const Page = () => {
                 className={`w-full pl-10 pr-10 py-3 rounded border border-gray-300 outline-none text-sm focus:ring-2 focus:ring-blue-500 `}
               />
               <span
-                className="absolute right-3 top-2.5 text-gray-500 cursor-pointer"
+                className="absolute right-3 top-3.5 text-gray-500 cursor-pointer"
                 onClick={() => setShowProviderPassword(!showProviderPassword)}
               >
                 {showProviderPassword ? (
@@ -303,7 +303,7 @@ const Page = () => {
                 className="w-full pl-10 pr-10 py-3 rounded border border-gray-300 outline-none text-sm focus:ring-2 focus:ring-blue-500"
               />
               <span
-                className="absolute right-3 top-3 text-gray-500 cursor-pointer"
+                className="absolute right-3 top-3.5 text-gray-500 cursor-pointer"
                 onClick={() => setShowCustomerPassword(!showCustomerPassword)}
               >
                 {showCustomerPassword ? (

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiArrowRight, FiArrowUp } from "react-icons/fi";
-import { Grip } from 'lucide-react';
+import { Grip } from "lucide-react";
 import CategoryLoader from "./Loader/CategoryLoader";
 import NotFound from "@/app/not-found";
 import NoDataFound from "./NoDataFound/NoDataFound";
@@ -128,7 +128,7 @@ const JobCategory = () => {
           </div>
         ) : displayedCategories.length > 0 ? (
           <motion.div
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 sm:gap-6"
+            className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 sm:gap-6"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -141,16 +141,14 @@ const JobCategory = () => {
                   layout
                   className="group"
                 >
-                  <Link
-                    href={`/category/${jobItem?._id}`}
-                    className="block h-full bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 transform"
-                  >
-                    <div className="p-4 flex flex-col items-center justify-between h-full">
-                      <div className="relative w-full pt-[100%] rounded-lg overflow-hidden bg-blue-50">
+                  <Link href={`/category/${jobItem?._id}`} className="">
+                    <div className="w-full h-full bg-white rounded p-1 md:p-2">
+                      <div className="w-16 md:w-20 h-16 md:h-20 mx-auto">
                         <Image
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          className="object-cover group-hover:scale-105 transition-transform duration-300 text-xs"
+                          width={4}
+                          height={4}
+                          layout="responsive"
+                          className="w-5 h-20"
                           src={`https://www.jonosokti.com${jobItem?.image}`}
                           alt={jobItem.name || "Category Image"}
                         />
@@ -160,8 +158,8 @@ const JobCategory = () => {
                           {jobItem.name || "Untitled"}
                         </h3>
                         <p className="mt-1 text-xs text-paraColor">
-                          {providerCounts[jobItem._id] ?? 0} Provider
-                          {providerCounts[jobItem._id] === 1 ? "" : "s"}{" "}
+                          {providerCounts[jobItem._id] ?? 0} Provider 
+                          {providerCounts[jobItem._id] === 1 ? "" : "s "}
                           available
                         </p>
                       </div>
@@ -173,7 +171,13 @@ const JobCategory = () => {
           </motion.div>
         ) : (
           <div>
-            <NoDataFound icon={<Grip/>} text={'No category available'} subText={'Currently, there are no job listings. Please check back later.'} />
+            <NoDataFound
+              icon={<Grip />}
+              text={"No category available"}
+              subText={
+                "Currently, there are no job listings. Please check back later."
+              }
+            />
           </div>
         )}
 

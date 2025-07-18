@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import { Suspense } from "react";
 import Image from "next/image";
 import {
   Phone,
@@ -11,6 +10,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import { ToastContainer, toast } from "react-toastify";
 import Link from "next/link";
 import coverImage from "@/public/images/jonosokti_cover.jpeg";
 import userImage from "@/public/images/profile.jpg";
@@ -25,7 +25,6 @@ import JobLoader from "@/components/Loader/JobLoader";
 
 const Page = ({ params }) => {
   const [singleUser, setSingleUser] = useState({}); // state to hold single user data
-  console.log("single user", singleUser);
   const [bannerImage, setBannerImage] = useState(coverImage); // state for banner image
   const [profileImage, setProfileImage] = useState(userImage); // state for profile image
   const [activeTab, setActiveTab] = useState("overview"); // state for active tab
@@ -35,11 +34,38 @@ const Page = ({ params }) => {
   const [showReviewModal, setShowReviewModal] = useState(false); // state for review modal
   const [loading, setLoading] = useState(false); // state for loading
   const [tapToShowPhone, setTapToShowPhone] = useState(true); // state for tap to show phone
+  const [authToken, setAuthToken] = useState('');
+
+  // store token 
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    setAuthToken(token)
+  }, [])
 
   // handle phone click
   const handlePhoneClick = () => {
+
+   if (!authToken) {
+  toast.error('🔒 Login to view contact info.', {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+  });
+  return;
+}
+
     if (!singleUser?.phone) {
-      alert("No phone number available");
+      toast.error('📞 No phone number available for this user.', {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+  });
       return;
     }
 
@@ -192,6 +218,10 @@ const Page = ({ params }) => {
     <section className="pt-20 pb-20">
       <div className="xl:container xl:mx-auto px-2 xl:px-0">
         <div className="flex flex-col md:flex-row gap-6">
+
+          <ToastContainer/>
+
+
           {/* Left Section */}
           <div className="w-full md:w-3/4">
             {/* Profile Card */}
@@ -220,12 +250,13 @@ const Page = ({ params }) => {
 
               {/* Profile Details */}
               <div className="mt-14 md:mt-16">
-                <div className="mt-12 md:mt-16 px-5 space-y-4">
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <div className="flex flex-wrap items-center justify-center gap-5">
-                      <h2 className="text-xl md:text-2xl font-semibold text-textHeadingColor flex items-center">
-                        {singleUser?.first_name || ""}
-                        {singleUser?.last_name || ""}
+                <div className="mt-12 md:mt-16 px-2">
+
+
+                  <div className="md:flex md:items-center justify-start leading-5">
+                    <div className="flex gap-3 items-center justify-start">
+                      <h2 className="text-xl md:text-2xl font-semibold text-textHeadingColor  ">
+                        {singleUser?.first_name || " "} {singleUser?.last_name  || " "}
                       </h2>
                       <Link
                         href={"#"}
@@ -239,13 +270,14 @@ const Page = ({ params }) => {
                       className="cursor-pointer text-paraColor pr-5 hover:text-gray-900 transition "
                       title="Share"
                     >
-                      <Share2 className="md:scale-110" />
+                      {/* <Share2 size={22} className="hidden md:block" /> */}
                     </span>
                   </div>
 
-                  <div className="space-y-2">
+
+                  <div className="md:mt-4">
                     {/* services  */}
-                    <div className="flex items-center justify-start flex-wrap text-sm md:text-base gap-2 text-black90 font-normal mt-1 leading-4 mb-2">
+                    <div className="flex items-center justify-start flex-wrap text-sm md:text-base gap-2 text-black90 font-normal leading-4 mb-2">
                       {[
                         "Cleaning Service",
                         "Electric Service",
@@ -287,9 +319,8 @@ const Page = ({ params }) => {
                           "Tap to Show Number"
                         ) : (
                           <div className="flex items-center justify-center gap-2">
-                            {" "}
-                            <Phone size={16} />{" "}
-                            {singleUser?.phone || "no phone"}{" "}
+                            <Phone size={16} />
+                            {singleUser?.phone || "no phone"}
                           </div>
                         )}
                       </span>

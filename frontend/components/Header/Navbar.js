@@ -109,16 +109,6 @@ const Navbar = () => {
     >
       <div className="xl:container xl:mx-auto flex justify-between items-center px-2 sm:px-0">
         <div>
-          {/* <Link href="/" className="flex items-center relative z-10">
-          <Image
-            width={150}
-            height={50}
-            src={jsLogo}
-            alt="jonosokti"
-            className="w-32 md:w-40 h-auto"
-            priority
-          />
-        </Link> */}
         <Link href={'/'} className="flex items-center justify-center gap-1">
         <Image src={mobileLogo} width={150} height={50} className="w-10" />
           <span className="hidden md:block font-extrabold text-gray-700 text-xl -tracking-tight">Jonosokti</span>
