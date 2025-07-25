@@ -20,10 +20,6 @@ import coverImage from "@/public/images/jonosokti_cover.jpeg";
 import userImage from "@/public/images/user.png";
 import ProfileBanner from '@/public/images/profile-banner.jpg';
 import { FaStar } from "react-icons/fa6";
-import facebook from '@/public/images/social/facebook.png';
-import x from '@/public/images/social/x.png';
-import linkedin from '@/public/images/social/linkedin.png';
-import telegram from '@/public/images/social/telegram.png';
 
 const Page = () => {
     const [bannerImage, setBannerImage] = useState(coverImage);
