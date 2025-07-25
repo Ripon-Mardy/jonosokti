@@ -88,7 +88,7 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 w-full z-50 transition-all duration-300 bg-white ${
         showNavbar ? "translate-y-0" : "-translate-y-full"
       } ${
         isScrolled 

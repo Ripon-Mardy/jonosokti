@@ -10,9 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // screens: {
-      //   'md': "1034px"
-      // },
+      backgroundImage : {
+        "heroImage": "url('/images/BannarCover/banner.jpg')",
+      },
       borderColor: {
         "borderInputColor" : "#D1D5DB",
         "borderFocusColor" : "#3B82F6",
@@ -47,6 +47,7 @@ module.exports = {
         "textColor": "#111827",
         "textHeadingColor" : "#111827",
         "textIconColor" : "#9CA3AF",
+        "textBannerColor" : "#2563EB",
         
 
 
