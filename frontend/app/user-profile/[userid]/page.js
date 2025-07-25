@@ -14,14 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Link from "next/link";
 import coverImage from "@/public/images/jonosokti_cover.jpeg";
 import userImage from "@/public/images/profile.jpg";
-import jsLogo from "@/public/images/jslogo2.png";
-import ProfileBanner from "@/public/images/profile-banner.jpg";
 import { FaStar } from "react-icons/fa6";
-import facebook from "@/public/images/social/facebook.png";
-import x from "@/public/images/social/x.png";
-import linkedin from "@/public/images/social/linkedin.png";
-import telegram from "@/public/images/social/telegram.png";
-import JobLoader from "@/components/Loader/JobLoader";
 
 const Page = ({ params }) => {
   const [singleUser, setSingleUser] = useState({}); // state to hold single user data
