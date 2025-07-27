@@ -1,6 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { BriefcaseBusiness } from "lucide-react";
+import {
+  BriefcaseBusiness,
+  MapPin,
+  CircleDollarSign,
+  User,
+  Heart,
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -91,11 +97,11 @@ const Jobs = () => {
           transition={{ duration: 0.5 }}
           className="mb-4 text-center"
         >
-          <h2 className="text-2xl sm:text-2xl font-bold text-textHeadingColor">
-            Recently Posted Jobs
+          <h2 className="text-2xl sm:text-3xl font-bold text-textHeadingColor">
+            Recent Job Posts
           </h2>
-          <p className="mt-1 text-textColor text-sm">
-            Job picks tailored for you
+          <p className="mt-1 text-gray-600 text-base">
+            Latest service requests from clients. Apply now and start earning.
           </p>
         </motion.div>
 
@@ -103,65 +109,55 @@ const Jobs = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          
         >
           {loading ? (
             <JobLoader />
           ) : error ? (
             <div>error</div>
-          ) : jobs.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {displayedJobs.map((job, index) => (
-                <motion.div
-                  key={job.id || index}
-                  variants={itemVariants}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Link
-                    href={`/alljobs/${job._id || ""}`}
-                    className="flex gap-4 p-3 rounded-lg border border-borderInputColor hover:border-borderFocusColor hover:bg-blue-50/30 transition-all duration-200 group bg-white"
-                  >
-                    <div className="relative flex-shrink-0 w-14 h-14 rounded-md overflow-hidden bg-blue-50 border border-gray-100">
-                      <Image
-                        src={jobImage}
-                        alt={job.companyName || "Company logo"}
-                        fill
-                        sizes="56px"
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex justify-between items-start flex-wrap">
-                        <h3 className="text-gray-900 font-semibold text-base group-hover:text-blue-600 transition-colors">
-                          {shortenText(job.title, 6)}
-                        </h3>
-                      </div>
+          ) : jobs.length > -1 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-white rounded-lg shadow-md p-4 border border-gray-50">
+                <div className="flex items-center justify-start gap-3 mb-4">
+                  <span className="bg-blue-200 p-2 rounded-full">
+                    <BriefcaseBusiness className="w-5 h-5 text-blue-500" />
+                  </span>
+                  <div>
+                    <h2 className="text-textHeadingColor font-bold text-base">
+                      Emergency Plumbing Repair
+                    </h2>
+                    <span className="text-xs font-medium text-textColor">
+                      2 hours ago
+                    </span>
+                  </div>
+                </div>
 
-                      <div className="mt-1 flex flex-wrap items-center text-sm text-gray-500 gap-x-3 w-full">
-                        <span className="inline-flex items-center text-xs">
-                          <BsBriefcase className="mr-1 text-textIconColor" />
-                          {job.company_name || "Wing Assistant"}
-                        </span>
-                        <span className="inline-flex items-center text-xs">
-                          <FaLocationDot className="mr-1 text-textIconColor" />
-                          {job.address || "Dhaka, Bangladesh"}
-                        </span>
-                      </div>
-
-                      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
-                        <span className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium flex gap-1">
-                          {/* <FaMoneyBillWave className="mr-1 text-gray-500" /> */}
-                          ৳ {job.cost || "35000"}/month
-                        </span>
-                        <span className="inline-flex items-center text-xs text-gray-500">
-                          <FaRegClock className="mr-1 text-textIconColor" />
-                          {job.posted || "6 months ago"}
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
+                {/* details  */}
+                <div>
+                  <p className="text-textColor text-sm font-medium">
+                   {` Need urgent plumbing repair for kitchen sink. Water leakage
+                    issue. Need urgent plumbing repair for kitchen sink. Water leakage
+                    issue.`.split(' ').slice(0, 34).join(' ')}...
+                  </p>
+                  <div className="mt-4 space-y-2">
+                    <span className="flex items-center justify-start gap-2 text-xs text-gray-600">
+                      <MapPin className="w-3 h-3" /> Dhanmondi, Dhaka
+                    </span>
+                    <span className="flex items-center justify-start gap-2 text-xs text-gray-600">
+                      <CircleDollarSign className="w-3 h-3" /> ৳800/hour
+                    </span>
+                    <span className="flex items-center justify-start gap-2 text-xs text-gray-600">
+                      <User className="w-3 h-3" /> Rashid Ahmed
+                    </span>
+                  </div>
+                </div>
+                {/* button  */}
+                <div className="flex items-center justify-center mt-4 gap-3">
+                  <button className="btn w-full">Apply Now</button>
+                  <button className="w-1/3 flex items-center justify-center border border-gray-200 py-2 rounded-full text-gray-500">
+                    <Heart className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
             </div>
           ) : (
             <div className="mt-5 ">
