@@ -5,10 +5,9 @@ import { Search, List  } from "lucide-react";
 
 const MainBanner = () => {
     const [category, setCategory] = useState([]);
-    console.log('category', category)
 
     // api key 
-    const apiKey = process.env.NEXT_PUBLIC_API_KEY
+    const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
     useEffect(() => {
       const fetchCategories = async () => {
@@ -24,7 +23,7 @@ const MainBanner = () => {
     },[])
 
   return (
-    <div className="bg-heroImage relative after:content-[''] after:absolute after:inset-0 after:bg-black after:bg-opacity-75 after:z-10 bg-cover bg-no-repeat bg-fixed bg-top py-10 pb-28">
+    <div className="bg-heroImage relative after:content-[''] after:absolute after:inset-0 after:bg-black after:bg-opacity-50 after:z-10 bg-cover bg-no-repeat bg-fixed bg-top py-10 pb-28">
       <div className="xl:container xl:mx-auto relative px-2 xl:px-0 pt-20 z-20">
         <div className="text-center text-white space-y-3">
           <h2 className="text-white font-bold text-3xl sm:text-5xl mx-auto sm:max-w-3xl">
@@ -46,13 +45,13 @@ const MainBanner = () => {
             </span>
             <input
               type="text"
-              className="w-full pl-12 pr-4 py-2 md:py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition text-sm"
+              className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition text-sm"
               placeholder="Where service you want"
             />
           </div>
           
          <div className="relative w-full">
-             <select className="w-full border border-gray-300 rounded-md py-2 md:py-3 outline-none pl-12 pr-4 focus:ring-1 focus:ring-blue-500 focus:border-transparent transition text-sm">
+             <select className="w-full border border-gray-300 rounded-md py-3 outline-none pl-12 pr-4 focus:ring-1 focus:ring-blue-500 focus:border-transparent transition text-sm">
             <option selected>All Services</option>
             {category.map((item) => (
              <div>
