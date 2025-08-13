@@ -14,7 +14,7 @@ module.exports = {
         "heroImage": "url('/images/BannarCover/banner.jpg')",
       },
       borderColor: {
-        "borderInputColor" : "#D1D5DB",
+        "borderInputColor" : "#E5E7EB",
         "borderFocusColor" : "#3B82F6",
 
 
@@ -30,6 +30,8 @@ module.exports = {
         "buttonBgColor" : "#2563EB",
         "buttonHoverBgColor" : "#1D4ED8",
         "headerBgColor" : "#1D4ED8",
+        "callButtonColor" : "#16A34A",
+        "bookServiceColor" : "#F97316",
 
 
 

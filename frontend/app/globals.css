@@ -6,6 +6,10 @@
   -moz-appearance: textfield;
 }
 
+body {
+  background-color: #F9FAFB;
+}
+
 .no-arrows::-webkit-outer-spin-button,
 .no-arrows::-webkit-inner-spin-button {
   -webkit-appearance: none;
