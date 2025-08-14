@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import userImage from "@/public/images/user.png";
 import { FaStar } from "react-icons/fa";
@@ -15,6 +16,7 @@ import {
   Globe,
   ShieldCheck,
   UserCheck,
+  X 
 } from "lucide-react";
 
 // image 
@@ -25,6 +27,10 @@ import image4 from '@/public/images/gallery/4.jpg'
 
 const page = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  const [isBooking, setIsBooking] = useState(false);
+  const [authToken, setIsAuthTokn] = useState('');
+  const router = useRouter();
+  const isLoggedin = authToken;
 
   const tabs = [
     { id: "overview", label: "Overview" },
@@ -32,7 +38,23 @@ const page = () => {
     { id: "reviews", label: "Reviews" },
     { id: "gallery", label: "Gallery" },
   ];
+
   const galleryImage = [image1, image2, image3, image4];
+
+  // authtoken 
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    setIsAuthTokn(authToken);
+  }, [authToken]);
+
+  // handleCallClick 
+  const handleCallClick = () => {
+    if(isLoggedin) {
+      window.location.href = `tel:+8801320585642`
+    } else {
+      router.push('/login')
+    }
+  }
 
   return (
     <div className="xl:container xl:mx-auto px-2 xl:px-0 py-24">
@@ -92,13 +114,15 @@ const page = () => {
 
                 {/* Action buttons */}
                 <div className="flex items-center flex-wrap gap-3 pt-3 sm:pt-5">
-                  <button className="flex items-center gap-1 text-sm bg-callButtonColor py-2 px-6 rounded-md text-white font-medium">
-                    <Phone className="w-4 h-4" /> Call Now
+
+                   <button onClick={handleCallClick} className="flex items-center gap-1 text-sm bg-callButtonColor py-2 px-6 rounded-md text-white font-medium">
+                    <Phone className="w-4 h-4" /> {isLoggedin ? 'Call Now' : 'Login to Call'}
                   </button>
-                  <button className="flex items-center gap-1 text-sm bg-bgColor text-white py-2 px-5 rounded-md font-medium">
+
+                  <button onClick={() => alert('This Features is comming soon...')} className="flex items-center gap-1 text-sm bg-bgColor text-white py-2 px-5 rounded-md font-medium">
                     <Mail className="w-4 h-4" /> Message
                   </button>
-                  <button className="flex items-center gap-1 text-sm bg-bookServiceColor py-2 px-6 rounded-md text-white font-medium">
+                  <button onClick={() => setIsBooking(!isBooking)} className="flex items-center gap-1 text-sm bg-bookServiceColor py-2 px-6 rounded-md text-white font-medium">
                     <Calendar className="w-4 h-4" /> Book Service
                   </button>
                 </div>
@@ -367,12 +391,66 @@ const page = () => {
          <div className="border border-red-300 rounded-md shadow p-3 md:p-5 mt-5 bg-[#FAF5FF] space-y-3">
           <h2 className="text-xl font-semibold text-red-700">Emergency Service</h2>
           <p className="text-base text-red-500">Need urgent repair? Call directly for emergency service.</p>
-          <button className=" w-full py-2 rounded-md font-medium bg-red-700 flex items-center justify-center gap-2 text-red-200"> <Phone className="w-4 h-4 text-red-200" /> Emergency Call </button>
+          <button className=" w-full py-2 rounded-md font-medium bg-red-700 hover:bg-red-800 transition flex items-center justify-center gap-2 text-red-200"> <Phone className="w-4 h-4 text-red-200" /> Emergency Call </button>
          </div>
 
 
 
         </div>
+
+        {/* book sevices popup  */}
+        {isBooking && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
+        <div className="bg-white w-full max-w-md p-5 rounded-md shadow-md h-auto overflow-y-auto">
+          <div className="flex items-center justify-between gap-2">
+            <h2 className="text-lg font-bold text-textHeadingColor">Book Service</h2>
+            <X onClick={() => setIsBooking(!isBooking)} className="w-4 h-4 text-textColor cursor-pointer" />
+          </div>
+
+         <div className="mt-5 space-y-4">
+          {/* service type  */}
+           <div className="flex flex-col gap-1">
+            <label htmlFor="type" className="text-textColor font-medium text-sm">Service Type</label>
+            <select id="type" className="w-full py-2 px-2 outline-none border border-borderInputColor rounded-md text-base text-textHeadingColor" required>
+              <option value="Battery ReplaceMent">Battery Replacement - $500 - $600 </option>
+              <option value="Battery ReplaceMent">Battery Replacement - $500 - $600 </option>
+              <option value="Battery ReplaceMent">Battery Replacement - $500 - $600 </option>
+              <option value="Battery ReplaceMent">Battery Replacement - $500 - $600 </option> 
+              <option value="Battery ReplaceMent">Battery Replacement - $500 - $600 </option>
+            </select>
+          </div>
+          {/* preferred date  */}
+          <div className="flex flex-col gap-1">
+            <label htmlFor="date" className="text-textColor font-medium text-sm">Preferred Date</label>
+            <input id="date" className="w-full py-2 px-2 outline-none border border-borderInputColor rounded-md text-base text-textHeadingColor" type="date" />
+          </div>
+          {/* Preferred Time  */}
+          <div className="flex flex-col gap-1">
+            <label htmlFor="time" className="text-textColor font-medium text-sm">Preferred Time</label>
+            <select id="time" className="w-full py-2 px-2 outline-none border border-borderInputColor rounded-md text-base text-textHeadingColor">
+              <option value="#">9:00 AM - 10:00 AM</option>
+              <option value="#">10:00 AM - 11:00 AM</option>
+              <option value="#">11:00 AM - 12:00 AM</option>
+              <option value="#">2:00 PM - 3:00 PM</option>
+              <option value="#">3:00 PM - 4:00 PM</option>
+              <option value="#">4:00 PM - 5:00 PM</option>
+            </select>
+          </div>
+          {/* Additional Requirements  */}
+          <div className="flex flex-col gap-1">
+            <label htmlFor="additional" className="text-textColor font-medium text-sm">Additional Requirements</label>
+            <textarea name=""rows={5} id="additional" className="w-full py-2 px-2 outline-none border border-borderInputColor rounded-md text-base text-textHeadingColor" placeholder="Describe your issue or any specific requirements..."></textarea>
+          </div>
+          {/* acitons buttons  */}
+          <div className="flex items-center justify-between gap-4">
+            <button onClick={() => setIsBooking(!isBooking)} className="border border-borderInputColor py-1.5 px-4 w-full rounded-md text-base font-medium text-textHeadingColor">Cancel</button>
+            <button className="btn w-full">Confirm Booking</button>
+          </div>
+         </div>
+
+        </div>
+        </div>
+        )}
 
 
       </div>

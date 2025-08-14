@@ -79,7 +79,7 @@ const UsersCard = () => {
           </div>
           {/* hire now  */}
           <div className="mt-4 flex gap-3 items-center justify-center">
-            <button className=" btn w-full">Hire Now</button>
+            <Link href={'/in/profile'} className=" btn w-full">Hire Now</Link>
             {/* <button className="w-1/2 flex items-center justify-center border border-gray-300 py-2 rounded-full text-gray-600">
               <MessageSquareMore className="w-5 h-5" />
             </button> */}
