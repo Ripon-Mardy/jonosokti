@@ -345,7 +345,7 @@ const page = () => {
                 href={"#"}
                 className="flex items-center justify-start gap-1 bg-callButtonColor p-1 rounded-md text-white text-sm px-4"
               >
-                <Phone className="w-3 h-3" /> Call
+                <Phone className="w-3 h-3" /> {isLoggedin ? 'Call' : 'Login to call'}
               </Link>
             </div>
             <span className="bg-gray-100 p-1 px-3 rounded-md py-3 flex items-center justify-start gap-2 text-sm text-textColor font-medium">

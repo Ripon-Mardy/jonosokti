@@ -37,7 +37,7 @@ const page = ({params}) => {
       <div className="mt-4">
         <h2 className="text-xl sm:text-3xl font-bold">Phone Repair Providers</h2>
         <p className="text-sm text-textColor">
-          4 providers available in your area
+          3 providers available in your area
         </p>
       </div>
 
