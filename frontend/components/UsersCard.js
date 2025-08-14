@@ -13,13 +13,13 @@ import {
 } from "lucide-react";
 import { FaStar } from "react-icons/fa6";
 
-const UsersCard = ({ image, first_name, last_name, address, userId }) => {
+const UsersCard = () => {
   return (
     <>
-      <div className="bg-white rounded-lg shadow-md p-4">
+      <div className="bg-white rounded-lg border border-gray-200 p-3">
         <div>
           {/* image content  */}
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             {/* Image + Badge */}
             <div className="relative w-16 h-16 rounded-full">
               <Image
@@ -60,7 +60,7 @@ const UsersCard = ({ image, first_name, last_name, address, userId }) => {
             <span className="flex items-center justify-start gap-2 text-xs text-gray-600">
               <Clock10 className="w-3 h-3" /> Responds in 30 mins 
             </span>
-            <span className="flex items-center justify-start gap-2 text-xs text-gray-900">
+            <span className="flex items-center justify-start gap-2 text-xs text-gray-600">
               <CircleCheck className="w-3 h-3" /> 234 jobs completed
             </span>
           </div>
@@ -79,10 +79,10 @@ const UsersCard = ({ image, first_name, last_name, address, userId }) => {
           </div>
           {/* hire now  */}
           <div className="mt-4 flex gap-3 items-center justify-center">
-            <button className="btn w-full">Hire Now</button>
-            <button className="w-1/2 flex items-center justify-center border border-gray-300 py-2 rounded-full text-gray-600">
+            <Link href={'/in/profile'} className=" btn w-full">Hire Now</Link>
+            {/* <button className="w-1/2 flex items-center justify-center border border-gray-300 py-2 rounded-full text-gray-600">
               <MessageSquareMore className="w-5 h-5" />
-            </button>
+            </button> */}
           </div>
 
 

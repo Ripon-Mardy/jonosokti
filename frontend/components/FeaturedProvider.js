@@ -22,7 +22,7 @@ const FeaturedProvider = () => {
                <UsersCard key={index}/>
             ))}
         </div>
-        <div className="text-center mt-4">
+        <div className="text-center mt-5">
         <button className="btn">See all providers</button>
         </div>
        </div>

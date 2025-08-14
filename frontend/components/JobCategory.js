@@ -84,12 +84,14 @@ const JobCategory = () => {
   return (
     <section className="py-3">
       <div className="max-w-7xl mx-auto px-2 sm:px-0">
+        
+        {/* cateogry title  */}
         <div className="text-center mb-6">
           <motion.h2
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-2xl md:text-2xl font-bold text-textHeadingColor mb-1"
+            className="text-center text-xl md:text-3xl text-textHeadingColor font-bold"
           >
             Popular Categories
           </motion.h2>
@@ -97,14 +99,14 @@ const JobCategory = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-sm text-textColor max-w-2xl mx-auto"
+            className="max-w-xl mx-auto text-center text-gray-600 mt-2 mb-6 text-sm sm:text-base"
           >
             What service do you need? Browse our most popular categories
           </motion.p>
         </div>
 
         {isLoading ? (
-          <CategoryLoader />
+          <div>Loading...</div>
         ) : error ? (
           <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md max-w-2xl mx-auto">
             <div className="flex">
@@ -128,7 +130,7 @@ const JobCategory = () => {
           </div>
         ) : displayedCategories.length > 0 ? (
           <motion.div
-            className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 sm:gap-6"
+            className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-2 sm:gap-6"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -139,11 +141,11 @@ const JobCategory = () => {
                   key={jobItem._id || index}
                   variants={itemVariants}
                   layout
-                  className="group"
+                  className="group border border-gray-100 p-2 rounded-md"
                 >
-                  <Link href={`/category/${jobItem?._id}`} className="">
-                    <div className="w-full h-full bg-white rounded p-1 md:p-2">
-                      <div className="w-16 md:w-20 h-16 md:h-20 mx-auto">
+                  <Link href={`/category/sub-category/${jobItem?._id}`}>
+                    <div className="w-full h-full bg-white rounded">
+                      <div className="w-16 md:w-20 h-auto mx-auto">
                         <Image
                           width={4}
                           height={4}
