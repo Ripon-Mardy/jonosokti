@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { BsFillHandbagFill } from "react-icons/bs";
 import { FaUserFriends } from "react-icons/fa";
 import { MdOutlinePayments } from "react-icons/md";
-import Transcation from "./Transcation";
 
 const DashboardCard = ({ icon: Icon, title, count, total, activeCount, bgColor }) => {
   // Calculate percentage based on activeCount and total
