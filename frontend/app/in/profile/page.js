@@ -63,7 +63,7 @@ const page = () => {
       <div className="md:grid md:grid-cols-3 gap-5">
         <div className="md:col-span-2">
           {/* left side left info  */}
-          <div className=" bg-white p-3 sm:p-4 shadow-md rounded-md flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className=" bg-white p-3 md:p-4 shadow-md rounded-md flex flex-col md:flex-row items-start md:items-center gap-4">
             <div className="w-48 h-48 flex items-center justify-start">
               <Image
                 src={userImage}
@@ -75,10 +75,10 @@ const page = () => {
             </div>
 
             {/* Right side info */}
-            <div className="space-y-2 sm:space-y-1">
+            <div className="space-y-2 md:space-y-1">
               {/* Name + verification */}
-              <div className="flex gap-2 items-center">
-                <h2 className="text-textHeadingColor font-bold text-2xl sm:text-3xl">
+              <div className="flex flex-wrap gap-2 items-center">
+                <h2 className="text-textHeadingColor font-bold text-2xl md:text-3xl">
                   Ripon Mardy Axel
                 </h2>
                 <button className="text-xs text-textColor border border-blue-500 border-dashed font-medium px-2 rounded-full">
@@ -92,9 +92,9 @@ const page = () => {
               </h3>
 
               {/* Stats */}
-              <div className="space-y-3 sm:space-y-0 sm:py-3">
-                <div className="space-y-2 sm:flex sm:items-center sm:gap-4">
-                  <div className="flex items-center gap-2 text-sm text-textColor mt-4 sm:mt-0">
+              <div className="space-y-3 md:space-y-0 md:py-3">
+                <div className="space-y-2 md:flex flex-wrap md:items-center md:gap-4">
+                  <div className="flex items-center gap-2 text-sm text-textColor mt-4 md:mt-0">
                     <FaStar className="w-3 h-3 text-yellow-500" />
                     <span className="font-bold">4.9</span>
                     <span>(3 reviews)</span>
@@ -105,15 +105,18 @@ const page = () => {
                   <div className="flex items-center gap-2 text-sm text-textColor">
                     <Clock3 className="w-3 h-3" /> Responds in 30 mins
                   </div>
-                </div>
 
-                {/* Location */}
+                   {/* Location */}
                 <h2 className="text-sm text-textColor flex items-center gap-2">
                   <MapPin className="w-3 h-3" /> Dhanmondi, Dhaka
                 </h2>
 
+                </div>
+
+               
+
                 {/* Action buttons */}
-                <div className="flex items-center flex-wrap gap-3 pt-3 sm:pt-5">
+                <div className="flex items-center flex-wrap gap-3 pt-3 md:pt-5">
 
                    <button onClick={handleCallClick} className="flex items-center gap-1 text-sm bg-callButtonColor py-2 px-6 rounded-md text-white font-medium">
                     <Phone className="w-4 h-4" /> {isLoggedin ? 'Call Now' : 'Login to Call'}
@@ -337,7 +340,7 @@ const page = () => {
             Contact Information
           </h2>
           <div className="mt-3 space-y-3">
-            <div className="bg-gray-100 p-1 px-3 rounded-md py-3 flex items justify-between">
+            <div className="bg-gray-100 p-1 px-3 rounded-md py-3 flex flex-wrap items justify-between gap-1">
               <span className=" flex items-center justify-start gap-2 text-sm text-textColor font-semibold">
                 <Phone className="w-4 h-4" /> +880-1712-345678
               </span>

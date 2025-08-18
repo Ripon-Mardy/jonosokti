@@ -14,8 +14,8 @@ import { FaLocationDot, FaRegClock } from "react-icons/fa6";
 import { HiArrowLongRight } from "react-icons/hi2";
 import { BsBriefcase } from "react-icons/bs";
 import jobImage from "@/public/images/jobsimage.jpg";
-import JobLoader from "./Loader/JobLoader";
 import NoDataFound from "./NoDataFound/NoDataFound";
+import Loader from "./Loader/Loader";
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -111,7 +111,7 @@ const Jobs = () => {
           animate="visible"
         >
           {loading ? (
-            <JobLoader />
+            <Loader/>
           ) : error ? (
             <div>error</div>
           ) : jobs.length > -1 ? (

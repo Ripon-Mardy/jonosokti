@@ -34,7 +34,7 @@ const Navbar = () => {
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/alljobs", label: "Jobs" },
+    { href: "/jobs", label: "Jobs" },
     { href: "/Post-a-jobs", label: "post a job" },
     { href: "/pricing", label: "Pricing" },
     { href: "/how-it-work", label: "How it works" },
@@ -188,21 +188,6 @@ const Navbar = () => {
 
             </div>
 
-            {/* <Link
-              href="/login"
-              className="flex items-center gap-1.5 px-4 py-2 font-medium text-sm text-gray-700 hover:text-blue-600 transition-colors duration-200"
-            >
-              <IoLogInOutline className="text-lg" />
-              <span>Login</span>
-            </Link>
-            <Link 
-              href="/mobile-signup" 
-              className="flex items-center gap-1.5 px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-200 font-medium text-sm shadow-sm"
-            >
-              <FiUser className="text-sm" />
-              <span>Sign Up</span>
-              <GoArrowUpRight className="text-sm" />
-            </Link> */}
           </div>
         </div>
 
@@ -230,48 +215,6 @@ const Navbar = () => {
                 </div>
               </div>
 
-              {/* profile dropdown menu  */}
-              {/* {showProfileDropdown && (
-                <div className="absolute -left-10 top-full w-32 rounded-md bg-white shadow-lg ring-1 ring-gray-200 z-50">
-                  <div className="py-2">
-                    {[
-                      {
-                        label: "Profile",
-                        icon: <UserRound size={18} />,
-                        href: "/alljobs",
-                      },
-                      {
-                        label: "Setting dfefef",
-                        icon: <Settings size={18} />,
-                        href: "/set",
-                      },
-                      {
-                        label: "Logout",
-                        icon: <LogOut size={18} />,
-                        href: "#",
-                      },
-                    ].map((item, index) => (
-                      <Link
-                        href={item.href}
-                        key={index}
-                        onClick={() => {
-                          if (item.label === "Logout") {
-                            localStorage.removeItem("authToken");
-                            // window.location.href = "/login";
-                            router.push('/login')
-                          }
-                          setShowProfileDropdown(false);
-                        }}
-
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200"
-                      >
-                        <span className="text-gray-500">{item.icon}</span>
-                        <span>Hello</span>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )} */}
             </div>
           </div>
 

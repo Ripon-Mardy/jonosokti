@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Search, List  } from "lucide-react";
+import Link from "next/link";
 
 const MainBanner = () => {
     const [category, setCategory] = useState([]);
@@ -65,7 +66,7 @@ const MainBanner = () => {
           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"> <List className="w-5 h-5"/> </span>
          </div>
 
-          <button className="bg-bgColor text-sm hover:bg-hoverBg transition text-white font-medium rounded-md w-full py-2 sm:py-3 sm:w-1/2">Find Services</button>
+          <Link href={'/exparts'} className="bg-bgColor text-sm text-center hover:bg-hoverBg transition text-white font-medium rounded-md w-full py-2 sm:py-3 sm:w-1/2">Find Services</Link>
         </div>
 
 

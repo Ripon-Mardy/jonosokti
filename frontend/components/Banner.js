@@ -228,9 +228,9 @@ const Banner = () => {
             onSubmit={handleSearchSubmit}
             className="bg-white shadow-xl rounded-2xl p-3 md:p-5 max-w-md ml-auto"
           >
-            <h3 className="text-xl font-semibold text-textHeadingColor mb-3">
+            <Link href={'/exparts'} className="text-xl font-semibold text-textHeadingColor mb-3">
               Find Services
-            </h3>
+            </Link>
 
             {error && (
               <div

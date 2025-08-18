@@ -171,19 +171,19 @@ const page = () => {
   };
 
   // Loading state
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center items-center">
-        <div className=" p-8 rounded-2xl shadow-xl flex flex-col items-center space-y-4">
-          <Loader2 className="animate-spin text-blue-500" size={48} />
-          {/* <div className="text-center">
-            <h3 className="text-lg font-semibold text-gray-800">Loading Experts</h3>
-            <p className="text-gray-600">Finding the best professionals for you...</p>
-          </div> */}
-        </div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center items-center">
+  //       <div className=" p-8 rounded-2xl shadow-xl flex flex-col items-center space-y-4">
+  //         <Loader2 className="animate-spin text-blue-500" size={48} />
+  //         {/* <div className="text-center">
+  //           <h3 className="text-lg font-semibold text-gray-800">Loading Experts</h3>
+  //           <p className="text-gray-600">Finding the best professionals for you...</p>
+  //         </div> */}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
@@ -191,7 +191,7 @@ const page = () => {
 
 
         {/* Header */}
-        <div className="text-center mb-8 bg-headerBgColor rounded-md p-3 space-y-2 py-5 max-w-4xl mx-auto">
+        {/* <div className="text-center mb-8 bg-headerBgColor rounded-md p-3 space-y-2 py-5 max-w-4xl mx-auto">
           <div className="flex items-center justify-center gap-2">
             <Award className="text-yellow-300" size={28} />
             <h1 className="text-base md:text-xl font-bold text-white">
@@ -204,7 +204,7 @@ const page = () => {
             guaranteed.
           </p>
 
-        </div>
+        </div> */}
 
         {/* Search and Sort Bar */}
         <div className="bg-white rounded-2xl shadow-lg p-2 mb-8">
@@ -554,7 +554,7 @@ const page = () => {
           {/* Experts Grid */}
           <div className="w-full">
             {filteredUsers && filteredUsers.length > 0 ? (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1  md:grid-cols-2 xl:grid-cols-3 gap-2">
                 {filteredUsers.map((user, index) => (
                   <UsersCard key={index} userId={user?._id}  />
                 ))}
@@ -570,6 +570,8 @@ const page = () => {
 
 
         </div>
+
+
       </div>
     </div>
   );

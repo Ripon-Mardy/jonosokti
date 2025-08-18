@@ -1,23 +1,19 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import Loading from "@/components/Loading";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Clock8,
   MapPin,
-  Banknote,
-  Bookmark,
-  Award,
   Search,
   Filter,
   X,
   ChevronDown,
   Heart,
-  Users,
-  Star,
+  BriefcaseBusiness,
+  CircleDollarSign,
+  User 
 } from "lucide-react";
-import jobsImage from "@/public/images/jobsimage.jpg";
+import Loader from "@/components/Loader/Loader";
 
 const page = () => {
   const [formData, setFormData] = useState({
@@ -31,7 +27,6 @@ const page = () => {
   const [category, setCategory] = useState([]);
   const [location, setLocation] = useState([]);
   const [filteredLocation, setFilteredLocation] = useState([]);
-  const [savedJobs, setSavedJobs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -129,13 +124,6 @@ const page = () => {
     };
   }, []);
 
-  // Handle saving a job
-  const handleSaveJob = (job) => {
-    if (!savedJobs.some((savedJob) => savedJob.id === job.id)) {
-      setSavedJobs([...savedJobs, job]);
-    }
-  };
-
   // Handle input change
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -186,29 +174,12 @@ const page = () => {
   };
 
   return (
-    <div>
-      {/* Hero Section */}
-      <div className="relative">
-        <div className="xl:container xl:mx-auto px-2 xl:px-0 relative z-10 pt-16 md:pt-24">
-          <div className="text-center mx-auto">
+    <div className="py-20">
 
+      <div className="xl:container xl:mx-auto px-2 xl:px-0 mt-10 relative z-20">
 
-            {/* Header */}
-            <div className="text-center mb-8 bg-headerBgColor p-3 rounded-md space-y-2 py-5 max-w-4xl mx-auto">
-              <div className="flex items-center justify-center gap-2">
-                <Award className="text-yellow-300" size={28} />
-                <h1 className="text-base md:text-xl font-bold text-white">
-                  Find Your Dream Career
-                </h1>
-              </div>
-              <p className="text-white text-sm max-w-2xl mx-auto">
-                Discover thousands of opportunities from top companies. Your
-                next career move starts here.
-              </p>
-            </div>
-
-            {/* Quick Search Bar */}
-            <div className="relative max-w-2xl mx-auto mt-5">
+              {/* quick search bar  */}
+        <div className="relative max-w-2xl mx-auto mt-5">
               <div className="relative">
                 <Search
                   className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -225,50 +196,8 @@ const page = () => {
               </div>
             </div>
 
-          </div>
-        </div>
-      </div>
-
-      <div className="xl:container xl:mx-auto px-2 xl:px-0 mt-5 relative z-20">
-        {/* Stats Cards */}
-        {/* <div className='grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12'>
-          <div className='bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300'>
-            <div className='flex items-center gap-4'>
-              <div className='bg-blue-100 p-3 rounded-xl'>
-                <TrendingUp className='text-blue-600' size={24} />
-              </div>
-              <div>
-                <p className='text-2xl font-bold text-gray-800'>{filteredJobs.length}+</p>
-                <p className='text-gray-600 text-sm'>Active Jobs</p>
-              </div>
-            </div>
-          </div>
-          <div className='bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300'>
-            <div className='flex items-center gap-4'>
-              <div className='bg-green-100 p-3 rounded-xl'>
-                <Users className='text-green-600' size={24} />
-              </div>
-              <div>
-                <p className='text-2xl font-bold text-gray-800'>500+</p>
-                <p className='text-gray-600 text-sm'>Companies</p>
-              </div>
-            </div>
-          </div>
-          <div className='bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300'>
-            <div className='flex items-center gap-4'>
-              <div className='bg-purple-100 p-3 rounded-xl'>
-                <Star className='text-purple-600' size={24} />
-              </div>
-              <div>
-                <p className='text-2xl font-bold text-gray-800'>1000+</p>
-                <p className='text-gray-600 text-sm'>Success Stories</p>
-              </div>
-            </div>
-          </div>
-        </div> */}
-
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-5">
 
           {/* Mobile Filter Toggle */}
           <div className="lg:hidden mb-4 col-span-full">
@@ -395,7 +324,7 @@ const page = () => {
                 </div>
 
                 {/* Job Type Filter */}
-                <div>
+                {/* <div>
                   <label className="block text-base font-semibold text-gray-700 mb-4">
                     Job Type
                   </label>
@@ -425,7 +354,10 @@ const page = () => {
                       </label>
                     ))}
                   </div>
-                </div>
+                </div> */}
+
+
+
               </div>
             </div>
           </div>
@@ -433,22 +365,8 @@ const page = () => {
           {/* Job Listings */}
           <div className="lg:col-span-8">
 
-
-            {/* <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-xl md:text-xl font-bold text-gray-800">
-                  {filteredJobs.length > 0
-                    ? `${filteredJobs.length} Jobs Found`
-                    : "No Jobs Found"}
-                </h2>
-                <p className="text-gray-600 text-sm">Discover your next opportunity</p>
-              </div>
-            </div> */}
-
             {loading ? (
-              <div className="flex justify-center items-center h-96 bg-white rounded-2xl shadow-lg">
-                <Loading />
-              </div>
+              <Loader/>
             ) : error ? (
               <div className="text-center text-red-500 bg-red-50 p-8 rounded-2xl border border-red-200">
                 <p className="text-lg font-medium mb-2">
@@ -456,97 +374,104 @@ const page = () => {
                 </p>
                 <p>{error}</p>
               </div>
-            ) : filteredJobs.length > 0 ? (
-              <div className="space-y-6">
-                {filteredJobs.map((job, index) => (
-                  <div
-                    key={index}
-                    className={`group bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl hover:border-blue-200 transition-all duration-300 overflow-hidden ${
-                      animateCards ? "animate-fade-in-up" : "opacity-0"
-                    }`}
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    <Link href={`/alljobs/${job._id}`} className="block p-6">
-                      <div className="flex flex-col sm:flex-row gap-6">
-                        <div className="flex-shrink-0">
-                          <div className="relative">
-                            <Image
-                              alt="company logo"
-                              className="rounded-2xl ring-4 ring-gray-100 group-hover:ring-blue-100 transition-all"
-                              width={80}
-                              height={80}
-                              src={jobsImage}
-                            />
-                            <div className="absolute -top-2 -right-2 bg-green-500 w-4 h-4 rounded-full border-2 border-white"></div>
-                          </div>
-                        </div>
+            ) : filteredJobs.length < 5 ? (
 
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-start justify-between gap-4 mb-3">
-                            <div className="flex-1 min-w-0">
-                              <h3 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2">
-                                {job.title}
-                              </h3>
-                              <p className="text-gray-600 font-medium mt-1">
-                                {job.company_name}
-                              </p>
-                            </div>
-                            <button
-                              onClick={(e) => {
-                                e.preventDefault();
-                                handleSaveJob(job);
-                              }}
-                              className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all"
-                            >
-                              <Heart
-                                size={20}
-                                className={`${
-                                  savedJobs.some((saved) => saved.id === job.id)
-                                    ? "fill-current text-red-500"
-                                    : ""
-                                }`}
-                              />
-                            </button>
-                          </div>
-
-                          <div className="flex flex-wrap items-center gap-4 text-sm mb-4">
-                            <span className="flex items-center gap-2 text-gray-600">
-                              <Clock8 size={16} className="text-blue-500" />
-                              {job.posted || "10 Dec"}
-                            </span>
-                            <span className="flex items-center gap-2 text-gray-600">
-                              <MapPin size={16} className="text-green-500" />
-                              {job?.address || "Remote"}
-                            </span>
-                            <span className="flex items-center gap-2 bg-green-50 text-green-700 px-3 py-1 rounded-full">
-                              <Banknote size={16} />৳{job.cost || 0}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center justify-between">
-                            <div className="flex gap-2">
-                              <span className="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full font-medium">
-                                {job.type || "Full Time"}
-                              </span>
-                              {job.featured && (
-                                <span className="bg-yellow-100 text-yellow-700 text-sm px-3 py-1 rounded-full font-medium flex items-center gap-1">
-                                  <Star size={14} />
-                                  Featured
-                                </span>
-                              )}
-                            </div>
-                            <div className="text-blue-600 font-medium group-hover:translate-x-1 transition-transform">
-                              View Details →
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* 1  */}
+                <div className="bg-white rounded-lg shadow-md p-4 border border-gray-50">
+                <div className="flex items-center justify-start gap-3 mb-4">
+                  <span className="bg-blue-200 p-2 rounded-full">
+                    <BriefcaseBusiness className="w-5 h-5 text-blue-500" />
+                  </span>
+                  <div>
+                    <h2 className="text-textHeadingColor font-bold text-base">
+                      Emergency Plumbing Repair
+                    </h2>
+                    <span className="text-xs font-medium text-textColor">
+                      2 hours ago
+                    </span>
                   </div>
-                ))}
+                </div>
+
+                {/* details  */}
+                <div>
+                  <p className="text-textColor text-sm font-medium">
+                   {` Need urgent plumbing repair for kitchen sink. Water leakage
+                    issue. Need urgent plumbing repair for kitchen sink. Water leakage
+                    issue.`.split(' ').slice(0, 34).join(' ')}...
+                  </p>
+                  <div className="mt-4 space-y-2">
+                    <span className="flex items-center justify-start gap-2 text-xs text-gray-600">
+                      <MapPin className="w-3 h-3" /> Dhanmondi, Dhaka
+                    </span>
+                    <span className="flex items-center justify-start gap-2 text-xs text-gray-600">
+                      <CircleDollarSign className="w-3 h-3" /> ৳800/hour
+                    </span>
+                    <span className="flex items-center justify-start gap-2 text-xs text-gray-600">
+                      <User className="w-3 h-3" /> Rashid Ahmed
+                    </span>
+                  </div>
+                </div>
+                {/* button  */}
+                <div className="flex items-center justify-center mt-4 gap-3">
+                  <button className="btn w-full">Apply Now</button>
+                  <button className="w-1/3 flex items-center justify-center border border-gray-200 py-2 rounded-full text-gray-500">
+                    <Heart className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
+              {/* 2  */}
+              <div className="bg-white rounded-lg shadow-md p-4 border border-gray-50">
+                <div className="flex items-center justify-start gap-3 mb-4">
+                  <span className="bg-blue-200 p-2 rounded-full">
+                    <BriefcaseBusiness className="w-5 h-5 text-blue-500" />
+                  </span>
+                  <div>
+                    <h2 className="text-textHeadingColor font-bold text-base">
+                      Emergency Plumbing Repair
+                    </h2>
+                    <span className="text-xs font-medium text-textColor">
+                      2 hours ago
+                    </span>
+                  </div>
+                </div>
+
+                {/* details  */}
+                <div>
+                  <p className="text-textColor text-sm font-medium">
+                   {` Need urgent plumbing repair for kitchen sink. Water leakage
+                    issue. Need urgent plumbing repair for kitchen sink. Water leakage
+                    issue.`.split(' ').slice(0, 34).join(' ')}...
+                  </p>
+                  <div className="mt-4 space-y-2">
+                    <span className="flex items-center justify-start gap-2 text-xs text-gray-600">
+                      <MapPin className="w-3 h-3" /> Dhanmondi, Dhaka
+                    </span>
+                    <span className="flex items-center justify-start gap-2 text-xs text-gray-600">
+                      <CircleDollarSign className="w-3 h-3" /> ৳800/hour
+                    </span>
+                    <span className="flex items-center justify-start gap-2 text-xs text-gray-600">
+                      <User className="w-3 h-3" /> Rashid Ahmed
+                    </span>
+                  </div>
+                </div>
+                {/* button  */}
+                <div className="flex items-center justify-center mt-4 gap-3">
+                  <button className="btn w-full">Apply Now</button>
+                  <button className="w-1/3 flex items-center justify-center border border-gray-200 py-2 rounded-full text-gray-500">
+                    <Heart className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+              </div>
+              
+
+
             ) : (
-              <div className="text-center py-16 bg-white rounded-2xl">
+
+
+              // if users is empty 
+              <div className="text-center py-16 rounded-2xl">
                 <div className="max-w-md mx-auto">
                   <div className="bg-gray-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
                     <Search size={32} className="text-gray-400" />
@@ -566,6 +491,8 @@ const page = () => {
                   </button>
                 </div>
               </div>
+
+
             )}
           </div>
         </div>
