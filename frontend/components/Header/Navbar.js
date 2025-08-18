@@ -41,7 +41,7 @@ const Navbar = () => {
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/alljobs", label: "Jobs" },
+    { href: "/jobs", label: "Jobs" },
     // {href : "/post-a-jobs", label : "post a job"},
     { href: "/pricing", label: "Pricing" },
     { href: "/how-it-work", label: "How it works" },
@@ -227,7 +227,7 @@ const Navbar = () => {
                           className={`w-full text-left px-4 py-3 rounded-md transition-all duration-200 ${
                             isSpecial
                               ? "bg-blue-600 text-white"
-                              : activeTab === href
+                              : pathname === href
                               ? "text-blue-600 bg-blue-50 font-medium"
                               : "text-gray-700 hover:bg-gray-50"
                           }`}

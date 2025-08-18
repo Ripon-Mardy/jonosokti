@@ -8,6 +8,7 @@ import { Grip } from "lucide-react";
 import CategoryLoader from "./Loader/CategoryLoader";
 import NotFound from "@/app/not-found";
 import NoDataFound from "./NoDataFound/NoDataFound";
+import Loader from "./Loader/Loader";
 
 const JobCategory = () => {
   const [jobCategories, setJobCategories] = useState([]);
@@ -84,7 +85,6 @@ const JobCategory = () => {
   return (
     <section className="py-3">
       <div className="max-w-7xl mx-auto px-2 sm:px-0">
-        
         {/* cateogry title  */}
         <div className="text-center mb-6">
           <motion.h2
@@ -106,7 +106,7 @@ const JobCategory = () => {
         </div>
 
         {isLoading ? (
-          <div>Loading...</div>
+         <Loader/>
         ) : error ? (
           <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-md max-w-2xl mx-auto">
             <div className="flex">
@@ -160,7 +160,7 @@ const JobCategory = () => {
                           {jobItem.name || "Untitled"}
                         </h3>
                         <p className="mt-1 text-xs text-paraColor">
-                          {providerCounts[jobItem._id] ?? 0} Provider 
+                          {providerCounts[jobItem._id] ?? 0} Provider
                           {providerCounts[jobItem._id] === 1 ? "" : "s "}
                           available
                         </p>

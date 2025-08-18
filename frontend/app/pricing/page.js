@@ -1,10 +1,10 @@
 "use client";
-import Loading from "@/components/Loading";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { RxCheck } from "react-icons/rx";
 import { motion } from "framer-motion";
 import { Award, CircleDollarSign  } from "lucide-react";
+import Loader from "@/components/Loader/Loader";
 
 const Page = () => {
   const [packages, setPackages] = useState([]);
@@ -49,12 +49,12 @@ const Page = () => {
 
 
         {/* Header */}
-        <div className="text-center mb-8 bg-headerBgColor rounded-md p-3 space-y-2 py-5 max-w-4xl mx-auto">
+        <div className="text-center mb-8 rounded-md p-3 space-y-2 py-5 max-w-4xl mx-auto">
           <div className="flex items-center justify-center gap-2">
-            <CircleDollarSign  className="text-yellow-300" size={28} />
-            <h1 className="text-base md:text-xl font-bold text-white">Choose Your Perfect Plan</h1>
+            {/* <CircleDollarSign  className="text-yellow-300" size={28} /> */}
+            <h1 className="text-base md:text-2xl font-bold text-textHeadingColor">Choose Your Perfect Plan</h1>
           </div>
-          <p className="text-white text-sm max-w-2xl mx-auto">
+          <p className=" text-sm md:text-base max-w-2xl mx-auto text-textColor">
             Select the package that best suits your needs. All plans include our core features.
           </p>
         </div>
@@ -66,7 +66,7 @@ const Page = () => {
         {/* Packages Grid */}
         {loading ? (
           <div className="flex justify-center items-center min-h-[400px]">
-            <Loading />
+            <Loader/>
           </div>
         ) : error ? (
           <div className="text-center p-8 bg-red-50 rounded-lg">
