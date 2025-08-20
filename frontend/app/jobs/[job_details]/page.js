@@ -52,26 +52,6 @@ const JobDetails = ({ params }) => {
     getSingleJob();
   }, [jobId]);
 
-  if(loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    )
-  }
-
-  if(error) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen px-4">
-        <div className="text-red-500 text-6xl mb-4">404</div>
-        <h1 className="text-2xl font-bold text-gray-800 mb-4">{error}</h1>
-        <p className="text-gray-600 mb-8">The job you're looking for doesn't exist or has been removed.</p>
-        <Link href="/jobs" className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-lg transition-all">
-          Browse All Jobs
-        </Link>
-      </div>
-    )
-  }
 
   return (
     <div className='max-w-7xl mx-auto px-2 pt-32 pb-16'>
@@ -95,7 +75,7 @@ const JobDetails = ({ params }) => {
               Featured Job
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-              {singleJob?.title || 'Job Title'} 
+              {singleJob?.title || 'Emergency Plumbing Repair'} 
             </h1>
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm text-gray-600">
               <div className="flex items-center gap-1">
@@ -137,44 +117,56 @@ const JobDetails = ({ params }) => {
       <div className="bg-white rounded-xl shadow-md mb-8 overflow-hidden">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
           {/* Location */}
-          <div className="flex flex-col justify-center p-6 border-r border-b border-gray-100">
-            <MapPin size={24} className="text-blue-500 mb-2" />
-            <p className="text-xs text-gray-500 uppercase font-medium">Location</p>
+          <div className="flex flex-col items-start justify-start gap-2 p-6 border-r border-b border-gray-100">
+            <div className='flex items-center justify-center gap-1'>
+              <MapPin className="text-blue-500 w-4 h-4" />
+            <p className="text-xs text-textColor uppercase font-medium">Location</p>
+            </div>
             <p className="text-sm font-medium text-gray-900">Dhaka, Bangladesh</p>
           </div>
 
           {/* Salary */}
-          <div className="flex flex-col justify-center p-6 border-r border-b border-gray-100">
-            <DollarSign size={24} className="text-green-500 mb-2" />
-            <p className="text-xs text-gray-500 uppercase font-medium">Salary</p>
-            <p className="text-sm font-medium text-gray-900">৳12,121</p>
+          <div className="flex items-start justify-start flex-col gap-2 p-6 border-r border-b border-gray-100">
+            <div className='flex items-center justify-start gap-1'>
+              <DollarSign className="text-green-500 w-4 h-4" />
+            <p className="text-xs text-textColor uppercase font-medium">Salary</p>
+            </div>
+            <p className="text-sm font-medium text-gray-900">৳ 12,121 TK</p>
           </div>
 
           {/* Job Type */}
-          <div className="flex flex-col justify-center p-6 border-r border-b border-gray-100">
-            <Briefcase size={24} className="text-purple-500 mb-2" />
-            <p className="text-xs text-gray-500 uppercase font-medium">Job Type</p>
+          <div className="flex flex-col justify-start items-start gap-2 p-6 border-r border-b border-gray-100">
+           <div className='flex items-center justify-start gap-1'>
+             <Briefcase className="text-purple-500 w-4 h-4" / >
+            <p className="text-xs text-textColor uppercase font-medium">Job Type</p>
+           </div>
             <p className="text-sm font-medium text-gray-900">Full-Time</p>
           </div>
 
           {/* Category */}
-          <div className="flex flex-col justify-center p-6 border-r border-b border-gray-100">
-            <Tag size={24} className="text-orange-500 mb-2" />
-            <p className="text-xs text-gray-500 uppercase font-medium">Category</p>
+          <div className="flex flex-col justify-start items-start gap-2 p-6 border-r border-b border-gray-100">
+            <div className='flex items-center justify-start gap-1'>
+              <Tag className="text-orange-500  w-4 h-4" />
+            <p className="text-xs text-textColor uppercase font-medium">Category</p>
+            </div>
             <p className="text-sm font-medium text-gray-900">Cleaning</p>
           </div>
 
           {/* Hours */}
-          <div className="flex flex-col justify-center p-6 border-r border-b border-gray-100">
-            <Clock size={24} className="text-red-500 mb-2" />
-            <p className="text-xs text-gray-500 uppercase font-medium">Hours</p>
+          <div className="flex flex-col justify-start items-start gap-2 p-6 border-r border-b border-gray-100">
+           <div className='flex items-center justify-start gap-1'>
+             <Clock className="text-red-500 w-4 h-4" />
+            <p className="text-xs text-textColor uppercase font-medium">Hours</p>
+           </div>
             <p className="text-sm font-medium text-gray-900">12 hrs/day</p>
           </div>
 
           {/* Posted On */}
-          <div className="flex flex-col justify-center p-6 border-b border-gray-100">
-            <User size={24} className="text-indigo-500 mb-2" />
-            <p className="text-xs text-gray-500 uppercase font-medium">Posted On</p>
+          <div className="flex flex-col justify-start items-start gap-2 p-6 border-b border-gray-100">
+            <div className='flex items-center justify-start gap-1'>
+              <User className="text-indigo-500 h-4 w-4" />
+            <p className="text-xs text-textColor uppercase font-medium">Posted On</p>
+            </div>
             <p className="text-sm font-medium text-gray-900">12 April 2024</p>
           </div>
         </div>

@@ -115,6 +115,7 @@ const Jobs = () => {
           ) : error ? (
             <div>error</div>
           ) : jobs.length > -1 ? (
+            // jobs  
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="bg-white rounded-lg shadow-md p-4 border border-gray-50">
                 <div className="flex items-center justify-start gap-3 mb-4">
@@ -152,13 +153,14 @@ const Jobs = () => {
                 </div>
                 {/* button  */}
                 <div className="flex items-center justify-center mt-4 gap-3">
-                  <button className="btn w-full">Apply Now</button>
+                  <Link href={'/jobs/1'} className="btn w-full">Apply Now</Link>
                   <button className="w-1/3 flex items-center justify-center border border-gray-200 py-2 rounded-full text-gray-500">
                     <Heart className="w-5 h-5" />
                   </button>
                 </div>
               </div>
             </div>
+
           ) : (
             <div className="mt-5 ">
               <NoDataFound
