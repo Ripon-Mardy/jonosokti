@@ -2,6 +2,7 @@ import { Poppins, Open_Sans, Roboto, Ubuntu, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer/Footer";
 import AuthContext from "@/components/NavbarContext/AuthContext";
+import Script from "next/script";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -38,6 +39,25 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+
+         <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+              page_path: window.location.pathname,
+            });
+          `,
+          }}
+        />
 
 
       </head>

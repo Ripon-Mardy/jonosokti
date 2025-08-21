@@ -14,7 +14,7 @@ const AuthContext = () => {
     setIsLoggedIn(!!token); // true or false
   }, [pathname]);
 
-  return <div>{isLoggedIn ? <AuthNavbar /> : <Navbar />}</div>;
+  return <div>{isLoggedIn ? <AuthNavbar onLogout={() => setIsLoggedIn(false)} /> : <Navbar />}</div>;
 };
 
 export default AuthContext;
