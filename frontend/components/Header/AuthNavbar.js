@@ -11,7 +11,7 @@ import { ChevronDown, UserRound, Settings, LogOut } from "lucide-react";
 import useOutsideClick from "@/hooks/useClickOutside";
 import { usePathname } from "next/navigation";
 
-const Navbar = () => {
+const AuthNavbar = ({onLogout}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -78,6 +78,13 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuRef]);
+
+  // handle logout button 
+  const handleLogoutButton = () => {
+    localStorage.removeItem('authToken');
+    onLogout();
+    router.push('/login')
+  }
 
   return (
     <motion.nav
@@ -167,14 +174,7 @@ const Navbar = () => {
                       <Link
                         href={item.href}
                         key={index}
-                        onClick={() => {
-                          if (item.label === "Logout") {
-                            localStorage.removeItem("authToken");
-                            // window.location.href = "/login";
-                            router.push('/login');
-                          }
-                          setShowProfileDropdown(false);
-                        }}
+                        onClick={handleLogoutButton}
                         className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200"
                       >
                         <span className="text-gray-500">{item.icon}</span>
@@ -238,14 +238,7 @@ const Navbar = () => {
                       <Link
                         href={item.href}
                         key={index}
-                        onClick={() => {
-                          if (item.label === "Logout") {
-                            localStorage.removeItem("authToken");
-                            // window.location.href = "/login";
-                            router.push('/login');
-                          }
-                          setShowProfileDropdown(false);
-                        }}
+                         onClick={handleLogoutButton}
                         className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200"
                       >
                         <span className="text-gray-500">{item.icon}</span>
@@ -353,4 +346,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default AuthNavbar;

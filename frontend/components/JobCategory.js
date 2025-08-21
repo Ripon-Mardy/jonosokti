@@ -141,10 +141,11 @@ const JobCategory = () => {
                   key={jobItem._id || index}
                   variants={itemVariants}
                   layout
-                  className="group border border-gray-100 p-2 rounded-md"
+                  className="group border border-gray-100 rounded-md"
                 >
+                  
                   <Link href={`/category/sub-category/${jobItem?._id}`}>
-                    <div className="w-full h-full bg-white rounded">
+                    <div className="w-full h-full bg-white rounded py-2">
                       <div className="w-16 md:w-20 h-auto mx-auto">
                         <Image
                           width={4}
@@ -167,11 +168,13 @@ const JobCategory = () => {
                       </div>
                     </div>
                   </Link>
+
                 </motion.div>
               ))}
             </AnimatePresence>
           </motion.div>
         ) : (
+
           <div>
             <NoDataFound
               icon={<Grip />}
@@ -181,6 +184,7 @@ const JobCategory = () => {
               }
             />
           </div>
+
         )}
 
         {jobCategories.length > initialVisibleCount && (
@@ -190,6 +194,7 @@ const JobCategory = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
+            
             <button onClick={() => setShowAll(!showAll)} className="btn">
               {showAll ? (
                 <>
@@ -206,6 +211,7 @@ const JobCategory = () => {
                 </>
               )}
             </button>
+
           </motion.div>
         )}
       </div>
