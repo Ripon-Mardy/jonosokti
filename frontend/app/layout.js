@@ -30,8 +30,8 @@ const dm_sans = DM_Sans({
 })
 
 export const metadata = {
-  title: "Jonosokti - জনশক্তি  ",
-  description: "Hire Experts & Get Your Job Done",
+  title: "জনশক্তি  ",
+  description: "বিশেষজ্ঞ নিয়োগ করুন এবং আপনার কাজ সম্পন্ন করুন",
 };
 
 export default function RootLayout({ children }) {
