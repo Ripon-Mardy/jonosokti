@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
 
 const RegistrationForm = () => {
-    
   const [activeForm, setActiveForm] = useState("provider");
   const [formData, setFormData] = useState({
     firstName: "",
@@ -16,6 +16,7 @@ const RegistrationForm = () => {
     password: "",
     // confirmPassword: ""
   });
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const categories = [
     "Technology Services",
@@ -27,21 +28,21 @@ const RegistrationForm = () => {
     "Transportation & Logistics",
     "Financial Services",
     "Marketing & Advertising",
-    "Other"
+    "Other",
   ];
 
   const packages = [
     "Basic Package - $29/month",
     "Professional Package - $79/month",
     "Enterprise Package - $199/month",
-    "Premium Package - $299/month"
+    "Premium Package - $299/month",
   ];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -54,14 +55,14 @@ const RegistrationForm = () => {
   return (
     <div className="xl:container xl:mx-auto px-2 lg:px-8 py-24">
       <div className="max-w-4xl mx-auto">
-
         {/* Header Section */}
         <div className="text-center mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">
             Join Our Platform
           </h1>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Create your account and start connecting with opportunities. Choose your registration type below.
+            Create your account and start connecting with opportunities. Choose
+            your registration type below.
           </p>
         </div>
 
@@ -79,8 +80,18 @@ const RegistrationForm = () => {
                 }`}
               >
                 <span className="flex items-center justify-center gap-2">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    />
                   </svg>
                   Service Provider
                 </span>
@@ -94,8 +105,18 @@ const RegistrationForm = () => {
                 }`}
               >
                 <span className="flex items-center justify-center gap-2">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
                   </svg>
                   Customer
                 </span>
@@ -109,13 +130,14 @@ const RegistrationForm = () => {
               {/* Form Title */}
               <div className="text-center sm:text-left">
                 <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                  {activeForm === "provider" ? "Provider Registration" : "Customer Registration"}
+                  {activeForm === "provider"
+                    ? "Provider Registration"
+                    : "Customer Registration"}
                 </h2>
                 <p className="text-gray-600">
-                  {activeForm === "provider" 
+                  {activeForm === "provider"
                     ? "Join as a service provider and showcase your expertise"
-                    : "Sign up as a customer to access our services"
-                  }
+                    : "Sign up as a customer to access our services"}
                 </p>
               </div>
 
@@ -123,7 +145,10 @@ const RegistrationForm = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* First Name */}
                 <div className="space-y-2">
-                  <label htmlFor="firstName" className="block text-sm font-semibold text-gray-700">
+                  <label
+                    htmlFor="firstName"
+                    className="block text-sm font-semibold text-gray-700"
+                  >
                     First Name *
                   </label>
                   <input
@@ -140,7 +165,10 @@ const RegistrationForm = () => {
 
                 {/* Last Name */}
                 <div className="space-y-2">
-                  <label htmlFor="lastName" className="block text-sm font-semibold text-gray-700">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-sm font-semibold text-gray-700"
+                  >
                     Last Name *
                   </label>
                   <input
@@ -172,14 +200,15 @@ const RegistrationForm = () => {
                   />
                 </div> */}
 
-               
-
                 {/* Provider-specific fields */}
                 {activeForm === "provider" && (
                   <>
                     {/* Company Name */}
                     <div className="space-y-2 md:col-span-2">
-                      <label htmlFor="companyName" className="block text-sm font-semibold text-gray-700">
+                      <label
+                        htmlFor="companyName"
+                        className="block text-sm font-semibold text-gray-700"
+                      >
                         Company Name *
                       </label>
                       <input
@@ -196,7 +225,10 @@ const RegistrationForm = () => {
 
                     {/* Category */}
                     <div className="space-y-2">
-                      <label htmlFor="category" className="block text-sm font-semibold text-gray-700">
+                      <label
+                        htmlFor="category"
+                        className="block text-sm font-semibold text-gray-700"
+                      >
                         Business Category *
                       </label>
                       <select
@@ -218,7 +250,10 @@ const RegistrationForm = () => {
 
                     {/* Package */}
                     <div className="space-y-2">
-                      <label htmlFor="package" className="block text-sm font-semibold text-gray-700">
+                      <label
+                        htmlFor="package"
+                        className="block text-sm font-semibold text-gray-700"
+                      >
                         Subscription Package *
                       </label>
                       <select
@@ -240,10 +275,12 @@ const RegistrationForm = () => {
                   </>
                 )}
 
-
-                 {/* Phone Number */}
+                {/* Phone Number */}
                 <div className="space-y-2">
-                  <label htmlFor="phone" className="block text-sm font-semibold text-gray-700">
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-semibold text-gray-700"
+                  >
                     Phone Number *
                   </label>
                   <input
@@ -260,19 +297,36 @@ const RegistrationForm = () => {
 
                 {/* Password */}
                 <div className="space-y-2">
-                  <label htmlFor="password" className="block text-sm font-semibold text-gray-700">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-semibold text-gray-700"
+                  >
                     Password *
                   </label>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 outline-none focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-700 placeholder-gray-400"
-                    placeholder="Create a strong password"
-                    required
-                  />
+                  <div className="relative">
+                    <input
+                      type={passwordVisible ? "text" : "password"}
+                      id="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 outline-none focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-700 placeholder-gray-400"
+                      placeholder="Create a strong password"
+                      required
+                    />
+                    <div className="absolute inset-y-0 right-3 flex items-center cursor-pointer">
+                      <span>
+                        {passwordVisible ? (
+                          <EyeOff
+                            onClick={() => setPasswordVisible(false)}
+                            className="w-5 h-5 text-textColor"
+                          />
+                        ) : (
+                          <Eye onClick={() => setPasswordVisible(true)} className="w-5 h-5 text-textColor" />
+                        )}{" "}
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Confirm Password */}
@@ -291,7 +345,6 @@ const RegistrationForm = () => {
                     required
                   />
                 </div> */}
-
               </div>
 
               {/* Terms and Conditions */}
@@ -302,13 +355,22 @@ const RegistrationForm = () => {
                   required
                   className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 mt-0.5"
                 />
-                <label htmlFor="terms" className="text-sm text-gray-600 leading-relaxed">
+                <label
+                  htmlFor="terms"
+                  className="text-sm text-gray-600 leading-relaxed"
+                >
                   I agree to the
-                  <a href="#" className="text-blue-600 hover:text-blue-800 font-medium underline">
+                  <a
+                    href="#"
+                    className="text-blue-600 hover:text-blue-800 font-medium underline"
+                  >
                     Terms of Service
                   </a>
                   and
-                  <a href="#" className="text-blue-600 hover:text-blue-800 font-medium underline">
+                  <a
+                    href="#"
+                    className="text-blue-600 hover:text-blue-800 font-medium underline"
+                  >
                     Privacy Policy
                   </a>
                 </label>
@@ -322,8 +384,18 @@ const RegistrationForm = () => {
                 >
                   <span className="flex items-center justify-center gap-2">
                     Create Account
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 7l5 5m0 0l-5 5m5-5H6"
+                      />
                     </svg>
                   </span>
                 </button>
@@ -333,7 +405,10 @@ const RegistrationForm = () => {
               <div className="text-center pt-4 border-t border-gray-100">
                 <p className="text-gray-600">
                   Already have an account?
-                  <a href="#" className="text-blue-600 hover:text-blue-800 font-semibold underline text-base">
+                  <a
+                    href="#"
+                    className="text-blue-600 hover:text-blue-800 font-semibold underline text-base"
+                  >
                     Sign In
                   </a>
                 </p>
