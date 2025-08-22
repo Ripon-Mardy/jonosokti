@@ -83,7 +83,6 @@ export default function Page() {
       }
 
       const result = await res.json();
-      console.log('result', result)
 
       // Assuming result.success = true on success
       if (result.status === true) {
@@ -109,13 +108,16 @@ export default function Page() {
   }, [timer, isOtpSent]);
 
   return (
-    <div className="xl:container xl:mx-auto pt-28 bg-gray-50 flex items-center justify-center px-4 flex-col pb-20">
-      <h2 className="text-2xl font-bold mb-2 text-center">
+    <div className="xl:container xl:mx-auto pt-28 flex items-center justify-center px-4 flex-col pb-20">
+      {/* <h2 className="text-2xl font-bold mb-2 text-center">
         {isVerified
           ? "Welcome, Registration Successful"
           : isOtpSent
           ? "OTP Verification"
           : "Phone Verification"}
+      </h2> */}
+      <h2 className="text-2xl font-bold mb-2 text-center">
+        {isOtpSent ? 'OTP Verification' : 'Phone Verification'}
       </h2>
 
       <p className="text-sm text-center text-gray-600 mb-6">
@@ -130,12 +132,12 @@ export default function Page() {
         {!isOtpSent && !isVerified && (
           <>
             <div className="relative mb-4">
-              <Phone className="absolute left-3 top-3 text-gray-400" />
+              <Phone className="absolute left-3 top-4 text-gray-400 w-5 h-5"  />
               <input
                 type="tel"
                 value={phone}
                 onChange={handlePhoneChange}
-                className="w-full pl-10 pr-3 outline-none py-3 focus:ring-1 focus:border-blue-500 rounded-md"
+                className="w-full pl-10 pr-3 outline-none py-3 focus:ring-1 focus:border-blue-500 rounded-lg border border-gray-300"
                 placeholder="01XXXXXXXXX"
               />
             </div>
