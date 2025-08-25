@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Phone, Clock } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Registration from "@/components/Registration";
 
 export default function Page() {
   const [phone, setPhone] = useState("");
@@ -87,7 +88,7 @@ export default function Page() {
       // Assuming result.success = true on success
       if (result.status === true) {
         setIsVerified(true);
-        router.push('/registration-form')
+        // router.push('/registration-form')
         
       } else {
         setErrorMessage("OTP not matched. Please try again.");
@@ -108,30 +109,24 @@ export default function Page() {
   }, [timer, isOtpSent]);
 
   return (
-    <div className="xl:container xl:mx-auto pt-28 flex items-center justify-center px-4 flex-col pb-20">
-      {/* <h2 className="text-2xl font-bold mb-2 text-center">
-        {isVerified
-          ? "Welcome, Registration Successful"
-          : isOtpSent
-          ? "OTP Verification"
-          : "Phone Verification"}
-      </h2> */}
-      <h2 className="text-2xl font-bold mb-2 text-center">
-        {isOtpSent ? 'OTP Verification' : 'Phone Verification'}
-      </h2>
+    <div className="xl:container xl:mx-auto py-24 flex items-center justify-center px-4 flex-col pb-20">
 
-      <p className="text-sm text-center text-gray-600 mb-6">
+      {/* <p className="text-sm text-center text-gray-600 mb-6">
         {isVerified
           ? "You have successfully verified your phone number."
           : isOtpSent
           ? "Enter the verification code sent to your phone"
           : "We’ll send a code to your phone"}
-      </p>
+      </p> */}
 
-      <div className="bg-white p-6 rounded-md shadow-md w-full max-w-md">
-        {!isOtpSent && !isVerified && (
-          <>
-            <div className="relative mb-4">
+
+       <div className="max-w-md w-full">
+         {!isOtpSent && !isVerified && (
+          <div>
+             <h2 className="text-2xl font-bold mb-2 text-center"> Phone Verification </h2>
+             <p className="text-sm text-center text-gray-600 mb-6">Enter the verification code sent to your phone</p>
+            <div className=" bg-white p-6 rounded-lg shadow-md">
+            <div className="relative mb-4 w-full">
               <Phone className="absolute left-3 top-4 text-gray-400 w-5 h-5"  />
               <input
                 type="tel"
@@ -148,11 +143,18 @@ export default function Page() {
             >
               {isLoading ? "Sending..." : "Send OTP"}
             </button>
-          </>
+          </div>
+          </div>
         )}
+       </div>
 
-        {isOtpSent && !isVerified && (
-          <>
+       <div className="max-w-md w-full">
+         {isOtpSent && !isVerified && (
+         <div>  
+           <h2 className="text-2xl font-bold mb-2 text-center">OTP Verification</h2>
+              <p className="text-sm text-center text-gray-600 mb-6">Enter the verification code sent to your phone</p>
+           <div className="bg-white p-6 rounded-lg shadow-md" >
+             
             <div className="flex justify-between mb-4">
               {otp.map((digit, index) => (
                 <input
@@ -191,8 +193,20 @@ export default function Page() {
                 </button>
               )}
             </p>
-          </>
+          </div>
+         </div>
         )}
+       </div>
+
+        {/* {isVerified && (
+            <Registration/>
+
+        )} */}
+
+       
+
+
+
 
         {/* {isVerified && (
           <div className="text-center text-green-600 font-medium mt-4">
@@ -202,7 +216,9 @@ export default function Page() {
 
 
         
-      </div>
+      {/* </div> */}
+      {isVerified && <Registration />}
+
     </div>
   );
 }
