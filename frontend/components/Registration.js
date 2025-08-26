@@ -2,15 +2,16 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-const Registration = () => {
+const Registration = ({ phone }) => {
   const [activeForm, setActiveForm] = useState("provider");
   const [providerFormData, setProviderFormData] = useState({
-    user_type: 1,
+    user_type: (1).toString(),
     first_name: "",
     last_name: "",
     company_name: "",
-    phone: "",
+    phone: phone || "",
     password: "",
     category_id: "",
     package_id: "",
@@ -19,8 +20,12 @@ const Registration = () => {
   const [category, setCategory] = useState([]);
   const [packageData, setPackageData] = useState([]);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [registrationMessage, setRegistrationMessage] = useState(false);
+  const [showRegistrationMessage, setShowRegistrationMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  const router = useRouter();
 
   const categories = [
     "Technology Services",
@@ -51,40 +56,87 @@ const Registration = () => {
   };
 
   // all category list fetch
-useEffect(() => {
-  const fetchCategory = async () => {
-    try {
-      const [categoryRes, packageRes] = await Promise.all([
-        fetch(`${apiKey}/category/categories`),
-        fetch(`${apiKey}/package/packages`)
-      ]);
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const [categoryRes, packageRes] = await Promise.all([
+          fetch(`${apiKey}/category/categories`),
+          fetch(`${apiKey}/package/packages`),
+        ]);
 
-      if (!categoryRes.ok || !packageRes.ok) {
-        throw new Error("Failed to fetch data");
+        if (!categoryRes.ok || !packageRes.ok) {
+          throw new Error("Failed to fetch data");
+        }
+
+        const categoryData = await categoryRes.json();
+        const packageData = await packageRes.json();
+
+        setCategory(categoryData?.data || []);
+        setPackageData(packageData?.data || []);
+      } catch (error) {
+        console.error("Fetch Error:", error);
       }
+    };
 
-      const categoryData = await categoryRes.json();
-      const packageData = await packageRes.json();
-
-      setCategory(categoryData || []);
-      setPackageData(packageData || []);
-    } catch (error) {
-      console.error("Fetch Error:", error);
-    }
-  };
-
-  fetchCategory();
-}, []);
-
+    fetchCategory();
+  }, []);
 
   // handle provider submit
-  const handleProviderSubmit = () => {
+  const handleProviderSubmit = async (e) => {
     e.preventDefault();
-    alert("form submitted");
+    setLoading(true);
+    try {
+      const res = await fetch(`${apiKey}/user-auth/registration`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(providerFormData),
+      });
+
+      const data = await res.json();
+      console.log("data", data);
+      if (data?.status == true) {
+        setShowRegistrationMessage(data?.message);
+        setRegistrationMessage(true);
+        
+        setTimeout(() => {
+          setRegistrationMessage(false);
+        }, 5000);
+
+        router.push('/login');
+
+        setProviderFormData({
+          user_type: (1).toString(),
+          first_name: "",
+          last_name: "",
+          company_name: "",
+          phone: "",
+          password: "",
+          category_id: "",
+          package_id: "",
+        });
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="xl:container xl:mx-auto px-2">
+
+      {registrationMessage && (
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2">
+          <h2 className="bg-bgColor text-white px-10 py-2 rounded-xl font-semibold w-fit text-sm">
+            {showRegistrationMessage} 🎉
+          </h2>
+        </div>
+      )}
+      
+
+
       <div className="max-w-4xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-8">
@@ -246,9 +298,9 @@ useEffect(() => {
                       required
                     >
                       <option value="">Select your business category</option>
-                      {categories.map((category, index) => (
-                        <option key={index} value={category}>
-                          {category}
+                      {category.map((category, index) => (
+                        <option key={index} value={category?._id}>
+                          {category?.name}
                         </option>
                       ))}
                     </select>
@@ -266,13 +318,14 @@ useEffect(() => {
                       id="package"
                       name="package_id"
                       value={providerFormData.package_id}
+                      onChange={handleProviderInputChange}
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-700 bg-white"
                       required
                     >
                       <option value="">Choose your package</option>
-                      {packages.map((pkg, index) => (
-                        <option key={index} value={pkg}>
-                          {pkg}
+                      {packageData.map((pkg, index) => (
+                        <option key={index} value={pkg?._id}>
+                          {pkg?.name} {pkg?.price}
                         </option>
                       ))}
                     </select>
@@ -290,11 +343,12 @@ useEffect(() => {
                       type="tel"
                       id="phone"
                       name="phone"
-                      value={providerFormData.phone}
+                      value={phone}
                       onChange={handleProviderInputChange}
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 outline-none focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-700 placeholder-gray-400"
                       placeholder="+8801XXXXXXXXX"
                       required
+                      disabled
                     />
                   </div>
                   {/* Password */}
@@ -371,7 +425,7 @@ useEffect(() => {
                     className="w-full bg-bgColor hover:bg-hoverBg text-white font-semibold py-4 px-8 rounded-xl hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300 shadow-lg text-base hover:shadow-xl"
                   >
                     <span className="flex items-center justify-center gap-2 text-base">
-                      Create Account
+                      {loading ? "Submitting..." : "Create Account"}
                       <svg
                         className="w-5 h-5"
                         fill="none"
