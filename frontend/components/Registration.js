@@ -16,7 +16,14 @@ const Registration = ({ phone }) => {
     category_id: "",
     package_id: "",
   });
-  console.log("providerFormData", providerFormData);
+  const [customerFormData, setCustomerFormData] = useState({
+    user_type: (2).toString(),
+    first_name: "",
+    last_name: "",
+    phone: phone || "",
+    password: "",
+  })
+  console.log('customerFormData', customerFormData);
   const [category, setCategory] = useState([]);
   const [packageData, setPackageData] = useState([]);
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -122,6 +129,62 @@ const Registration = ({ phone }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // handle Customer Input Change 
+  const handleCustomerInputChange = (e) => {
+    const {name, value} = e.target;
+
+    setCustomerFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  // handle customer submit 
+  const handleCustomerSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${apiKey}/user-auth/registration`, {
+        method : 'POST',
+        headers : {
+          'Content-Type' : 'application/json',
+        },
+        body : JSON.stringify(customerFormData)
+      })
+
+      if(!res.ok) {
+        throw new Error("Failed to register")
+      }
+      const data = await res.json();
+
+      if(data?.status == true) {
+        setShowRegistrationMessage(data?.message);
+        setRegistrationMessage(true);
+        
+        setTimeout(() => {
+          setRegistrationMessage(false);
+        }, 5000);
+
+        router.push('/login');
+
+        setCustomerFormData({
+          user_type: (2).toString(),
+          first_name: "",
+          last_name: "",
+          phone: "",
+          password: "",
+        })
+      }
+    } catch (error) {
+      console.log('error', error);
+      console.error("error", error);
+    }finally {
+      setLoading(false)
+    }
+
   };
 
   return (
@@ -471,7 +534,7 @@ const Registration = ({ phone }) => {
                 </p>
               </div>
               {/* form section  */}
-              <form action="#" className="space-y-3">
+              <form action="#" onSubmit={handleCustomerSubmit} className="space-y-3">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                   {/* First Name */}
                   <div className="space-y-2">
@@ -484,6 +547,9 @@ const Registration = ({ phone }) => {
                     <input
                       type="text"
                       id="firstName"
+                      name="first_name"
+                      onChange={handleCustomerInputChange}
+                      value={customerFormData.first_name}
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl outline-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-700"
                       placeholder="Enter your first name"
                       required
@@ -501,6 +567,9 @@ const Registration = ({ phone }) => {
                     <input
                       type="text"
                       id="lastName"
+                      name="last_name"
+                      value={customerFormData.last_name}
+                      onChange={handleCustomerInputChange}
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 outline-none focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-700 placeholder-gray-400"
                       placeholder="Enter your last name"
                       required
@@ -518,6 +587,9 @@ const Registration = ({ phone }) => {
                     <input
                       type="tel"
                       id="phone"
+                      value={customerFormData.phone}
+                      onChange={handleCustomerInputChange}
+                      name="phone"
                       className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 outline-none focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-700 placeholder-gray-400"
                       placeholder="+8801XXXXXXXXX"
                       required
@@ -534,6 +606,9 @@ const Registration = ({ phone }) => {
                     <div className="relative">
                       <input
                         type={passwordVisible ? "text" : "password"}
+                        value={customerFormData.password}
+                        onChange={handleCustomerInputChange}
+                        name="password"
                         id="password"
                         className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 outline-none focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-700 placeholder-gray-400"
                         placeholder="Create a strong password"
@@ -594,7 +669,7 @@ const Registration = ({ phone }) => {
                     className="w-full bg-bgColor hover:bg-hoverBg text-white font-semibold py-4 px-8 rounded-xl hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300 shadow-lg text-base hover:shadow-xl"
                   >
                     <span className="flex items-center justify-center gap-2 text-base">
-                      Create Account
+                     {loading ? "Submitting..." : "Create Account"}
                       <svg
                         className="w-5 h-5"
                         fill="none"
