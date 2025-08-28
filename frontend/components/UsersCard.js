@@ -1,4 +1,4 @@
-import React from "react";
+
 import customProfile from "@/public/images/profile.jpg";
 import Link from "next/link";
 import Image from "next/image";
@@ -13,7 +13,9 @@ import {
 } from "lucide-react";
 import { FaStar } from "react-icons/fa6";
 
-const UsersCard = () => {
+const UsersCard = ({user}) => {
+  console.log("users props", user)
+
   return (
     <>
       <div className="bg-white rounded-lg border border-gray-200 p-3">
