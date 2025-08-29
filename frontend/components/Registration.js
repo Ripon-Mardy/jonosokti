@@ -23,7 +23,6 @@ const Registration = ({ phone }) => {
     phone: phone || "",
     password: "",
   })
-  console.log('customerFormData', customerFormData);
   const [category, setCategory] = useState([]);
   const [packageData, setPackageData] = useState([]);
   const [passwordVisible, setPasswordVisible] = useState(false);
