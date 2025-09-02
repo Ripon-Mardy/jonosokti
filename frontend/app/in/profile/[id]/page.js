@@ -30,6 +30,8 @@ const page = ({params}) => {
   const [user, setUser] = useState([]);
   const [isBooking, setIsBooking] = useState(false);
   const [authToken, setIsAuthTokn] = useState("");
+  const [storeduser, setStoredUser] = useState([]);
+  console.log('stored data from login', storeduser)
   const [error, setError] = useState('');
   const router = useRouter();
   const isLoggedin = authToken;
@@ -49,9 +51,11 @@ const page = ({params}) => {
 
   const galleryImage = [image1, image2, image3, image4];
 
-  // authtoken
+  // authtoken or login user data
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
+    const storedUserData = localStorage.getItem('user');
+    setStoredUser(storedUserData)
     setIsAuthTokn(authToken);
   }, [authToken]);
 
@@ -105,7 +109,7 @@ const page = ({params}) => {
                   Add verification badge
                 </button>
               </div>
-
+ 
               {/* Job title */}
               <h3 className="text-sm text-blue-800 font-semibold">
                 Expert Electronics Technician
@@ -215,7 +219,7 @@ const page = ({params}) => {
                   {/* about  */}
                   <div>
                     <h2 className="text-xl font-semibold text-textHeadingColor">
-                      About Ripon Mardy Axel
+                      About {user?.first_name} {user?.last_name}
                     </h2>
                     <p className="text-base text-textColor my-4">
                       I am a professional electronics technician with over 8
@@ -255,15 +259,15 @@ const page = ({params}) => {
                       </h2>
                       <div className="space-y-2 mt-2">
                         <span className="flex items-center justify-start gap-2 text-base text-textColor">
-                          <ShieldCheck className="w-3 h-3 text-green-500" />{" "}
+                          <ShieldCheck className="w-3 h-3 text-green-500" />
                           Electronics Repair Certified
                         </span>
                         <span className="flex items-center justify-start gap-2 text-base text-textColor">
-                          <ShieldCheck className="w-3 h-3 text-green-500" />{" "}
+                          <ShieldCheck className="w-3 h-3 text-green-500" />
                           Mobile Device Specialist
                         </span>
                         <span className="flex items-center justify-start gap-2 text-base text-textColor">
-                          <ShieldCheck className="w-3 h-3 text-green-500" />{" "}
+                          <ShieldCheck className="w-3 h-3 text-green-500" />
                           Customer Service Excellence
                         </span>
                       </div>

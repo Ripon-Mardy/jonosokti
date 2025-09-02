@@ -17,6 +17,15 @@ const AuthNavbar = ({onLogout}) => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [loginStoredUser, setLoginStoredUser] = useState(null);
+  
+  // login stored user 
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if(user) {
+      setLoginStoredUser(JSON.parse(user))
+    }
+  }, [])
 
   const pathname = usePathname()
   const menuRef = useRef(null);
@@ -78,6 +87,8 @@ const AuthNavbar = ({onLogout}) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuRef]);
+
+  // get login user details 
 
   // handle logout button 
   const handleLogoutButton = () => {
@@ -143,7 +154,7 @@ const AuthNavbar = ({onLogout}) => {
                   className="rounded-full"
                 />
                 <div className="flex items-center gap-1">
-                  <span className="text-textColor text-sm"> James Baskey</span>
+                  <span className="text-textColor text-sm"> {loginStoredUser?.first_name} {loginStoredUser?.last_name}  </span>
                   <span>
                     <ChevronDown size={15} />
                   </span>
