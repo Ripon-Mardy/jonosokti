@@ -18,6 +18,7 @@ const AuthNavbar = ({onLogout}) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [loginStoredUser, setLoginStoredUser] = useState(null);
+  console.log('login user data', loginStoredUser)
   
   // login stored user 
   useEffect(() => {
@@ -88,15 +89,6 @@ const AuthNavbar = ({onLogout}) => {
     };
   }, [menuRef]);
 
-  // get login user details 
-
-  // handle logout button 
-  const handleLogoutButton = () => {
-    localStorage.removeItem('authToken');
-    onLogout();
-    router.push('/login')
-  }
-
   return (
     <motion.nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 bg-white ${
@@ -120,6 +112,7 @@ const AuthNavbar = ({onLogout}) => {
 
         {/* Desktop Navigation */}
         <div className="hidden xl:flex items-center space-x-1">
+
           <ul className="flex items-center space-x-1 mr-6">
             {navLinks.map(({ href, label, isSpecial }) => (
               <li key={href}>
@@ -169,23 +162,32 @@ const AuthNavbar = ({onLogout}) => {
                       {
                         label: "Profile",
                         icon: <UserRound size={18} />,
-                        href: "/in/profile",
+                        href : `/in/profile/${loginStoredUser?._id}`,
+                        action : null,
                       },
                       {
                         label: "Settings",
                         icon: <Settings size={18} />,
                         href: "/settings",
+                        action : null
                       },
                       {
                         label: "Logout",
                         icon: <LogOut size={18} />,
                         href: "#",
+                        action : 'logout'
                       },
                     ].map((item, index) => (
                       <Link
                         href={item.href}
                         key={index}
-                        onClick={handleLogoutButton}
+                        onClick={() => {
+                          if(item?.action === 'logout') {
+                            localStorage.removeItem('authToken');
+                            onLogout();
+                            router.push('/login');
+                          }
+                        }}
                         className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200"
                       >
                         <span className="text-gray-500">{item.icon}</span>
@@ -233,23 +235,32 @@ const AuthNavbar = ({onLogout}) => {
                       {
                         label: "Profile",
                         icon: <UserRound size={18} />,
-                        href: "/in/profile",
+                        href : `/in/profile/${loginStoredUser?._id}`,
+                        action : null
                       },
                       {
                         label: "Settings",
                         icon: <Settings size={18} />,
                         href: "/settings",
+                        action : null,
                       },
                       {
                         label: "Logout",
                         icon: <LogOut size={18} />,
                         href: "#",
+                        action : 'logout'
                       },
                     ].map((item, index) => (
                       <Link
                         href={item.href}
                         key={index}
-                         onClick={handleLogoutButton}
+                        onClick={() => {
+                          if(item?.action === 'logout') {
+                            localStorage.removeItem('authToken');
+                            onLogout();
+                            router.push('/login')
+                          }
+                        }}
                         className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200"
                       >
                         <span className="text-gray-500">{item.icon}</span>
