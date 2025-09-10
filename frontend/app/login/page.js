@@ -55,7 +55,9 @@ export default function Page() {
         localStorage.setItem('authToken', data?.token);
         localStorage.setItem('user', JSON.stringify(data?.data))
       }
-      router.push('/');
+      // router.push('/');
+      router.refresh()
+      router.replace('/')
     } catch (err) {
       setError(err.message);
     } finally {

@@ -18,24 +18,31 @@ import {
   UsersRound,
   Shield,
 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 import useOutsideClick from "@/hooks/useClickOutside";
 import UsersCard from "@/components/UsersCard";
 import NoDataFound from "@/components/NoDataFound/NoDataFound";
 
 const page = () => {
+
+  const searchParams = useSearchParams();
+  // get all params from url 
+  const locationParams = searchParams.get('location') || '';
+  const categoryParams = searchParams.get('category') || '';
+
+
+
   const [searchQuery, setSearchQuery] = useState("");
-  const [formData, setFormData] = useState({ location: "" });
+  const [formData, setFormData] = useState({ location: locationParams || '' });
   const [filters, setFilters] = useState({
-    location: "",
-    category: "",
+    location: locationParams || "",
+    category: categoryParams|| "",
     rating: "",
     verified: false,
   });
   const [users, setUsers] = useState([]);
-  console.log("users", users);
   const [filteredUsers, setFilteredUsers] = useState([]);
-  console.log("filteredUsers", filteredUsers);
   const [category, setCategory] = useState([]);
   const [location, setLocation] = useState([]);
   const [filteredLocation, setFilteredLocation] = useState([]);
@@ -170,41 +177,10 @@ const page = () => {
     return stars;
   };
 
-  // Loading state
-  // if (loading) {
-  //   return (
-  //     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center items-center">
-  //       <div className=" p-8 rounded-2xl shadow-xl flex flex-col items-center space-y-4">
-  //         <Loader2 className="animate-spin text-blue-500" size={48} />
-  //         {/* <div className="text-center">
-  //           <h3 className="text-lg font-semibold text-gray-800">Loading Experts</h3>
-  //           <p className="text-gray-600">Finding the best professionals for you...</p>
-  //         </div> */}
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
   return (
     <div>
       <div className="xl:container xl:mx-auto px-4 pt-24 pb-20">
-
-
-        {/* Header */}
-        {/* <div className="text-center mb-8 bg-headerBgColor rounded-md p-3 space-y-2 py-5 max-w-4xl mx-auto">
-          <div className="flex items-center justify-center gap-2">
-            <Award className="text-yellow-300" size={28} />
-            <h1 className="text-base md:text-xl font-bold text-white">
-              Hire Expert Professionals
-            </h1>
-          </div>
-
-          <p className="text-white text-sm max-w-2xl mx-auto">
-            Connect with verified professionals in your area. Quality service
-            guaranteed.
-          </p>
-
-        </div> */}
 
         {/* Search and Sort Bar */}
         <div className="bg-white rounded-2xl shadow-lg p-2 mb-8">

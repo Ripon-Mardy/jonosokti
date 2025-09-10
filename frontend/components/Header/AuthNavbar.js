@@ -184,8 +184,10 @@ const AuthNavbar = ({onLogout}) => {
                         onClick={() => {
                           if(item?.action === 'logout') {
                             localStorage.removeItem('authToken');
+                            localStorage.removeItem('user')
                             onLogout();
-                            router.push('/login');
+                            router.refresh();
+                            router.replace('/login')
                           }
                         }}
                         className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200"
