@@ -532,7 +532,7 @@ const page = () => {
             {filteredUsers && filteredUsers.length > 0 ? (
               <div className="grid grid-cols-1  md:grid-cols-2 xl:grid-cols-3 gap-2">
                 {filteredUsers.map((user, index) => (
-                  <UsersCard key={index} userId={user?._id}  />
+                  <UsersCard key={index} userId={user?._id}/>
                 ))}
               </div>
             ) : (

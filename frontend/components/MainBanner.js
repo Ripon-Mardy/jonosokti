@@ -5,7 +5,7 @@ import { List, MapPin } from "lucide-react";
 import useOutsideClick from "@/hooks/useClickOutside";
 import { useRouter } from "next/navigation";
 
-const MainBanner = ({onFormChange}) => {
+const MainBanner = () => {
   const [category, setCategory] = useState([]);
   const [location, setLocation] = useState([]);
   const [showDropdown, setshowDropdown] = useState(false);

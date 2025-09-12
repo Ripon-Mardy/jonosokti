@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import userImage from "@/public/images/user.png";
-import defaultProfile from "@/public/images/profile.jpg";
 import { FaStar } from "react-icons/fa";
 import {
   CircleCheck,
@@ -18,8 +17,6 @@ import {
   ShieldCheck,
   UserCheck,
   X,
-  User,
-  Pencil,
 } from "lucide-react";
 
 // image
@@ -28,22 +25,21 @@ import image2 from "@/public/images/gallery/2.jpg";
 import image3 from "@/public/images/gallery/3.jpg";
 import image4 from "@/public/images/gallery/4.jpg";
 
-const page = ({ params }) => {
+const page = ({params}) => {
   const [activeTab, setActiveTab] = useState("overview");
   const [user, setUser] = useState([]);
   const [isBooking, setIsBooking] = useState(false);
   const [authToken, setIsAuthTokn] = useState("");
   const [storeduser, setStoredUser] = useState([]);
-  const [error, setError] = useState("");
-  const [isAboutPopUp, setIsAboutPopUp] = useState(false);
-
+  console.log('stored data from login', storeduser)
+  const [error, setError] = useState('');
   const router = useRouter();
   const isLoggedin = authToken;
 
-  // api key
+  // api key 
   const apikey = process.env.NEXT_PUBLIC_API_KEY;
 
-  // userId
+  // userId 
   const userId = params.id;
 
   const tabs = [
@@ -58,30 +54,31 @@ const page = ({ params }) => {
   // authtoken or login user data
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
-    const storedUserData = localStorage.getItem("user");
-    setStoredUser(storedUserData);
+    const storedUserData = localStorage.getItem('user');
+    setStoredUser(storedUserData)
     setIsAuthTokn(authToken);
   }, [authToken]);
 
-  // get single users
+  // get single users 
   useEffect(() => {
     const getSingleUser = async () => {
       try {
         const res = await fetch(`${apikey}/user/get-user?id=${userId}`);
 
-        if (!res.ok) {
-          setError("Failed to fetch user");
+        if(!res.ok) {
+        setError('Failed to fetch user')
         }
 
         const userData = await res.json();
         setUser(userData?.data || []);
+
       } catch (error) {
-        console.log("error", error);
+        console.log('error', error)
       }
     };
 
-    getSingleUser();
-  }, []);
+    getSingleUser()
+  }, [])
 
   return (
     <div className="xl:container xl:mx-auto px-2 xl:px-0 py-24">
@@ -90,152 +87,109 @@ const page = ({ params }) => {
       <div className="md:grid md:grid-cols-3 gap-5">
         <div className="md:col-span-2">
           {/* left side left info  */}
-          <div className="flex flex-col md:flex-row items-start gap-8 bg-white border border-gray-100 shadow rounded-md p-3">
-            <div className="w-40 h-auto flex items-center justify-start flex-col">
-              {/* Profile Image Preview */}
+          <div className=" bg-white p-3 md:p-4 shadow-md rounded-md flex flex-col md:flex-row items-start md:items-center gap-4">
+            <div className="w-48 h-48 flex items-center justify-start">
               <Image
+                src={userImage}
                 alt="User"
-                src={defaultProfile}
-                className="rounded-md object-cover"
+                className="rounded-md"
                 width={192}
                 height={192}
               />
-
-              {/* File Input */}
-              <label className="text-sm mt-5 bg-yellow-300 hover:bg-yellow-400 transition font-semibold px-3 py-1 rounded-md text-textHeadingColor hover:text-gray-900 cursor-pointer">
-                Select Image
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                />
-              </label>
             </div>
 
             {/* Right side info */}
-            <div className="space-y-2 md:space-y-1 w-full">
+            <div className="space-y-2 md:space-y-1">
               {/* Name + verification */}
-              <div className="flex items-center justify-between w-full mb-4">
-                <div className="flex items-center justify-center gap-2">
-                  <User className="w-6 h-6" />
-                  <h2 className="text-2xl text-textHeadingColor font-semibold">
-                    About Me
+              <div className="flex flex-wrap gap-2 items-center">
+                <h2 className="text-textHeadingColor font-bold text-2xl md:text-3xl">
+                  {user?.first_name} {user?.last_name}
+                </h2>
+                <button className="text-xs text-textColor border border-blue-500 border-dashed font-medium px-2 rounded-full">
+                  Add verification badge
+                </button>
+              </div>
+ 
+              {/* Job title */}
+              <h3 className="text-sm text-blue-800 font-semibold">
+                Expert Electronics Technician
+              </h3>
+
+              {/* Stats */}
+              <div className="space-y-3 md:space-y-0 md:py-3">
+                <div className="space-y-2 md:flex flex-wrap md:items-center md:gap-4">
+                  <div className="flex items-center gap-1 text-sm text-textColor">
+                    <FaStar className="w-3 h-3 text-yellow-500" />
+                    <span className="font-bold">4.9</span>
+                    <span>(3 reviews)</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-sm text-textColor">
+                    <CircleCheck className="w-3 h-3" /> 234 jobs completed
+                  </div>
+                  <div className="flex items-center gap-1 text-sm text-textColor">
+                    <Clock3 className="w-3 h-3" /> Responds in 30 mins
+                  </div>
+
+                  {/* Location */}
+                  <h2 className="text-sm text-textColor flex items-center gap-1">
+                    <MapPin className="w-3 h-3" /> Dhanmondi, Dhaka
                   </h2>
                 </div>
-                <Pencil
-                  onClick={() => setIsAboutPopUp(true)}
-                  className="w-5 h-5 cursor-pointer"
-                />
-              </div>
 
-              <div className=" space-y-4">
-                <div className="block space-y-2">
-                  <label
-                    className="block text-textColor font-medium text-base"
-                    htmlFor="fist_name"
+                {/* Action buttons */}
+                <div className="flex items-center flex-wrap gap-3 pt-3 md:pt-5">
+
+                  {isLoggedin ? (
+                    <Link href={'tel:01320585642'}
+                    className="flex items-center gap-1 text-sm bg-callButtonColor py-2 px-6 rounded-md text-white font-medium"
                   >
-                    First Name *
-                  </label>
-                  <div className="flex items-center p-3 rounded-md border border-gray-300 bg-gray-50 focus-within:border-blue-500 transition">
-                    <User className="w-5 h-5 text-textColor" />
-                    <input
-                      type="text"
-                      className="text-base pl-3 w-full outline-none bg-transparent text-textColor"
-                      value={user?.first_name}
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="block space-y-2">
-                  <label
-                    className="block text-base text-textColor"
-                    htmlFor="fist_name"
+                    <Phone className="w-4 h-4" />
+                    Call Now
+                  </Link>
+                  ) : (
+                    <Link href={'/login'}
+                    className="flex items-center gap-1 text-sm bg-callButtonColor py-2 px-6 rounded-md text-white font-medium"
                   >
-                    Last Name *
-                  </label>
-                  <div className="flex  p-3 rounded-md border border-gray-300 focus-within:border-blue-500 transition">
-                    <User className="w-5 h-5 text-textColor" />
-                    <input
-                      type="text"
-                      className="text-base pl-2 w-full outline-none "
-                      value={user?.last_name}
-                      disabled
-                    />
-                  </div>
+                    <Phone className="w-4 h-4" />
+                    Login to call
+                  </Link>
+                  )}
+
+                  {isLoggedin ? (
+                    <button onClick={() => alert('This Features is comming soon...')} className="flex items-center gap-1 text-sm bg-bgColor text-white py-2 px-5 rounded-md font-medium">
+                       <Mail className="w-4 h-4" /> Message
+                    </button>
+                  ) : (
+                    <Link
+                      className="flex items-center gap-1 text-sm bg-bgColor text-white py-2 px-5 rounded-md font-medium"
+                      href={"/login"}
+                    >
+                     <Mail className="w-4 h-4" />  Login to message
+                    </Link>
+                  )}
+
+                  {isLoggedin ? (
+                     <button onClick={() => setIsBooking(!isBooking)}
+                    className="flex items-center gap-1 text-sm bg-bookServiceColor py-2 px-6 rounded-md text-white font-medium"
+                  >
+                    <Calendar className="w-4 h-4" />
+                   Book Service
+                  </button>
+                  ) : (
+                    <div>
+                      <Link href={'/login'}
+                    className="flex items-center gap-1 text-sm bg-bookServiceColor py-2 px-6 rounded-md text-white font-medium"
+                  >
+                    <Calendar className="w-4 h-4" />
+                   Login to Book Service
+                  </Link>
+                    </div>
+                  )}
+
                 </div>
               </div>
             </div>
           </div>
-
-          {/* about pop up  */}
-
-          {isAboutPopUp && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
-              <div className="bg-white max-w-md w-full p-6 rounded-lg shadow-lg space-y-5">
-                <div className="flex items-center justify-between gap-3">
-                  <h2 className="text-2xl font-bold text-textHeadingColor">
-                    About Me
-                  </h2>
-                  <X
-                    onClick={() => setIsAboutPopUp(false)}
-                    className="w-6 h-6 text-textColor cursor-pointer"
-                  />
-                </div>
-                {/* First Name */}
-                <div className="space-y-2">
-                  <label
-                    className="block text-textColor font-medium text-base"
-                    htmlFor="first_name"
-                  >
-                    First Name *
-                  </label>
-                  <div className="flex items-center p-3 rounded-md border border-gray-300 bg-gray-50 focus-within:border-blue-500 transition">
-                    <User className="w-5 h-5 text-gray-500" />
-                    <input
-                      id="first_name"
-                      type="text"
-                      className="text-base pl-3 w-full outline-none bg-transparent text-gray-700"
-                      value={user?.first_name}
-                    />
-                  </div>
-                </div>
-
-                {/* Last Name */}
-                <div className="space-y-2">
-                  <label
-                    className="block text-textColor font-medium text-base"
-                    htmlFor="last_name"
-                  >
-                    Last Name *
-                  </label>
-                  <div className="flex items-center p-3 rounded-md border border-gray-300 bg-gray-50 focus-within:border-blue-500 transition">
-                    <User className="w-5 h-5 text-gray-500" />
-                    <input
-                      id="last_name"
-                      type="text"
-                      className="text-base pl-3 w-full outline-none bg-transparent text-gray-700"
-                      value={user?.last_name}
-                    />
-                  </div>
-                </div>
-                {/* Buttons */}
-                <div className="flex justify-end space-x-2 pt-4">
-                  <button
-                    onClick={() => setIsAboutPopUp(false)}
-                    className="px-4 py-2 rounded-md bg-gray-200 text-gray-700"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 rounded-md bg-blue-600 text-white"
-                  >
-                    Save
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* left  side right info  */}
 
@@ -501,22 +455,23 @@ const page = ({ params }) => {
                 </span>
 
                 {isLoggedin ? (
-                  <Link
-                    href={`tel:${user?.phone}`}
-                    className="flex items-center justify-start gap-1 bg-callButtonColor p-1 rounded-md text-white text-sm px-4"
-                  >
-                    <Phone className="w-3 h-3" />
-                    Call
-                  </Link>
+                   <Link
+                  href={`tel:${user?.phone}`}
+                  className="flex items-center justify-start gap-1 bg-callButtonColor p-1 rounded-md text-white text-sm px-4"
+                >
+                  <Phone className="w-3 h-3" />
+                  Call
+                </Link>
                 ) : (
-                  <Link
-                    href={"#"}
-                    className="flex items-center justify-start gap-1 bg-callButtonColor p-1 rounded-md text-white text-sm px-4"
-                  >
-                    <Phone className="w-3 h-3" />
-                    Login to Call
-                  </Link>
+                   <Link
+                  href={"#"}
+                  className="flex items-center justify-start gap-1 bg-callButtonColor p-1 rounded-md text-white text-sm px-4"
+                >
+                  <Phone className="w-3 h-3" />
+                  Login to Call
+                </Link>
                 )}
+
               </div>
               <span className="bg-gray-100 p-1 px-3 rounded-md py-3 flex items-center justify-start gap-2 text-sm text-textColor font-medium">
                 <MapPin className="w-4 h-4" /> Dhanmondi, Dhaka
@@ -574,10 +529,7 @@ const page = ({ params }) => {
             <p className="text-base text-red-500">
               Need urgent repair? Call directly for emergency service.
             </p>
-            <Link
-              href={`tel:${user?.phone}`}
-              className=" w-full py-2 rounded-md font-medium bg-red-700 hover:bg-red-800 transition flex items-center justify-center gap-2 text-red-200"
-            >
+            <Link href={`tel:${user?.phone}`} className=" w-full py-2 rounded-md font-medium bg-red-700 hover:bg-red-800 transition flex items-center justify-center gap-2 text-red-200">
               <Phone className="w-4 h-4 text-red-200" /> Emergency Call
             </Link>
           </div>
