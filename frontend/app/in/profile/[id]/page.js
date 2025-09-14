@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import userImage from "@/public/images/user.png";
 import defaultProfile from "@/public/images/profile.jpg";
 import { FaStar } from "react-icons/fa";
 import {
@@ -569,7 +568,7 @@ const page = ({ params }) => {
           {/* Emergency services  */}
           <div className="border border-red-300 rounded-md shadow p-3 md:p-5 mt-5 bg-[#FAF5FF] space-y-3">
             <h2 className="text-xl font-semibold text-red-700">
-              Emergency Service
+              Emergency Service 
             </h2>
             <p className="text-base text-red-500">
               Need urgent repair? Call directly for emergency service.
