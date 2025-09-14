@@ -51,11 +51,13 @@ export default function Page() {
       }
 
       const data = await res.json();
-      if(res.ok && data.status === true) {
+      if(res.ok && data.status) {
         localStorage.setItem('authToken', data?.token);
-        localStorage.setItem('userData', data?.data)
+        localStorage.setItem('user', JSON.stringify(data?.data))
       }
-      router.push('/');
+      // router.push('/');
+      router.refresh()
+      router.replace('/')
     } catch (err) {
       setError(err.message);
     } finally {

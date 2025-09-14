@@ -7,7 +7,7 @@ import NoDataFound from "./NoDataFound/NoDataFound";
 import { Users } from "lucide-react";
 
 const FeaturedProvider = () => {
-  const [users, setUsers] = useState({users: []});
+  const [users, setUsers] = useState({ users: [] });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -52,33 +52,36 @@ const FeaturedProvider = () => {
       <div>
         <div>
           <div>
-            {isLoading ? (
-              <Loader />
-            ) : error ? (
+            {isLoading && <Loader />}
+
+            {!isLoading && error && (
               <div className="flex justify-center py-10">
                 <p className="bg-red-100 text-red-600 px-4 py-2 rounded-lg shadow">
                   ❌ {error}
                 </p>
               </div>
-            ) : users?.users?.length > 0 ? (
+            )}
+
+            {!isLoading && !error && users?.users?.length > 0 && (
               <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {users?.users?.map((user, index) => (
                   <UsersCard user={user} key={index} />
                 ))}
               </div>
-            ) : (
+            )}
+
+            {!isLoading && !error && users?.users?.length === 0 && (
               <NoDataFound
                 icon={<Users />}
-                text={"No Users Found"}
-                subText={
-                  "We couldn’t find any users at the moment. Please try again later."
-                }
+                text="No Users Found"
+                subText="We couldn’t find any users at the moment. Please try again later."
               />
             )}
+
           </div>
         </div>
 
-        {users?.users?.length > 0 && (
+        {users?.users?.length > 8 && (
           <div className="text-center mt-5">
             <button className="btn">See all providers</button>
           </div>

@@ -14,7 +14,6 @@ import {
 import { FaStar } from "react-icons/fa6";
 
 const UsersCard = ({user}) => {
-  console.log("users props", user)
 
   return (
     <>
@@ -40,7 +39,7 @@ const UsersCard = ({user}) => {
             {/* Text Info */}
             <div className="flex flex-col">
               <h2 className="text-textHeadingColor font-bold text-base truncate w-[200px]">
-                Ahmed Hossain
+                {user?.first_name} {user?.last_name}
               </h2>
               <h3 className="text-textBannerColor text-sm font-semibold">
                 Emergency Plumbing
@@ -81,7 +80,7 @@ const UsersCard = ({user}) => {
           </div>
           {/* hire now  */}
           <div className="mt-4 flex gap-3 items-center justify-center">
-            <Link href={'/in/profile'} className=" btn w-full">Hire Now</Link>
+            <Link href={`/in/profile/${user?._id}`} className=" btn w-full">Hire Now</Link>
             {/* <button className="w-1/2 flex items-center justify-center border border-gray-300 py-2 rounded-full text-gray-600">
               <MessageSquareMore className="w-5 h-5" />
             </button> */}
