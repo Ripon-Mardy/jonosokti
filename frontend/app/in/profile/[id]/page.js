@@ -32,7 +32,7 @@ const page = ({ params }) => {
   const [user, setUser] = useState([]);
   const [isBooking, setIsBooking] = useState(false);
   const [authToken, setIsAuthTokn] = useState("");
-  const [storeduser, setStoredUser] = useState([]);
+  const [profilePreview, setProfilePreview] = useState(null)
   const [error, setError] = useState("");
   const [isAboutPopUp, setIsAboutPopUp] = useState(false);
 
@@ -57,8 +57,6 @@ const page = ({ params }) => {
   // authtoken or login user data
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
-    const storedUserData = localStorage.getItem("user");
-    setStoredUser(storedUserData);
     setIsAuthTokn(authToken);
   }, [authToken]);
 
@@ -82,6 +80,14 @@ const page = ({ params }) => {
     getSingleUser();
   }, []);
 
+  // handle profile file change 
+  const handleFileChnage = (e) => {
+    const file = e.target.files[0];
+    if(file) {
+      setProfilePreview(URL.createObjectURL(file))
+    }
+  }
+
   return (
     <div className="xl:container xl:mx-auto px-2 xl:px-0 py-24">
       {/* Left side info */}
@@ -94,7 +100,7 @@ const page = ({ params }) => {
               {/* Profile Image Preview */}
               <Image
                 alt="User"
-                src={defaultProfile}
+                src={profilePreview || defaultProfile}
                 className="rounded-md object-cover"
                 width={192}
                 height={192}
@@ -106,6 +112,7 @@ const page = ({ params }) => {
                 <input
                   type="file"
                   accept="image/*"
+                  onChange={handleFileChnage}
                   className="hidden"
                 />
               </label>
@@ -114,7 +121,7 @@ const page = ({ params }) => {
             {/* Right side info */}
             <div className="space-y-2 md:space-y-1 w-full">
               {/* Name + verification */}
-              <div className="flex items-center justify-between w-full mb-4">
+              <div className="flex items-center justify-between w-full mb-3">
                 <div className="flex items-center justify-center gap-2">
                   <User className="w-6 h-6" />
                   <h2 className="text-2xl text-textHeadingColor font-semibold">
@@ -127,7 +134,7 @@ const page = ({ params }) => {
                 />
               </div>
 
-              <div className=" space-y-4">
+              <div className="space-y-3">
                 <div className="block space-y-2">
                   <label
                     className="block text-textColor font-medium text-base"
@@ -135,7 +142,7 @@ const page = ({ params }) => {
                   >
                     First Name *
                   </label>
-                  <div className="flex items-center p-3 rounded-md border border-gray-300 bg-gray-50 focus-within:border-blue-500 transition">
+                  <div className="flex items-center p-2 rounded-md border border-gray-300 bg-gray-50 focus-within:border-blue-500 transition">
                     <User className="w-5 h-5 text-textColor" />
                     <input
                       type="text"
@@ -152,7 +159,7 @@ const page = ({ params }) => {
                   >
                     Last Name *
                   </label>
-                  <div className="flex  p-3 rounded-md border border-gray-300 focus-within:border-blue-500 transition">
+                  <div className="flex  p-2 rounded-md border border-gray-300 focus-within:border-blue-500 transition">
                     <User className="w-5 h-5 text-textColor" />
                     <input
                       type="text"
