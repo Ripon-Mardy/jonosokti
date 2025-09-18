@@ -300,8 +300,7 @@ const page = ({params}) => {
                         models
                       </p>
                       <span className="text-textColor flex items-center justify-start gap-1 text-sm">
-                        {" "}
-                        <Clock3 className="w-3 h-3" /> Duration: 1-2 hours{" "}
+                        <Clock3 className="w-3 h-3" /> Duration: 1-2 hours
                       </span>
                     </div>
 
@@ -319,8 +318,7 @@ const page = ({params}) => {
                         models
                       </p>
                       <span className="text-textColor flex items-center justify-start gap-1 text-sm">
-                        {" "}
-                        <Clock3 className="w-3 h-3" /> Duration: 1-2 hours{" "}
+                        <Clock3 className="w-3 h-3" /> Duration: 1-2 hours
                       </span>
                     </div>
 
@@ -338,8 +336,7 @@ const page = ({params}) => {
                         models
                       </p>
                       <span className="text-textColor flex items-center justify-start gap-1 text-sm">
-                        {" "}
-                        <Clock3 className="w-3 h-3" /> Duration: 1-2 hours{" "}
+                        <Clock3 className="w-3 h-3" /> Duration: 1-2 hours
                       </span>
                     </div>
                   </div>
@@ -354,9 +351,8 @@ const page = ({params}) => {
                       Customer Reviews
                     </h2>
                     <span className="flex items-center justify-start gap-2">
-                      {" "}
-                      <FaStar className="w-4 h-4 text-yellow-500" />{" "}
-                      <span className="font-bold">4.9</span> (3 reviews){" "}
+                      <FaStar className="w-4 h-4 text-yellow-500" />
+                      <span className="font-bold">4.9</span> (3 reviews)
                     </span>
                   </div>
                   {/* reviews  */}
@@ -368,7 +364,7 @@ const page = ({params}) => {
                         </h2>
                         <span className="text-yellow-500 flex items-center justify-start gap-2 text-sm">
                           {" "}
-                          <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />{" "}
+                          <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />
                         </span>
                       </div>
                       <span className="text-sm text-textColor">2 days ago</span>
@@ -387,7 +383,7 @@ const page = ({params}) => {
                         </h2>
                         <span className="text-yellow-500 flex items-center justify-start gap-2 text-sm">
                           {" "}
-                          <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />{" "}
+                          <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />
                         </span>
                       </div>
                       <span className="text-sm text-textColor">2 days ago</span>
@@ -564,19 +560,19 @@ const page = ({params}) => {
                     required
                   >
                     <option value="Battery ReplaceMent">
-                      Battery Replacement - $500 - $600{" "}
+                      Battery Replacement - $500 - $600
                     </option>
                     <option value="Battery ReplaceMent">
-                      Battery Replacement - $500 - $600{" "}
+                      Battery Replacement - $500 - $600
                     </option>
                     <option value="Battery ReplaceMent">
-                      Battery Replacement - $500 - $600{" "}
+                      Battery Replacement - $500 - $600
                     </option>
                     <option value="Battery ReplaceMent">
-                      Battery Replacement - $500 - $600{" "}
+                      Battery Replacement - $500 - $600
                     </option>
                     <option value="Battery ReplaceMent">
-                      Battery Replacement - $500 - $600{" "}
+                      Battery Replacement - $500 - $600
                     </option>
                   </select>
                 </div>
