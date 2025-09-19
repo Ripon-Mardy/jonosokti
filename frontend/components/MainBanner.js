@@ -74,7 +74,7 @@ const MainBanner = () => {
         <div className="text-center text-white space-y-3">
           <h2 className="text-white font-bold text-3xl sm:text-5xl mx-auto sm:max-w-3xl">
             Find Trusted
-            <b className="text-textBannerColor font-bold">Service Providers</b>
+            <b className="text-textBannerColor font-bold"> Service Providers </b>
             Near You
           </h2>
           <p className="text-white text-center max-w-sm mx-auto sm:max-w-xl text-sm sm:text-base">
