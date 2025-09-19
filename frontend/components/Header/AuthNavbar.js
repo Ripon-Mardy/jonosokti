@@ -18,7 +18,6 @@ const AuthNavbar = ({onLogout}) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [loginStoredUser, setLoginStoredUser] = useState(null);
-  console.log('login user data', loginStoredUser)
   
   // login stored user 
   useEffect(() => {

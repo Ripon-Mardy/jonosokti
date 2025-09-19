@@ -1,8 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import useOutsideClick from "@/hooks/useClickOutside";
 
 import defaultProfile from "@/public/images/profile.jpg";
 import { FaStar } from "react-icons/fa";
@@ -33,6 +34,10 @@ const page = ({ params }) => {
   const [user, setUser] = useState([]);
   const [isBooking, setIsBooking] = useState(false);
   const [authToken, setIsAuthTokn] = useState("");
+  const [location, setLocation] = useState([]);
+  const [filteredLocation, setFilteredLocation] = useState([]);
+  const [locationInputsearchTerm, setLocationInputSearchTerm] = useState("");
+  const [showLocationInputsuggestion, setShowLocationInputSuggestion] = useState(false);
   const [profilePreview, setProfilePreview] = useState(null);
   const [galleryImagePreview, setGalleryImagePreview] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -44,9 +49,11 @@ const page = ({ params }) => {
   const [galleryPopup, setGalleryPopup] = useState(false);
   const [contactInformationPopup, setContactInformationPopup] = useState(false);
 
-
   const router = useRouter();
   const isLoggedin = authToken;
+  // ref 
+  const locationInputRef = useRef(null);
+  useOutsideClick(locationInputRef, () => setShowLocationInputSuggestion(false))
 
   // api key
   const apikey = process.env.NEXT_PUBLIC_API_KEY;
@@ -89,6 +96,34 @@ const page = ({ params }) => {
     getSingleUser();
   }, []);
 
+  // get all location city
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const response = await fetch(
+          "https://bdapi.vercel.app/api/v.1/district"
+        );
+        if (!response.ok) throw new Error("failed to fetch location");
+        const data = await response.json();
+        setLocation(data?.data || []);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchLocation();
+  }, []);
+
+  // filtered input location 
+  useEffect(() => {
+    if(!locationInputsearchTerm.trim()) {
+      setFilteredLocation(location);
+    } else {
+      setFilteredLocation(
+        location.filter((loc) => loc?.name.toLowerCase().includes(locationInputsearchTerm.toLowerCase()))
+      )
+    }
+  }, [location, locationInputsearchTerm])
+
   // handle profile file change
   const handleFileChnage = (e) => {
     const file = e.target.files[0];
@@ -125,15 +160,17 @@ const page = ({ params }) => {
         <div className="md:col-span-2">
           {/* left side left info  */}
           <div className="flex flex-col md:flex-row items-start gap-8 bg-white border border-gray-100 shadow rounded-md p-3">
-            <div className="w-40 h-auto flex items-center justify-start flex-col">
+            <div className=" h-auto flex items-center justify-start flex-col overflow-hidden">
               {/* Profile Image Preview */}
-              <Image
-                alt="User"
-                src={profilePreview || defaultProfile}
-                className="rounded-md object-cover"
-                width={192}
-                height={192}
-              />
+              <div className="w-48 h-40">
+                <Image
+                  alt="User"
+                  src={profilePreview || defaultProfile}
+                  className="rounded-md object-cover"
+                  width={192}
+                  height={192}
+                />
+              </div>
 
               {/* File Input */}
               <label className="text-sm mt-5 bg-yellow-300 hover:bg-yellow-400 transition font-semibold px-3 py-1 rounded-md text-textHeadingColor hover:text-gray-900 cursor-pointer">
@@ -204,10 +241,10 @@ const page = ({ params }) => {
 
           {/* about pop up  */}
           {isAboutPopUp && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
+            <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50 px-2">
               <div className="bg-white max-w-md w-full p-6 rounded-lg shadow-lg space-y-5">
                 <div className="flex items-center justify-between gap-3">
-                  <h2 className="text-2xl font-bold text-textHeadingColor">
+                  <h2 className="text-xl font-bold text-textHeadingColor">
                     About Me
                   </h2>
                   <X
@@ -540,16 +577,19 @@ const page = ({ params }) => {
         {/* right side info  */}
         <div className="md:col-span-1  h-fit">
           <div className="bg-white shadow-md p-3 rounded-md h-auto">
-           <div className="flex items-center justify-between gap-2">
-             <h2 className="text-lg font-semibold md:font-bold">
-              Contact Information
-            </h2>
-            <Pencil onClick={() => setContactInformationPopup(true)}  className="w-5 h-5 text-textColor cursor-pointer" />
-           </div>
+            <div className="flex items-center justify-between gap-2">
+              <h2 className="text-lg font-semibold md:font-bold">
+                Contact Information
+              </h2>
+              <Pencil
+                onClick={() => setContactInformationPopup(true)}
+                className="w-5 h-5 text-textColor cursor-pointer"
+              />
+            </div>
             <div className="mt-3 space-y-3">
               <div className="bg-gray-100 p-1 px-3 rounded-md py-3 flex flex-wrap items justify-between gap-1">
                 <span className=" flex items-center justify-start gap-2 text-sm text-textColor font-semibold">
-                  <Phone className="w-4 h-4" /> +880-1712-345678
+                  <Phone className="w-4 h-4" /> +88 {user?.phone}
                 </span>
               </div>
               <span className="bg-gray-100 p-1 px-3 rounded-md py-3 flex items-center justify-start gap-2 text-sm text-textColor font-medium">
@@ -845,7 +885,10 @@ const page = ({ params }) => {
             <div className="bg-white max-w-xl w-full h-fit p-4 rounded-md">
               <div className="flex items-center justify-between gap-2">
                 <h2 className="text-lg font-semibold">Gallery</h2>
-                <X onClick={() => setGalleryPopup(false)} className="w-5 h-5 cursor-pointer text-textColor" />
+                <X
+                  onClick={() => setGalleryPopup(false)}
+                  className="w-5 h-5 cursor-pointer text-textColor"
+                />
               </div>
 
               <div className="flex flex-col gap-2 mt-4 h-auto">
@@ -859,7 +902,7 @@ const page = ({ params }) => {
                     e.preventDefault();
                     setIsBooking(true);
                   }}
-                  onDragLeave={() => setIsDragging(false) }
+                  onDragLeave={() => setIsDragging(false)}
                   className={`relative w-40 h-40 border border-dashed border-gray-300 rounded-md flex items-center justify-center overflow-hidden bg-gray-50 ${
                     isDragging ? "border border-blue-600 bg-blue-500" : ""
                   } `}
@@ -925,32 +968,83 @@ const page = ({ params }) => {
         )}
 
         {/* contact information popup  */}
-       {contactInformationPopup && (
-         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
-          <div className="bg-white w-full max-w-md p-5 rounded-md shadow-md h-auto overflow-y-auto">
-            <div className="flex items-center justify-between gap-2 mb-5">
-              <h2 className="text-lg font-semibold text-textHeadingColor">Contact information</h2>
-              <X onClick={() => setContactInformationPopup(false)} className="text-textColor w-5 h-5 cursor-pointer" />
-            </div>
-            {/* add contact information form  */}
-            <form>
-              <div className="space-y-1">
-                <label htmlFor="locaiton" className="text-sm font-medium text-textHeadingColor">Select your city *</label>
-                <div className="relative flex items-center border border-gray-300 rounded-md focus-within:ring-1 focus-within:border-blue-400 bg-white">
-                  <MapPin className="w-4 h-4 text-textColor absolute left-2" />
-                  <input type="text" id="location" className="w-full pl-8 p-2 rounded-md text-sm outline-none" placeholder="Enter your city here" required />
+        {contactInformationPopup && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+            <div className="bg-white w-full max-w-md p-5 rounded-md shadow-md h-auto">
+              <div className="flex items-center justify-between gap-2 mb-5">
+                <h2 className="text-lg font-semibold text-textHeadingColor">
+                  Contact information
+                </h2>
+                <X
+                  onClick={() => setContactInformationPopup(false)}
+                  className="text-textColor w-5 h-5 cursor-pointer"
+                />
+              </div>
+              {/* add contact information form  */}
+              <form className="space-y-4" ref={locationInputRef}>
+                <div className="relative space-y-1">
+                  <label
+                    htmlFor="locaiton"
+                    className="text-sm font-medium text-textHeadingColor"
+                  >
+                    Select your city *
+                  </label>
+                  <div className="relative flex items-center border border-gray-300 rounded-md focus-within:ring-1 focus-within:border-blue-400 bg-white">
+                    <MapPin className="w-4 h-4 text-textColor absolute left-2" />
+                    <input
+                    onFocus={() => setShowLocationInputSuggestion(true)}
+                    value={locationInputsearchTerm}
+                    onChange={(e) => setLocationInputSearchTerm(e.target.value)}
+                      type="text"
+                      id="location"
+                      className="w-full pl-8 p-2 rounded-md text-sm outline-none"
+                      placeholder="Enter your city here"
+                      required
+                    />
+                  </div>
+
+                  {/* show filtered location  */}
+                    {showLocationInputsuggestion && (
+                      <div className="absolute left-0 top-full max-h-40 w-full overflow-y-auto z-50 bg-white border border-gray-200 rounded-md">
+
+                      {filteredLocation.length > 0 ? (
+                        filteredLocation?.map((loc, index) => (
+                          <div
+                          className="border-b last:border-0 border-gray-200 p-1"
+                          key={index}
+                        >
+                          <button className="block text-textColor" key={index}>
+                            {loc?.name}
+                          </button>
+                        </div>
+                        ))
+                      ) : (
+                        <div>
+                        <p className="p-2 text-sm text-gray-500">No locations found</p>
+                        </div>
+                      )}
+
+
+                    </div>
+                    )}
+
                 </div>
-              </div>
 
-              <div className="text-right mt-5">
-                <button type="submit" className="btn">Save</button>
-              </div>
-            </form>
+                <div className="space-y-1">
+                  <label htmlFor="address-details" className="text-sm font-medium text-textHeadingColor">Address Details *</label>
+                  <textarea rows={3} id="address-details" className="w-full p-2 text-sm text-textHeadingColor outline-none rounded-md border border-gray-200 focus-within:border-blue-400 transition" placeholder="write your address details..."></textarea>
+                </div>
 
+                <div className="text-right mt-5">
+                  <button type="submit" className="btn">
+                    Save
+                  </button>
+                </div>
+                
+              </form>
+            </div>
           </div>
-        </div>
-       )}
-
+        )}
 
 
       </div>
