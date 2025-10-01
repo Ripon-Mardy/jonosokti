@@ -12,7 +12,7 @@ const Header = ({ toggleMobileMenu }) => {
   }
   return (
     <>
-      <div className=" px-3 p-2 bg-white flex items-center justify-between w-full shadow z-50">
+      <div className="bg-gray-100 px-3 p-2 flex items-center justify-between w-full border-b border-gray-300 z-50">
         <div className="flex items-center justify-center gap-4">
           <span onClick={toggleMobileMenu} className="cursor-pointer md:hidden">
             <Menu size={20} />

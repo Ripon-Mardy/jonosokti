@@ -8,10 +8,8 @@ import useOutsideClick from "@/hooks/useClickOutside";
 import defaultProfile from "@/public/images/profile.jpg";
 import { FaStar } from "react-icons/fa";
 import {
-  CircleCheck,
   Clock3,
   Phone,
-  Mail,
   Calendar,
   MapPin,
   Globe,

@@ -83,30 +83,28 @@ const Sidebar = () => {
       <div className="fixed flex justify-between h-6 w-full">
         {/* Desktop Sidebar */}
         <div
-          className={`bg-slate-800 text-white min-h-screen hidden md:block w-0 transition-all duration-300 overflow-y-auto ${
+          className={`bg-gray-100 border-r border-gray-300 min-h-screen hidden md:block w-0 transition-all duration-300 overflow-y-auto ${
             expanded ? "w-0 hidden overflow-hidden" : "w-60 p-2"
           } `}
         >
           <Image src={jonosokti} width={150} height={150} alt="jonosokti" />
-          <ul className="flex flex-col space-y-5 mt-8 overflow-y-auto">
+          <ul className="flex flex-col space-y-2 mt-8 overflow-y-auto">
             {menus.map((menu) => {
               const IconComponent = iconMap[menu.icon];
               const hasSubMenu = menu.subMenu && menu.subMenu.length > 0;
               return (
                 <div key={menu.id}>
                   <div
-                    className={`flex items-center gap-2 p-2 rounded-md transition-all duration-100 w-full cursor-pointer ${
-                      activeMenu === menu.id ? "bg-slate-600" : "hover:bg-slate-700"
-                    }`}
+                    className={`flex items-center gap-2 p-2 rounded-md transition-all duration-100 w-full cursor-pointer`}
                     onClick={() => {
                       handleSubMenuToggle(menu.id);
                       handleMenuClick(menu.id); // Set active menu
                     }}
                   >
-                    {IconComponent && <IconComponent className="text-xl" />}
+                    {IconComponent && <IconComponent className="text-lg text-gray-600" />}
                     <Link
                       href={menu.component || "#"}
-                      className="inline-block w-full"
+                      className="inline-block w-full text-gray-800"
                     >
                       {menu.name}
                     </Link>

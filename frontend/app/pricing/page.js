@@ -156,7 +156,7 @@ const Page = () => {
             All Plans Include
           </h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
-            {["24/7 Support", "Regular Updates", "Security Features", "API Access"].map(
+            {["24/7 Support", "Regular Updates", "Security Features"].map(
               (feature, index) => (
                 <div
                   key={index}
