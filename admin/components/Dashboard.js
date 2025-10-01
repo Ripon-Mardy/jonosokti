@@ -69,9 +69,6 @@ const Dashboard = () => {
     }
   }, [router]);
 
-  // Check admin URL (move outside useEffect for immediate throw)
-  if (!adminUrl) throw new Error("AdminUrl variable is not defined");
-
   // Fetch dashboard data
   useEffect(() => {
     const fetchDashboardData = async () => {
